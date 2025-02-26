@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin/login', [DashboardController::class, 'login'])->name('admin.login');
