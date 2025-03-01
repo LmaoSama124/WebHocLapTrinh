@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->smallInteger('age');
             $table->string('address', 50);
-            $table->enum('sexx', ['nam', 'nu']);
+            $table->enum('sexx', ['nam', 'nu','khac']);
             $table->date('dob');
             $table->string('phone', 15);
             $table->timestamps();
