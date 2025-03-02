@@ -11,4 +11,8 @@ class DashboardController extends Controller
     {
         return view('admin.themes.dashboard');
     }
+
+    public function login() {
+        return view('admin.themes.login');
+    }
 }
