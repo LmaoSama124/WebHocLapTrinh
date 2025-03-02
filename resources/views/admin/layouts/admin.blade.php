@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin</title>
+    <title>GiGaChad</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('assets/admin/images/kaiadmin/favicon.ico') }}" type="image/x-icon" />
 
@@ -78,8 +78,8 @@
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/admin/js/kaiadmin.min.js') }}"></script>
 
-    <script src={{ asset('assets/admin/js/setting-demo.js') }}></script>
-    <script src={{ asset('assets/admin/js/demo.js') }}></script>
+    <script src="{{ asset('assets/admin/js/setting-demo.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/demo.js') }}"></script>
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: "line",
