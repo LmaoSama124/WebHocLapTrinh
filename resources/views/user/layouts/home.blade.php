@@ -9,6 +9,10 @@
 
     <link rel="stylesheet" href="{{ asset('assets/user/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/user/css/bootstrap.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/user/css/bootstrap-icons.css') }}"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('assets/user/css/enrolled-courses.css') }}">
     
 
 
@@ -159,12 +163,12 @@
 
     <link rel="preconnect" href="{{ asset('fonts.gstatic.com/index.html') }}" crossorigin>
 
-    <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1') }}"
-        id="jquery-core-js"></script>
+    {{-- <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/jquery/jquery.minf43b.js?ver=3.7.1') }}"
+        id="jquery-core-js"></script> --}}
 
-    <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1') }}"
-        id="jquery-migrate-js"></script>
-    <script type="text/javascript" id="jquery-js-after">
+    {{-- <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/jquery/jquery-migrate.min5589.js?ver=3.4.1') }}"
+        id="jquery-migrate-js"></script> --}}
+    {{-- <script type="text/javascript" id="jquery-js-after">
         /* <![CDATA[ */ ! function($) {
             "use strict";
             $(document).ready(function() {
@@ -179,7 +183,7 @@
             })
         }(jQuery);
         /* ]]> */
-    </script>
+    </script> --}}
     <script type="text/javascript" id="stm-lms-lms-js-extra">
         /* <![CDATA[ */
         var stm_lms_vars = {
@@ -193,13 +197,13 @@
         };
         /* ]]> */
     </script>
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/lms7223.js?ver=65') }}"
-        id="stm-lms-lms-js"></script>
+        id="stm-lms-lms-js"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min9e57.js?ver=2.7.0-wc.9.6.2') }}"
-        id="jquery-blockui-js" defer="defer" data-wp-strategy="defer"></script>
+        id="jquery-blockui-js" defer="defer" data-wp-strategy="defer"></script> --}}
     <script type="text/javascript" id="wc-add-to-cart-js-extra">
         /* <![CDATA[ */
         var wc_add_to_cart_params = {
@@ -212,9 +216,9 @@
         };
         /* ]]> */
     </script>
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.minc2dd.js?ver=9.6.2') }}"
-        id="wc-add-to-cart-js" defer="defer" data-wp-strategy="defer"></script>
+        id="wc-add-to-cart-js" defer="defer" data-wp-strategy="defer"></script> --}}
 
     <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.minaef8.js?ver=2.1.4-wc.9.6.2') }}"
@@ -228,14 +232,14 @@
         };
         /* ]]> */
     </script>
-
+{{-- 
     <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.minc2dd.js?ver=9.6.2') }}"
-        id="woocommerce-js" defer="defer" data-wp-strategy="defer"></script>
+        id="woocommerce-js" defer="defer" data-wp-strategy="defer"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/includes/megamenu/assets/js/megamenu9704.js?ver=6.7.1') }}"
-        id="stm_megamenu-js"></script>
+        id="stm_megamenu-js"></script> --}}
 
     <script type="text/javascript" src="{{ asset('assets/user/www.googletagmanager.com/gtag/jsf7e5?id=GT-TB6VKD3') }}"
         id="google_gtagjs-js" async></script>
@@ -443,17 +447,17 @@
         src="{{ asset('assets/user/wp-content/plugins/bck-tu-dong-xac-nhan-thanh-toan-chuyen-khoan-ngan-hang/assets/js/easy.qrcode9704.js?ver=6.7.1') }}"
         id="mpay-qrcode-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/bootstrap.mindd8b.js?ver=3.5.16') }}"
-        id="masterstudy-bootstrap-js"></script>
+        id="masterstudy-bootstrap-js"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/ms-bootstrap-customdd8b.js?ver=3.5.16') }}"
-        id="masterstudy-bootstrap-custom-js"></script>
+        id="masterstudy-bootstrap-custom-js"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/assets/js/components/header/headerffdc.js?ver=2.0.9') }}"
-        id="starter-header-js"></script>
+        id="starter-header-js"></script> --}}
 
     <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/assets/js/commentsffdc.js?ver=2.0.9') }}"
@@ -511,9 +515,9 @@
         src="{{ asset('assets/user/wp-content/plugins/highlighting-code-block/build/js/hcb_script7406.js?ver=2.0.1') }}"
         id="hcb-script-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/header-footer-elementor/inc/js/frontend3601.js?ver=2.2.0') }}"
-        id="hfe-frontend-js-js"></script>
+        id="hfe-frontend-js-js"></script> --}}
 
     <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/libraries/nuxy/metaboxes/assets/js/vue.mindd8b.js?ver=3.5.16') }}"
@@ -527,41 +531,45 @@
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/vue2-autocompletedd8b.js?ver=3.5.16') }}"
         id="ms_lms_courses_searchbox_autocomplete-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/elementor-widgets/course-search-box/course-search-boxdd8b.js?ver=3.5.16') }}"
-        id="ms_lms_courses_searchbox-js"></script>
-        
+        id="ms_lms_courses_searchbox-js"></script> --}}
+    
+    {{-- <script type="text/javascript"
+        src="{{asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/libraries/nuxy/metaboxes/assets/js/vue-resource.min.js?ver=3.5.17') }}"
+        id="vue-resource.js-js"></script>     --}}
+{{-- 
     <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/jquery.cookiedd8b.js?ver=3.5.16') }}"
         id="jquery.cookie-js"></script>
-    
-    <script type="text/javascript"
+     --}}
+    {{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/course/maindd8b.js?ver=3.5.16') }}"
-		id="masterstudy-single-course-components-js"></script>
+		id="masterstudy-single-course-components-js"></script> --}}
 
     <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/plyr/plyrdd8b.js?ver=3.5.16') }}"
 		id="plyr-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system-pro/assets/js/course/mainc9a9.js?ver=4.6.10') }}"
-		id="masterstudy-single-course-main-js"></script>
-
+		id="masterstudy-single-course-main-js"></script> --}}
+{{-- 
     <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/buy-buttondd8b.js?ver=3.5.16') }}"
-		id="masterstudy-buy-button-js"></script>
+		id="masterstudy-buy-button-js"></script> --}}
 
-	<script type="text/javascript"
+	{{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/course/stickybardd8b.js?ver=3.5.16') }}"
-		id="masterstudy-single-course-stickybar-js"></script>
+		id="masterstudy-single-course-stickybar-js"></script> --}}
 
-	<script type="text/javascript"
+	{{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/hintdd8b.js?ver=3.5.16') }}"
-		id="masterstudy-hint-js"></script>
+		id="masterstudy-hint-js"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/course/completedd8b.js?ver=3.5.16') }}"
-		id="masterstudy-single-course-complete-js"></script>
+		id="masterstudy-single-course-complete-js"></script> --}}
 
 	<script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system-pro/assets/js/certificate-builder/jspdf.umdc9a9.js?ver=4.6.10') }}"
@@ -575,45 +583,45 @@
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system-pro/assets/js/certificate-builder/certificates-fontsc9a9.js?ver=4.6.10') }}"
 		id="masterstudy_certificate_fonts-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
 		src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/course-player/generate-certificatedd8b.js?ver=3.5.16') }}"
-		id="masterstudy_generate_certificate-js"></script>
+		id="masterstudy_generate_certificate-js"></script> --}}
 
-    <script src="{{ asset('assets/user/wp-content/plugins/gtranslate/js/float9704.js?ver=6.7.1') }}" data-no-optimize="1" data-no-minify="1"
-    data-gt-orig-url="/" data-gt-orig-domain="titv.vn" data-gt-widget-id="38759367" defer></script>
+    {{-- <script src="{{ asset('assets/user/wp-content/plugins/gtranslate/js/float9704.js?ver=6.7.1') }}" data-no-optimize="1" data-no-minify="1"
+    data-gt-orig-url="/" data-gt-orig-domain="titv.vn" data-gt-widget-id="38759367" defer></script> --}}
     
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/authorization/maindd8b.js?ver=3.5.16') }}"
-        id="masterstudy-authorization-main-js"></script>
+        id="masterstudy-authorization-main-js"></script> --}}
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/components/authorization/ajaxdd8b.js?ver=3.5.16') }}"
-        id="masterstudy-authorization-ajax-js"></script>
+        id="masterstudy-authorization-ajax-js"></script> --}}
 
     <script type="text/javascript"  
         src="{{ asset('assets/user/wp-content/plugins/elementor/assets/js/webpack.runtime.min3dd9.js?ver=3.27.6') }}"
         id="elementor-webpack-runtime-js"></script>
 
-    <script type="text/javascript" 
+    {{-- <script type="text/javascript" 
         src="{{ asset('assets/user/wp-content/plugins/elementor/assets/js/frontend-modules.min3dd9.js?ver=3.27.6') }}"
-        id="elementor-frontend-modules-js"></script>
+        id="elementor-frontend-modules-js"></script> --}}
 
-    <script type="text/javascript" 
+    {{-- <script type="text/javascript" 
         src="{{ asset('asset/user/wp-includes/js/jquery/ui/core.minb37e.js?ver=1.13.3') }}"
-        id="jquery-ui-core-js"></script>
+        id="jquery-ui-core-js"></script> --}}
 
     <script type="text/javascript" src="{{ asset('assets/user/wp-content/plugins/elementor/assets/js/frontend.min3dd9.js?ver=3.27.6')}}"
 		id="elementor-frontend-js"></script>
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/select2.mindd8b.js?ver=3.5.16') }}"
-        id="ms_lms_courses_select2-js"></script>
-    <script type="text/javascript"
+        id="ms_lms_courses_select2-js"></script> --}}
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/elementor-widgets/courses/coursesdd8b.js?ver=3.5.16') }}"
-        id="ms_lms_courses-js"></script>
-    <script type="text/javascript"
+        id="ms_lms_courses-js"></script> --}}
+    {{-- <script type="text/javascript"
         src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/js/wishlistdd8b.js?ver=3.5.16') }}"
-        id="stm-lms-wishlist-js"></script>
+        id="stm-lms-wishlist-js"></script> --}}
 
 </body>
 

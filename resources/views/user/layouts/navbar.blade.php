@@ -20,7 +20,7 @@
                                         <div class="hfe-site-logo-set">
                                             <div class="hfe-site-logo-container">
                                                 <img class="hfe-site-logo-img elementor-animation-"
-                                                    src="{{asset('assets/user/wp-content/uploads/2022/08/Screenshot-2023-01-29-230321.png') }}"
+                                                    src="{{ asset('assets/user/wp-content/uploads/2022/08/Screenshot-2023-01-29-230321.png') }}"
                                                     alt="Screenshot 2023-01-29 230321" />
                                             </div>
                                         </div>
@@ -66,8 +66,8 @@
                                                     </li>
                                                     <li id="menu-item-54201"
                                                         class="menu-item menu-item-type-post_type menu-item-object-page stm_col_width_default stm_mega_cols_inside_default stm_mega_col_width_banner_default hfe-creative-menu">
-                                                        <a href="cua-hang/index.html"
-                                                            class="hfe-sub-menu-item">PHẦN MỀM</a>
+                                                        <a href="cua-hang/index.html" class="hfe-sub-menu-item">PHẦN
+                                                            MỀM</a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-50bfdaac"
                     data-id="50bfdaac" data-element_type="column">
                     <div class="elementor-widget-wrap elementor-element-populated">
@@ -131,7 +131,7 @@
                                     <span class="ms-lms-authorization-icon">
                                         <i class="fas fa-user" aria-hidden="true"></i>
                                     </span>
-                                    <a href="index.php/user-account/index.html">
+                                    <a href="{{ route('user.themes.login.login') }}">
                                         <span class="ms-lms-authorization-title">
                                             login/sign up </span>
                                     </a>
@@ -145,116 +145,112 @@
     </div>
 </header>
 <!-- Sau khi dang nhap -->
-<!-- <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-50bfdaac"
-                            data-id="50bfdaac" data-element_type="column">
-                            <div class="elementor-widget-wrap elementor-element-populated">
-                                <div class="elementor-element elementor-element-19add38f elementor-widget elementor-widget-stm_lms_pro_site_authorization_links"
-                                    data-id="19add38f" data-element_type="widget"
-                                    data-widget_type="stm_lms_pro_site_authorization_links.default">
-                                    <div class="elementor-widget-container">
-                                        <div class="stm_lms_account_dropdown">
-                                            <div class="dropdown">
-                                                <button id="dLabel" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="stmlms-user11 masterstudy-dropdown-menu__icon"></i>
-                                                    <span class="login_name">Hey, vuong8a...</span>
-                                                    <span class="caret"></span>
-                                                </button>
+{{-- <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-50bfdaac"
+    data-id="50bfdaac" data-element_type="column">
+    <div class="elementor-widget-wrap elementor-element-populated">
+        <div class="elementor-element elementor-element-19add38f elementor-widget elementor-widget-stm_lms_pro_site_authorization_links"
+            data-id="19add38f" data-element_type="widget"
+            data-widget_type="stm_lms_pro_site_authorization_links.default">
+            <div class="elementor-widget-container">
+                <div class="stm_lms_account_dropdown">
+                    <div class="dropdown">
+                        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="stmlms-user11 masterstudy-dropdown-menu__icon"></i>
+                            <span class="login_name">Hey, vuong8a...</span>
+                            <span class="caret"></span>
+                        </button>
 
-                                                <div class="masterstudy-dropdown-menu dropdown-menu"
-                                                    aria-labelledby="dLabel">
-                                                    <div class="masterstudy-dropdown-menu__wrap">
-                                                        <div class="masterstudy-dropdown-menu__learning-column">
-                                                            <h3>Learning Area</h3>
-                                                            <ul class="masterstudy-dropdown-menu__list">
+                        <div class="masterstudy-dropdown-menu dropdown-menu" aria-labelledby="dLabel">
+                            <div class="masterstudy-dropdown-menu__wrap">
+                                <div class="masterstudy-dropdown-menu__learning-column">
+                                    <h3>Learning Area</h3>
+                                    <ul class="masterstudy-dropdown-menu__list">
 
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/enrolled-courses"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            Enrolled Courses </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/chat"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            Messages </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/wishlist/"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            Wishlist </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/enrolled-quizzes"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            Enrolled Quizzes </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/my-orders"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            My Orders </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/my-certificates/"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            My Certificates </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/enterprise-groups/"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            Groups </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/enrolled-assignments"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            My Assignments </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="https://titv.vn/user-account/points-history/"
-                                                                        class="dropdown_menu_item ">
-                                                                        <span class="dropdown_menu_item__title">
-                                                                            My Points </span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="masterstudy-dropdown-menu__logout">
-                                                                <a href="#"
-                                                                    class="stm_lms_logout"><span>Logout</span></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="stm_lms_settings_button">
-                                            <a href="https://titv.vn/user-account/settings">
-                                                <i class="stmlms-cog"></i>
+                                        <li>
+                                            <a href="https://titv.vn/user-account/enrolled-courses"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    Enrolled Courses </span>
                                             </a>
-                                        </div>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/chat" class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    Messages </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/wishlist/" class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    Wishlist </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/enrolled-quizzes"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    Enrolled Quizzes </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/my-orders"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    My Orders </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/my-certificates/"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    My Certificates </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/enterprise-groups/"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    Groups </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/enrolled-assignments"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    My Assignments </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://titv.vn/user-account/points-history/"
+                                                class="dropdown_menu_item ">
+                                                <span class="dropdown_menu_item__title">
+                                                    My Points </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="masterstudy-dropdown-menu__logout">
+                                        <a href="#" class="stm_lms_logout"><span>Logout</span></a>
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="stm_lms_settings_button">
+                    <a href="https://titv.vn/user-account/settings">
+                        <i class="stmlms-cog"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
