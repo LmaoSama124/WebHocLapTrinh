@@ -4,7 +4,7 @@
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Chi tiết thu nhập</h3>
+            <h3 class="fw-bold mb-3">Thông tin danh mục</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="{{ route('admin.dashboard') }}">
@@ -15,20 +15,13 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('#') }}">Danh sách thu nhập</a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Chi tiết thu nhập</a>
+                    <a href="#">Chi tiết danh mục</a>
                 </li>
             </ul>
         </div>
-
         <div class="row">
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Trường</th>
@@ -36,33 +29,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            function noData($value) {
+                                return empty($value) ? '<span class="badge bg-danger">No Data</span>' : $value;
+                            }
+                        @endphp
                         <tr>
                             <td><strong>ID</strong></td>
-                            <td>{{ $income->id }}</td>
+                            <td>{{ $category->id }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Tổng số người mua</strong></td>
-                            <td>{{ $income->total_buyer }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Số tiền</strong></td>
-                            <td>{{ number_format($income->amount, 0, ',', '.') }} VNĐ</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tháng tổng hợp</strong></td>
-                            <td>{{ $income->time }}</td>
+                            <td><strong>Tên danh mục</strong></td>
+                            <td>{!! noData($category->category_name) !!}</td>
                         </tr>
                         <tr>
                             <td><strong>Ngày tạo</strong></td>
-                            <td>{{ $income->created_at }}</td>
+                            <td>{!! noData($category->created_at) !!}</td>
                         </tr>
                         <tr>
                             <td><strong>Ngày cập nhật</strong></td>
-                            <td>{{ $income->updated_at }}</td>
+                            <td>{!! noData($category->updated_at) !!}</td>
                         </tr>
                     </tbody>
                 </table>
-                <a href="{{ route('#') }}" class="btn btn-secondary mt-3">Quay lại</a>
             </div>
         </div>
     </div>

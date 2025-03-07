@@ -4,10 +4,10 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Quản lý khoá học khả dụng</h3>
+                <h3 class="fw-bold mb-3">Quản lý danh mục</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
-                        <a href="?mode=admin">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="icon-home"></i>
                         </a>
                     </li>
@@ -15,69 +15,58 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Bảng quản lý khoá học khả dụng</a>
+                        <a href="#">Bảng quản lý danh mục</a>
                     </li>
                 </ul>
             </div>
+
+            @if(session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: '{{ session('success') }}',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+            @endif
 
             <div class="row table-row">
                 <div class="table-container">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>ID User</th>
-                                <th>Name</th>
-                                <th>ID Course</th>
-                                <th>Title</th>
-                                <th>Expiration At</th>
-                                <th>Status</th>
-                                <th>LPT</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th class="sticky-id">ID</th>
+                                <th>Tên danh mục</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>ID User</th>
-                                <th>Name</th>
-                                <th>ID Course</th>
-                                <th>Title</th>
-                                <th>Expiration At</th>
-                                <th>Status</th>
-                                <th>LPT</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th class="sticky-id">ID</th>
+                                <th>Tên danh mục</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse ($incomes as $income)
+                            @forelse ($categories as $category)
                                 <tr>
-                                    <td class="sticky-id">{{ $income->id }}</td>
-                                    <td>{{ $income->id_user ?? '--' }}</td>
-                                    <td>{{ $income->name ?? '--' }}</td>
-                                    <td>{{ $income->id_course ?? '--' }}</td>
-                                    <td>{{ $income->title ?? '--'}}</td>
-                                    <td>{{ $income->expiration_at ?? '--'}}</td>
-                                    <td>{{ $income->status ?? '--'}}</td>
-                                    <td>{{ $income->lpt ?? '--'}}</td>
-                                    <td>{{ $income->updated_at ?? '--' }}</td>
+                                    <td class="sticky-id">{{ $category->id }}</td>
+                                    <td>{{ $category->category_name ?? '--' }}</td>
+                                    <td>{{ $category->created_at ?? '--' }}</td>
+                                    <td>{{ $category->updated_at ?? '--' }}</td>
                                     <td class="text-center sticky-actions">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href=""
-                                                class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
-                                                <i class="fas fa-income$income me-1"></i> Chi tiết
-                                            </a>
-                                            <a href=""
-                                                class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
+                                            <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning btn-sm">
                                                 <i class="fas fa-edit me-1"></i> Sửa
                                             </a>
-                                            <button
-                                                class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center delete-income$income"
-                                                data-id="{{ $income->id }}">
+                                            <button class="btn btn-danger btn-sm delete-category" data-id="{{ $category->id }}">
                                                 <i class="fas fa-trash me-1"></i> Xóa
                                             </button>
                                         </div>
@@ -85,8 +74,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="text-center fw-bold text-danger">
-                                        Không có bản ghi nào được tìm thấy
+                                    <td colspan="5" class="text-center fw-bold text-danger">
+                                        Không có danh mục nào được tìm thấy
                                     </td>
                                 </tr>
                             @endforelse
@@ -97,7 +86,6 @@
         </div>
     </div>
 
-    <!-- Modal Xác nhận Xóa -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -108,7 +96,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa người dùng này không?
+                    Bạn có chắc chắn muốn xóa danh mục này không?
                 </div>
                 <div class="modal-footer">
                     <form id="deleteForm" method="POST">
@@ -122,23 +110,21 @@
         </div>
     </div>
 
-    {{-- Script xử lý Xóa --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deletecourseAvailableButtons = document.querySelectorAll('.delete-courseAvailable');
+            let deleteCategoryButtons = document.querySelectorAll('.delete-category');
             let closeModalBtn = document.getElementById('closeModalBtn');
             let cancelModalBtn = document.getElementById('cancelModalBtn');
 
-            deletecourseAvailableButtons.forEach(button => {
+            deleteCategoryButtons.forEach(button => {
                 button.addEventListener('click', function () {
-                    let courseAvailableId = this.getAttribute('data-id');
+                    let categoryId = this.getAttribute('data-id');
                     let form = document.getElementById('deleteForm');
-                    form.action = '{{ url("admin/courseAvailables") }}/' + courseAvailableId;
+                    form.action = '{{ url("admin/categories") }}/' + categoryId;
                     $('#deleteModal').modal('show');
                 });
             });
 
-            // Đóng modal khi bấm "Hủy" hoặc nút "X"
             closeModalBtn.addEventListener('click', function () {
                 $('#deleteModal').modal('hide');
             });

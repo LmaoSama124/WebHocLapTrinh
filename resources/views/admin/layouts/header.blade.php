@@ -3,8 +3,8 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="?mode=admin" class="logo">
-                <img src="{{ asset('assets/admin/images/kaiadmin/logo_light.svg') }}" alt="navbar brand" class="navbar-brand"
-                    height="20" />
+                <img src="{{ asset('assets/admin/images/kaiadmin/logo_light.svg') }}" alt="navbar brand"
+                    class="navbar-brand" height="20" />
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -65,7 +65,8 @@
                                 <div class="notif-center">
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{ asset('assets/admin/images/jm_denis.jpg') }}" alt="Img Profile" />
+                                            <img src="{{ asset('assets/admin/images/jm_denis.jpg') }}"
+                                                alt="Img Profile" />
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Jimmy Denis</span>
@@ -75,7 +76,8 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{ asset('assets/admin/images/chadengle.jpg') }}" alt="Img Profile" />
+                                            <img src="{{ asset('assets/admin/images/chadengle.jpg') }}"
+                                                alt="Img Profile" />
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Chad</span>
@@ -152,7 +154,8 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{ asset('assets/admin/images/profile.jpg') }}" alt="Img Profile" />
+                                            <img src="{{ asset('assets/admin/images/profile.jpg') }}"
+                                                alt="Img Profile" />
                                         </div>
                                         <div class="notif-content">
                                             <span class="block">
@@ -249,7 +252,8 @@
                 <li class="nav-item topbar-user dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="{{ asset('assets/admin/images/profile.jpg') }}" alt="..." class="avatar-img rounded-circle" />
+                            <img src="{{ asset('assets/admin/images/profile.jpg') }}" alt="..."
+                                class="avatar-img rounded-circle" />
                         </div>
                         <span class="profile-username">
                             <span class="op-7">Hi,</span>
@@ -279,7 +283,14 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Account Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="?mode=admin&action=logout">Logout</a>
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
                             </li>
                         </div>
                     </ul>

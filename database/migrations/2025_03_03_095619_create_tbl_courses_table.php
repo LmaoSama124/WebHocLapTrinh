@@ -15,17 +15,20 @@ return new class extends Migration
             $table->string('level', 50);
             $table->integer('lesson');
             $table->double('price');
-            $table->string('category', 50);
+            $table->unsignedBigInteger('category_id'); // Khóa ngoại
             $table->string('total_time_finish');
             $table->string('finish_time');
             $table->text('thumbnail');
-            $table->date('expiration_date');
+            $table->integer('expiration_date');
             $table->float('rate')->default(0);
             $table->integer('student_enrolled')->default(0);
             $table->enum('status', ['Complete', 'Uncomplete']);
             $table->boolean('is_free')->default(false);
             $table->boolean('is_popular')->default(false);
             $table->timestamps();
+
+            // Thiết lập khóa ngoại
+            $table->foreign('category_id')->references('id')->on('tbl_categories')->onDelete('cascade');
         });
     }
 

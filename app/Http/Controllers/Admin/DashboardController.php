@@ -17,15 +17,4 @@ class DashboardController extends Controller
     {
         return view('admin.themes.login');
     }
-
-    public function tableUser()
-    {
-        $users = User::all();
-        return view('admin.themes.users.tableUser', compact('users'));
-    }
-
-    public function createUser()
-    {
-        return view('admin.themes.users.createUser');
-    }
 }
