@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->enum('payment_method', ['vn_pay', 'banking']);
             $table->double('amount');
+            $table->text('content');
             $table->enum('status', ['waiting', 'success', 'canceled'])->default('waiting');
             $table->timestamps();
 

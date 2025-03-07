@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/kaiadmin.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/option.css') }}"/>
 
 </head>
 
@@ -43,6 +44,9 @@
             @yield('content')
         </div>
     </div>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Js -->
     <script src="{{ asset('assets/admin/js/core/jquery-3.7.1.min.js') }}"></script>

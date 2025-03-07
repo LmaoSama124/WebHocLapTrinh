@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,7 +13,8 @@ class DashboardController extends Controller
         return view('admin.themes.dashboard');
     }
 
-    public function login() {
+    public function login()
+    {
         return view('admin.themes.login');
     }
 }
