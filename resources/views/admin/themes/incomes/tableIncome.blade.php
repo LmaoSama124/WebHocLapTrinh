@@ -4,10 +4,10 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Quản lý thu nhập</h3>
+                <h3 class="fw-bold mb-3">Quản lý doanh thu</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
-                        <a href="?mode=admin">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="icon-home"></i>
                         </a>
                     </li>
@@ -15,33 +15,46 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Bảng quản lý thu nhập</a>
+                        <a href="#">Bảng quản lý doanh thu</a>
                     </li>
                 </ul>
             </div>
+
+            @if(session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: '{{ session('success') }}',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+            @endif
 
             <div class="row table-row">
                 <div class="table-container">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>Total Buyer</th>
-                                <th>Total Amount</th>
-                                <th>Time</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th class="sticky-id">ID</th>
+                                <th>Tổng người mua</th>
+                                <th>Tổng doanh thu</th>
+                                <th>Thời gian</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>Total Buyer</th>
-                                <th>Total Amount</th>
-                                <th>Time</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th class="sticky-id">ID</th>
+                                <th>Tổng người mua</th>
+                                <th>Tổng doanh thu</th>
+                                <th>Thời gian</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </tfoot>
@@ -49,33 +62,23 @@
                             @forelse ($incomes as $income)
                                 <tr>
                                     <td class="sticky-id">{{ $income->id }}</td>
-                                    <td>{{ $income->total_buyer ?? '--' }}</td>
-                                    <td>{{ $income->total_amount ?? '--' }}</td>
-                                    <td>{{ $income->time ?? '--' }}</td>
-                                    <td>{{ $income->created_at ?? '--'}}</td>
-                                    <td>{{ $income->updated_at ?? '--' }}</td>
-                                    <td class="text-center sticky-actions">
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <a href=""
-                                                class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
-                                                <i class="fas fa-income me-1"></i> Chi tiết
-                                            </a>
-                                            <a href=""
-                                                class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
-                                                <i class="fas fa-edit me-1"></i> Sửa
-                                            </a>
-                                            <button
-                                                class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center delete-incomeincome"
-                                                data-id="{{ $income->id }}">
-                                                <i class="fas fa-trash me-1"></i> Xóa
-                                            </button>
-                                        </div>
+                                    <td>{{ $income->total_buyer }}</td>
+                                    <td>{{ number_format($income->total_amount, 2) }}</td>
+                                    <td>{{ date('d/m/Y', $income->time) }}</td>
+                                    <td>{{ $income->created_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $income->updated_at ? $income->updated_at->format('d/m/Y') : '--' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.incomes.show', $income->id) }}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-eye me-1"></i> Chi tiết
+                                        </a>
+                                        <a href="{{ route('admin.incomes.edit', $income->id) }}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit me-1"></i> Sửa
+                                        </a>
                                     </td>
-
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="text-center fw-bold text-danger">
+                                    <td colspan="7" class="text-center fw-bold text-danger">
                                         Không có bản ghi nào được tìm thấy
                                     </td>
                                 </tr>
@@ -87,53 +90,37 @@
         </div>
     </div>
 
-    <!-- Modal Xác nhận Xóa -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    {{-- Modal xóa doanh thu --}}
+    <div class="modal" id="deleteModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Xác nhận xóa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalBtn">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa người dùng này không?
+                    Bạn chắc chắn muốn xóa bản ghi này không?
                 </div>
                 <div class="modal-footer">
                     <form id="deleteForm" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Xóa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" id="cancelModalBtn">Hủy</button>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Script xử lý Xóa --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deleteincomeButtons = document.querySelectorAll('.delete-income');
-            let closeModalBtn = document.getElementById('closeModalBtn');
-            let cancelModalBtn = document.getElementById('cancelModalBtn');
-
-            deleteincomeButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    let incomeId = this.getAttribute('data-id');
-                    let form = document.getElementById('deleteForm');
-                    form.action = '{{ url("admin/incomes") }}/' + incomeId;
-                    $('#deleteModal').modal('show');
-                });
-            });
-
-            closeModalBtn.addEventListener('click', function () {
-                $('#deleteModal').modal('hide');
-            });
-
-            cancelModalBtn.addEventListener('click', function () {
-                $('#deleteModal').modal('hide');
+            $('.btn-delete').on('click', function () {
+                let incomeId = $(this).data('id');
+                $('#deleteForm').attr('action', '{{ url("admin/incomes") }}/' + incomeId);
+                $('#deleteModal').modal('show');
             });
         });
     </script>

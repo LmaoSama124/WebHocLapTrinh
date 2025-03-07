@@ -4,13 +4,13 @@
   <div class="container">
     <div class="page-inner">
     <div class="page-header">
-      <h3 class="fw-bold mb-3">Chỉnh sửa bài học</h3>
+      <h3 class="fw-bold mb-3">Chỉnh sửa đánh giá</h3>
       <ul class="breadcrumbs mb-3">
         <li class="nav-home">
           <a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a>
         </li>
         <li class="separator"><i class="icon-arrow-right"></i></li>
-        <li class="nav-item"><a href="#">Lessons</a></li>
+        <li class="nav-item"><a href="#">Reviews</a></li>
         <li class="separator"><i class="icon-arrow-right"></i></li>
         <li class="nav-item"><a href="#">Chỉnh sửa</a></li>
       </ul>
@@ -34,49 +34,44 @@
     @endif
 
     <div class="row">
-      <form action="{{ route('admin.lessons.update', $lesson->id) }}" method="post">
+      <form action="{{ route('admin.reviews.update', $review->id) }}" method="post">
         @csrf
         @method('PUT')
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <div class="card-title">Form chỉnh sửa bài học</div>
+              <div class="card-title">Form chỉnh sửa đánh giá</div>
             </div>
 
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 col-lg-4">
                   <div class="form-group">
-                    <label for="title">Tiêu đề</label>
-                    <input type="text" name="title" class="form-control" id="title" value="{{ $lesson->title }}" required />
+                    <label for="user">Người dùng</label>
+                    <input type="text" class="form-control" id="user" value="{{ $review->user->fullname }}" disabled />
                   </div>
 
                   <div class="form-group">
-                    <label for="id_course">ID Khóa học</label>
-                    <input type="number" name="id_course" class="form-control" id="id_course" value="{{ $lesson->id_course }}" required />
+                    <label for="course">Khóa học</label>
+                    <input type="text" class="form-control" id="course" value="{{ $review->course->title }}" disabled />
                   </div>
 
                   <div class="form-group">
-                    <label for="url">URL</label>
-                    <input type="text" name="url" class="form-control" id="url" value="{{ $lesson->url }}" required />
+                    <label for="content">Nội dung</label>
+                    <textarea name="content" class="form-control" id="content" rows="4" required>{{ $review->content }}</textarea>
                   </div>
 
                   <div class="form-group">
-                    <label for="is_preview">Xem trước</label>
-                    <select name="is_preview" class="form-select" id="is_preview">
-                      <option value="1" {{ $lesson->is_preview ? 'selected' : '' }}>Có</option>
-                      <option value="0" {{ !$lesson->is_preview ? 'selected' : '' }}>Không</option>
+                    <label for="rate">Đánh giá</label>
+                    <input type="number" step="0.1" name="rate" class="form-control" id="rate" value="{{ $review->rate }}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="status">Trạng thái</label>
+                    <select name="status" class="form-select" id="status">
+                      <option value="exist" {{ $review->status == 'exist' ? 'selected' : '' }}>Tồn tại</option>
+                      <option value="removed" {{ $review->status == 'removed' ? 'selected' : '' }}>Đã xóa</option>
                     </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="time">Thời lượng</label>
-                    <input type="text" name="time" class="form-control" id="time" value="{{ $lesson->time }}" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="chapter">Chương</label>
-                    <input type="text" name="chapter" class="form-control" id="chapter" value="{{ $lesson->chapter }}" required />
                   </div>
                 </div>
               </div>

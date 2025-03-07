@@ -4,7 +4,7 @@
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Payment Information</h3>
+            <h3 class="fw-bold mb-3">Admin Information</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="{{ route('admin.dashboard') }}">
@@ -15,7 +15,7 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Payment Detail</a>
+                    <a href="#">Admin Details</a>
                 </li>
             </ul>
         </div>
@@ -31,35 +31,19 @@
                     <tbody>
                         <tr>
                             <td><strong>ID</strong></td>
-                            <td>{{ $payment->id }}</td>
+                            <td>{{ $admin->id ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>User</strong></td>
-                            <td>{{ $payment->user->fullname ?? '--' }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Course</strong></td>
-                            <td>{{ $payment->course->title ?? '--' }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Payment Method</strong></td>
-                            <td>{{ ucfirst($payment->payment_method) }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Amount</strong></td>
-                            <td>{{ number_format($payment->amount, 2) }} VNĐ</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Status</strong></td>
-                            <td>{{ ucfirst($payment->status) }}</td>
+                            <td><strong>Username</strong></td>
+                            <td>{{ $admin->username ?? '--' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Created At</strong></td>
-                            <td>{{ $payment->created_at }}</td>
+                            <td>{{ $admin->created_at ?? '--' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Updated At</strong></td>
-                            <td>{{ $payment->updated_at }}</td>
+                            <td>{{ $admin->updated_at ?? '--' }}</td>
                         </tr>
                     </tbody>
                 </table>

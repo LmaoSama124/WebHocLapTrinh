@@ -1,6 +1,6 @@
 @extends('admin.layouts.login')
 
-@section('content') 
+@section('content')
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -8,12 +8,27 @@
                 <img src="{{ asset('assets/login_admin/images/img-01.png') }}" alt="IMG">
             </div>
 
-            <form class="login100-form validate-form" action="?mode=admin&action=login" method="post">
+            <form class="login100-form validate-form" action="{{ route('admin.login') }}" method="POST">
+                @csrf
                 <span class="login100-form-title">
                     Admin Site
                 </span>
+
+                {{-- Hiển thị lỗi --}}
+                @if(session('error'))
+                <div class="alert alert-danger text-center">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                @if(session('success'))
+                <div class="alert alert-success text-center">
+                    {{ session('success') }}
+                </div>
+                @endif
+
                 <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <input class="input100" type="text" name="username" placeholder="Username">
+                    <input class="input100" type="text" name="username" placeholder="Username" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-user" aria-hidden="true"></i>
@@ -21,7 +36,7 @@
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <input class="input100" type="password" name="password" placeholder="Password" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -29,7 +44,7 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
                         Login
                     </button>
                 </div>
@@ -49,21 +64,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-<script src="{{ asset('assets/login_admin/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ asset('assets/login_admin/vendor/bootstrap/js/popper.js') }}"></script>
-<script src="{{ asset('assets/login_admin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/login_admin/vendor/tilt/tilt.jquery.min.js') }}"></script>
-<script>
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
-</script>
-<script src="{{ asset('assets/login_admin/js/main.js') }}"></script>
-
-</body>
-</html>
 @endsection

@@ -4,13 +4,13 @@
   <div class="container">
     <div class="page-inner">
       <div class="page-header">
-        <h3 class="fw-bold mb-3">Chỉnh sửa doanh thu</h3>
+        <h3 class="fw-bold mb-3">Chỉnh sửa tin nhắn</h3>
         <ul class="breadcrumbs mb-3">
           <li class="nav-home">
             <a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a>
           </li>
           <li class="separator"><i class="icon-arrow-right"></i></li>
-          <li class="nav-item"><a href="#">Incomes</a></li>
+          <li class="nav-item"><a href="#">Messages</a></li>
           <li class="separator"><i class="icon-arrow-right"></i></li>
           <li class="nav-item"><a href="#">Chỉnh sửa</a></li>
         </ul>
@@ -34,31 +34,39 @@
       @endif
 
       <div class="row">
-        <form action="{{ route('admin.incomes.update', $income->id) }}" method="post">
+        <form action="{{ route('admin.messages.update', $message->id) }}" method="post">
           @csrf
           @method('PUT')
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <div class="card-title">Form chỉnh sửa doanh thu</div>
+                <div class="card-title">Form chỉnh sửa tin nhắn</div>
               </div>
 
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6 col-lg-4">
                     <div class="form-group">
-                      <label for="total_buyer">Tổng số người mua</label>
-                      <input type="number" name="total_buyer" class="form-control" id="total_buyer" value="{{ $income->total_buyer }}" required />
+                      <label for="sender">Người gửi</label>
+                      <input type="text" class="form-control" id="sender" value="{{ $message->sender->fullname }}" readonly />
                     </div>
 
                     <div class="form-group">
-                      <label for="total_amount">Tổng doanh thu</label>
-                      <input type="number" step="0.01" name="total_amount" class="form-control" id="total_amount" value="{{ $income->total_amount }}" required />
+                      <label for="id_receiver">Người nhận</label>
+                      <input name="id_receiver" class="form-control" id="id_receiver" value="{{ $message->receiver->fullname }}" readonly/>
                     </div>
 
                     <div class="form-group">
-                      <label for="time">Thời gian</label>
-                      <input type="date" name="time" class="form-control" id="time" value="{{ date('Y-m-d', $income->time) }}" required />
+                      <label for="content">Nội dung</label>
+                      <textarea name="content" class="form-control" id="content" rows="4" required>{{ $message->content }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="status">Trạng thái</label>
+                      <select name="status" class="form-select" id="status">
+                        <option value="exist" {{ $message->status == 'exist' ? 'selected' : '' }}>Tồn tại</option>
+                        <option value="removed" {{ $message->status == 'removed' ? 'selected' : '' }}>Đã xóa</option>
+                      </select>
                     </div>
                   </div>
                 </div>

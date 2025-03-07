@@ -1,10 +1,10 @@
-@extends('admin.layouts.admin') 
+@extends('admin.layouts.admin')
 
 @section('content') 
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Chi tiết doanh thu</h3>
+                <h3 class="fw-bold mb-3">Chi tiết đánh giá</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard') }}">
@@ -15,7 +15,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Chi tiết doanh thu</a>
+                        <a href="#">Chi tiết đánh giá</a>
                     </li>
                 </ul>
             </div>
@@ -37,27 +37,35 @@
                         <tbody>
                             <tr>
                                 <td><strong>ID</strong></td>
-                                <td>{{ $income->id }}</td>
+                                <td>{{ $review->id }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Tổng số người mua</strong></td>
-                                <td>{!! noData($income->total_buyer) !!}</td>
+                                <td><strong>Người dùng</strong></td>
+                                <td>{!! noData($review->user->fullname) !!}</td>
                             </tr>
                             <tr>
-                                <td><strong>Tổng doanh thu</strong></td>
-                                <td>{!! noData(number_format($income->total_amount, 2)) !!}</td>
+                                <td><strong>Khóa học</strong></td>
+                                <td>{!! noData($review->course->title) !!}</td>
                             </tr>
                             <tr>
-                                <td><strong>Thời gian</strong></td>
-                                <td>{!! noData(date('d/m/Y', $income->time)) !!}</td>
+                                <td><strong>Nội dung</strong></td>
+                                <td>{!! noData($review->content) !!}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Đánh giá</strong></td>
+                                <td>{!! noData(number_format($review->rate, 1)) !!}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trạng thái</strong></td>
+                                <td>{!! noData(ucfirst($review->status)) !!}</td>
                             </tr>
                             <tr>
                                 <td><strong>Ngày tạo</strong></td>
-                                <td>{!! noData($income->created_at->format('d/m/Y H:i')) !!}</td>
+                                <td>{!! noData($review->created_at) !!}</td>
                             </tr>
                             <tr>
                                 <td><strong>Ngày cập nhật</strong></td>
-                                <td>{!! noData($income->updated_at ? $income->updated_at->format('d/m/Y H:i') : '--') !!}</td>
+                                <td>{!! noData($review->updated_at) !!}</td>
                             </tr>
                         </tbody>
                     </table>

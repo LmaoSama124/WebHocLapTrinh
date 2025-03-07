@@ -4,7 +4,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Chi tiết doanh thu</h3>
+                <h3 class="fw-bold mb-3">Chi tiết tin nhắn</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard') }}">
@@ -15,7 +15,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Chi tiết doanh thu</a>
+                        <a href="#">Chi tiết tin nhắn</a>
                     </li>
                 </ul>
             </div>
@@ -37,27 +37,32 @@
                         <tbody>
                             <tr>
                                 <td><strong>ID</strong></td>
-                                <td>{{ $income->id }}</td>
+                                <td>{{ $message->id }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Tổng số người mua</strong></td>
-                                <td>{!! noData($income->total_buyer) !!}</td>
+                                <td><strong>Người gửi</strong></td>
+                                <td>{!! noData($message->sender->fullname) !!}</td>
                             </tr>
                             <tr>
-                                <td><strong>Tổng doanh thu</strong></td>
-                                <td>{!! noData(number_format($income->total_amount, 2)) !!}</td>
+                                <td><strong>Người nhận</strong></td>
+                                <td>{!! noData($message->receiver->fullname) !!}</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Nội dung</strong></td>
+                                <td>{!! noData($message->content) !!}</td>
                             </tr>
                             <tr>
-                                <td><strong>Thời gian</strong></td>
-                                <td>{!! noData(date('d/m/Y', $income->time)) !!}</td>
+                                <td><strong>Trạng thái</strong></td>
+                                <td>{!! noData(ucfirst($message->status)) !!}</td>
                             </tr>
                             <tr>
                                 <td><strong>Ngày tạo</strong></td>
-                                <td>{!! noData($income->created_at->format('d/m/Y H:i')) !!}</td>
+                                <td>{!! noData($message->created_at) !!}</td>
                             </tr>
                             <tr>
                                 <td><strong>Ngày cập nhật</strong></td>
-                                <td>{!! noData($income->updated_at ? $income->updated_at->format('d/m/Y H:i') : '--') !!}</td>
+                                <td>{!! noData($message->updated_at) !!}</td>
                             </tr>
                         </tbody>
                     </table>

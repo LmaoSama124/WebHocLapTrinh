@@ -4,13 +4,13 @@
   <div class="container">
     <div class="page-inner">
     <div class="page-header">
-      <h3 class="fw-bold mb-3">Chỉnh sửa bài học</h3>
+      <h3 class="fw-bold mb-3">Chỉnh sửa danh mục</h3>
       <ul class="breadcrumbs mb-3">
         <li class="nav-home">
           <a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a>
         </li>
         <li class="separator"><i class="icon-arrow-right"></i></li>
-        <li class="nav-item"><a href="#">Lessons</a></li>
+        <li class="nav-item"><a href="#">Danh mục</a></li>
         <li class="separator"><i class="icon-arrow-right"></i></li>
         <li class="nav-item"><a href="#">Chỉnh sửa</a></li>
       </ul>
@@ -34,49 +34,31 @@
     @endif
 
     <div class="row">
-      <form action="{{ route('admin.lessons.update', $lesson->id) }}" method="post">
+      <form action="{{ route('admin.categories.update', $category->id) }}" method="post">
         @csrf
         @method('PUT')
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <div class="card-title">Form chỉnh sửa bài học</div>
+              <div class="card-title">Form chỉnh sửa danh mục</div>
             </div>
 
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 col-lg-4">
                   <div class="form-group">
-                    <label for="title">Tiêu đề</label>
-                    <input type="text" name="title" class="form-control" id="title" value="{{ $lesson->title }}" required />
+                    <label for="category_name">Tên danh mục</label>
+                    <input type="text" name="category_name" class="form-control" id="category_name" value="{{ $category->category_name }}" required />
                   </div>
 
                   <div class="form-group">
-                    <label for="id_course">ID Khóa học</label>
-                    <input type="number" name="id_course" class="form-control" id="id_course" value="{{ $lesson->id_course }}" required />
+                    <label for="created_at">Ngày tạo</label>
+                    <input type="text" name="created_at" class="form-control" id="created_at" value="{{ $category->created_at }}" disabled />
                   </div>
 
                   <div class="form-group">
-                    <label for="url">URL</label>
-                    <input type="text" name="url" class="form-control" id="url" value="{{ $lesson->url }}" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="is_preview">Xem trước</label>
-                    <select name="is_preview" class="form-select" id="is_preview">
-                      <option value="1" {{ $lesson->is_preview ? 'selected' : '' }}>Có</option>
-                      <option value="0" {{ !$lesson->is_preview ? 'selected' : '' }}>Không</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="time">Thời lượng</label>
-                    <input type="text" name="time" class="form-control" id="time" value="{{ $lesson->time }}" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="chapter">Chương</label>
-                    <input type="text" name="chapter" class="form-control" id="chapter" value="{{ $lesson->chapter }}" required />
+                    <label for="updated_at">Ngày cập nhật</label>
+                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="{{ $category->updated_at }}" disabled />
                   </div>
                 </div>
               </div>
