@@ -15,6 +15,16 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\User\IndexController;
+use App\Http\Controllers\User\LoginController;
+
+Route::get('/user/course', [IndexController::class, 'course'])->name('user.course');
+Route::get('/user/course-detail', [IndexController::class, 'course_detail'])->name('user.themes.course.course-detail');
+Route::get('/user/course-enrolled', [IndexController::class, 'course_enrolled'])->name('user.themes.course.enrolled-courses');
+Route::get('/user/index', [IndexController::class, 'indexuser'])->name('user.index');
+Route::get('/user/login', [LoginController::class, 'showLoginForm'])->name('user.login');
+Route::get('/user/register', [LoginController::class, 'register'])->name('user.register');
+
 
 Route::prefix('/admin')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');

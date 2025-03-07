@@ -131,7 +131,7 @@
                                     <span class="ms-lms-authorization-icon">
                                         <i class="fas fa-user" aria-hidden="true"></i>
                                     </span>
-                                    <a href="{{ route('user.themes.login.login') }}">
+                                    <a href="{{ route('user.login') }}">
                                         <span class="ms-lms-authorization-title">
                                             login/sign up </span>
                                     </a>

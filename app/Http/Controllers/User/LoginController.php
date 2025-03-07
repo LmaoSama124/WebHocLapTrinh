@@ -14,7 +14,7 @@ class LoginController extends Controller
     // Hiển thị trang đăng nhập
     public function showLoginForm()
     {
-        return view('login');
+        return view('user.themes.login.login');
     }
 
     // Xử lý đăng nhập
@@ -33,12 +33,6 @@ class LoginController extends Controller
         }
 
         return back()->withErrors(['username' => 'Tên đăng nhập hoặc mật khẩu không chính xác']);
-    }
-
-    // Hiển thị trang đăng ký
-    public function showRegisterForm()
-    {
-        return view('register');
     }
 
     // Xử lý đăng ký

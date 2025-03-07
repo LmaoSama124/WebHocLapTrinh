@@ -18,7 +18,7 @@
                                                     <span class="masterstudy-authorization__header-title">
                                                         Sign In </span>
                                                 </div>
-                                                <form action="{{ route('login') }}" method="POST">
+                                                <form action="{{ route('user.login') }}" method="POST">
                                                     @csrf
                                                     <div class="masterstudy-authorization__form-wrapper">
                                                         <div class="masterstudy-authorization__form-field">
@@ -82,7 +82,7 @@
                                                     <span class="masterstudy-authorization__header-title">
                                                         Sign Up </span>
                                                 </div>
-                                                <form action="{{ route('register') }}" method="POST">
+                                                <form action="{{ route('user.register') }}" method="POST">
                                                     @csrf
                                                     <div class="masterstudy-authorization__form-wrapper">
                                                         <div class="masterstudy-authorization__form-field">
