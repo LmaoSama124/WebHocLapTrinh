@@ -96,6 +96,7 @@ Route::prefix('/admin')->group(function () {
         Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
         Route::get('/messages/{id}/edit', [MessageController::class, 'edit'])->name('admin.messages.edit');
 
+
         // ------------ admin.incomes
         Route::get('/incomes', [IncomeController::class, 'index'])->name('admin.incomes.index');
         Route::get('/incomes/create', [IncomeController::class, 'create'])->name('admin.incomes.create');
@@ -115,3 +116,4 @@ Route::prefix('/admin')->group(function () {
         Route::get('/courseEnrolled/{id}/edit', [CourseEnrolledController::class, 'edit'])->name('admin.courseEnrolled.edit');
     });
 });
+

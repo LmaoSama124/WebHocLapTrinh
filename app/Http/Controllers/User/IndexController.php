@@ -17,4 +17,16 @@ class IndexController extends Controller
     {
         return view('user.themes.course.course-detail');
     }
+    public function course_enrolled()
+    {
+        return view('user.themes.course.enrolled-courses');
+    }
+    public function course_payment()
+    {
+        return view('user.themes.course.course-payment');
+    }
+    public function login()
+    {
+        return view('user.themes.login.login');
+    }
 }
