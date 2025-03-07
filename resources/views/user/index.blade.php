@@ -79,7 +79,7 @@
                                                                     <!-- 1 Content -->
                                                                     <div
                                                                         class="ms_lms_courses_card_item_wrapper">
-                                                                        <a href="{{route('user.themes.course.course-detail')}}"
+                                                                        <a href="{{route('user.course-detail')}}"
                                                                             class="ms_lms_courses_card_item_image_link">
                                                                             <img decoding="async"
                                                                                 src="https://titv.vn/wp-content/uploads/2023/07/lap-trinh-c-300-×-152-px.png"
@@ -87,7 +87,7 @@
                                                                         </a>
                                                                         <div
                                                                             class="ms_lms_courses_card_item_info">
-                                                                            <a href="{{route('user.themes.course.course-detail')}}"
+                                                                            <a href="{{route('user.course-detail')}}"
                                                                                 class="ms_lms_courses_card_item_info_title">
                                                                                 <h3>[Video] Lập trình viên Java
                                                                                     Web Fullstack: React kết hợp
@@ -142,7 +142,7 @@
                                                                             <span
                                                                                 class="ms_lms_courses_card_item_popup_author_name">admin</span>
                                                                         </div>
-                                                                        <a href="{{route('user.themes.course.course-detail')}}"
+                                                                        <a href="{{route('user.course-detail')}}"
                                                                             class="ms_lms_courses_card_item_popup_title">
                                                                             <h3>[Video] Lập trình viên Java Web
                                                                                 Fullstack: React kết hợp Spring
@@ -170,7 +170,7 @@
                                                                         </div>
                                                                         <div
                                                                             class="ms_lms_courses_card_item_popup_button_wrapper">
-                                                                            <a href="{{route('user.themes.course.course-detail')}}"
+                                                                            <a href="{{route('user.course-detail')}}"
                                                                                 class="ms_lms_courses_card_item_popup_button">
                                                                                 <span>Preview this course</span>
                                                                             </a>
