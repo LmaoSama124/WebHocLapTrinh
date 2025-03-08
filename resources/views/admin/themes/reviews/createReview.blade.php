@@ -70,8 +70,8 @@
 
             <div class="form-group">
             <label for="rate">Đánh giá</label>
-            <input type="number" step="0.1" name="rate" class="form-control" id="rate"
-              placeholder="Nhập điểm đánh giá" required />
+            <input type="number" step="0.5" min="1" max="5" name="rate" class="form-control" id="rate"
+              placeholder="Nhập điểm đánh giá (1 - 5)" required />
             </div>
 
             <div class="form-group">
@@ -94,4 +94,23 @@
     </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const rateInput = document.getElementById('rate');
+
+    rateInput.addEventListener('change', function () {
+      const validValues = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+      if (!validValues.includes(parseFloat(rateInput.value))) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi nhập liệu!',
+        text: 'Điểm đánh giá chỉ được nhập các giá trị từ 1 đến 5, cách nhau 0.5 đơn vị.',
+        confirmButtonText: 'OK'
+      });
+      rateInput.value = ''; // Reset input nếu nhập sai
+      }
+    });
+    });
+  </script>
 @endsection
