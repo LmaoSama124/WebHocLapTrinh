@@ -7,7 +7,7 @@
                 <h3 class="fw-bold mb-3">Quản lý người dùng</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
-                        <a href="?mode=admin">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="icon-home"></i>
                         </a>
                     </li>
@@ -20,6 +20,20 @@
                 </ul>
             </div>
 
+            <!-- Sweet Alert -->
+            @if(session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: '{{ session('success') }}',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+            @endif
+
             <div class="row table-row">
                 <div class="table-container">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -27,52 +41,42 @@
                             <tr>
                                 <th class="sticky-id">Id</th>
                                 <th>Email</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>Address</th>
-                                <th>Gender</th>
-                                <th>Date of birth</th>
+                                <th>Full Name</th>
+                                <th>Display Name</th>
+                                <th>Username</th>
                                 <th>Phone</th>
+                                <th>Avatar</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>Address</th>
-                                <th>Gender</th>
-                                <th>Date of birth</th>
-                                <th>Phone</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th class="sticky-actions">Actions</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @forelse ($users as $user)
                                 <tr>
                                     <td class="sticky-id">{{ $user->id }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->age ?? '--' }}</td>
-                                    <td>{{ $user->address ?? '--' }}</td>
-                                    <td>{{ $user->gender ?? '--' }}</td>
-                                    <td>{{ $user->date_of_birth ?? '--' }}</td>
+                                    <td>{{ $user->fullname }}</td>
+                                    <td>{{ $user->displayname }}</td>
+                                    <td>{{ $user->username }}</td>
                                     <td>{{ $user->phone ?? '--' }}</td>
-                                    <td>{{ $user->created_at ?? '--'}}</td>
+                                    <td>
+                                        @if($user->avatar)
+                                            <img src="{{ asset($user->avatar) }}" alt="Avatar" width="50">
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td>{{ $user->created_at ?? '--' }}</td>
                                     <td>{{ $user->updated_at ?? '--' }}</td>
                                     <td class="text-center sticky-actions">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href=""
+                                            <a href="{{ route('admin.users.show', ['id' => $user->id]) }}"
                                                 class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-user me-1"></i> Chi tiết
                                             </a>
-                                            <a href=""
+
+                                            <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}"
                                                 class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-edit me-1"></i> Sửa
                                             </a>
@@ -83,11 +87,10 @@
                                             </button>
                                         </div>
                                     </td>
-
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="text-center fw-bold text-danger">
+                                    <td colspan="10" class="text-center fw-bold text-danger">
                                         Không có bản ghi nào được tìm thấy
                                     </td>
                                 </tr>
@@ -110,7 +113,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa người dùng này không?
+                    Bạn có chắc chắn muốn xóa giao dịch thanh toán này không?
                 </div>
                 <div class="modal-footer">
                     <form id="deleteForm" method="POST">
@@ -140,7 +143,6 @@
                 });
             });
 
-            // Đóng modal khi bấm "Hủy" hoặc nút "X"
             closeModalBtn.addEventListener('click', function () {
                 $('#deleteModal').modal('hide');
             });

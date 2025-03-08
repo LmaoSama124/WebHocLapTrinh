@@ -66,47 +66,41 @@
                                                 data-id="2e148b4b" data-element_type="widget"
                                                 data-widget_type="icon-list.default">
                                                 <div class="elementor-widget-container">
-                                                    <ul
-                                                        class="elementor-icon-list-items elementor-inline-items">
-                                                        <li
-                                                            class="elementor-icon-list-item elementor-inline-item">
+                                                    <ul class="elementor-icon-list-items elementor-inline-items">
+                                                        <li class="elementor-icon-list-item elementor-inline-item">
                                                             <a href="#">
-
                                                                 <span class="elementor-icon-list-icon">
-                                                                    <i aria-hidden="true"
-                                                                        class="fab fa-twitter"></i> </span>
+                                                                    <i aria-hidden="true" class="fab fa-twitter"></i>
+                                                                </span>
                                                                 <span class="elementor-icon-list-text"></span>
                                                             </a>
                                                         </li>
-                                                        <li
-                                                            class="elementor-icon-list-item elementor-inline-item">
+                                                        <li class="elementor-icon-list-item elementor-inline-item">
                                                             <a href="../web.facebook.com/groups/titvc9ef.html"
                                                                 target="_blank">
 
                                                                 <span class="elementor-icon-list-icon">
-                                                                    <i aria-hidden="true"
-                                                                        class="fab fa-facebook"></i> </span>
+                                                                    <i aria-hidden="true" class="fab fa-facebook"></i>
+                                                                </span>
                                                                 <span class="elementor-icon-list-text"></span>
                                                             </a>
                                                         </li>
-                                                        <li
-                                                            class="elementor-icon-list-item elementor-inline-item">
+                                                        <li class="elementor-icon-list-item elementor-inline-item">
                                                             <a href="#">
 
                                                                 <span class="elementor-icon-list-icon">
-                                                                    <i aria-hidden="true"
-                                                                        class="fab fa-linkedin"></i> </span>
+                                                                    <i aria-hidden="true" class="fab fa-linkedin"></i>
+                                                                </span>
                                                                 <span class="elementor-icon-list-text"></span>
                                                             </a>
                                                         </li>
-                                                        <li
-                                                            class="elementor-icon-list-item elementor-inline-item">
+                                                        <li class="elementor-icon-list-item elementor-inline-item">
                                                             <a href="../www.youtube.com/channel/UCPoFgUtKUYpL7N7883BeMFw.html"
                                                                 target="_blank">
 
                                                                 <span class="elementor-icon-list-icon">
-                                                                    <i aria-hidden="true"
-                                                                        class="fab fa-youtube"></i> </span>
+                                                                    <i aria-hidden="true" class="fab fa-youtube"></i>
+                                                                </span>
                                                                 <span class="elementor-icon-list-text"></span>
                                                             </a>
                                                         </li>
@@ -148,4 +142,17 @@
             </section>
         </div>
     </div>
+    <style>
+        html,
+        body {
+            height: 100% !important;
+            margin: 0!important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        #colophon {
+            margin-top: auto !important;
+        }
+    </style>
 </footer>

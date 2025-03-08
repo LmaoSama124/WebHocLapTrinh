@@ -7,7 +7,7 @@
             <h3 class="fw-bold mb-3">Payment Information</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
-                    <a href="?mode=admin">
+                    <a href="{{ route('admin.dashboard') }}">
                         <i class="icon-home"></i>
                     </a>
                 </li>
@@ -24,62 +24,42 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Field</th>
-                            <th>Data</th>
+                            <th>Trường</th>
+                            <th>Dữ liệu</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>ID</strong></td>
-                            <td>{{ $payment->id ?? '--' }}</td>
+                            <td>{{ $payment->id }}</td>
                         </tr>
                         <tr>
-                            <td><strong>ID User</strong></td>
-                            <td>{{ $payment->id_user ?? '--' }}</td>
+                            <td><strong>User</strong></td>
+                            <td>{{ $payment->user->fullname ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Name User</strong></td>
-                            <td>{{ $payment->name_user ?? '--' }}</td>
+                            <td><strong>Course</strong></td>
+                            <td>{{ $payment->course->title ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>ID Course</strong></td>
-                            <td>{{ $payment->id_course ?? '--' }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Title</strong></td>
-                            <td>{{ $payment->title ?? '--' }}</td>
+                            <td><strong>Payment Method</strong></td>
+                            <td>{{ ucfirst($payment->payment_method) }}</td>
                         </tr>
                         <tr>
                             <td><strong>Amount</strong></td>
-                            <td>{{ number_format($payment->amount, 2) ?? '--' }} VNĐ</td>
+                            <td>{{ number_format($payment->amount, 2) }} VNĐ</td>
                         </tr>
                         <tr>
                             <td><strong>Status</strong></td>
-                            <td>
-                                @if (!empty($payment->status))
-                                    {{ ucfirst($payment->status) }}
-                                @else
-                                    <span class="badge bg-danger">No data</span>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Comment</strong></td>
-                            <td>
-                                @if (!empty($payment->comment))
-                                    {{ $payment->comment }}
-                                @else
-                                    <span class="badge bg-warning">No comment</span>
-                                @endif
-                            </td>
+                            <td>{{ ucfirst($payment->status) }}</td>
                         </tr>
                         <tr>
                             <td><strong>Created At</strong></td>
-                            <td>{{ $payment->created_at ?? '--' }}</td>
+                            <td>{{ $payment->created_at }}</td>
                         </tr>
                         <tr>
                             <td><strong>Updated At</strong></td>
-                            <td>{{ $payment->updated_at ?? '--' }}</td>
+                            <td>{{ $payment->updated_at }}</td>
                         </tr>
                     </tbody>
                 </table>

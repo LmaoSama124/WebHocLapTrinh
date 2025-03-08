@@ -45,6 +45,9 @@
         </div>
     </div>
 
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Js -->
     <script src="{{ asset('assets/admin/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/core/popper.min.js') }}"></script>

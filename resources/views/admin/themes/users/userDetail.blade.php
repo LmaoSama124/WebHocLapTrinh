@@ -7,7 +7,7 @@
             <h3 class="fw-bold mb-3">User Information</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
-                    <a href="?mode=admin">
+                    <a href="{{ route('admin.dashboard') }}">
                         <i class="icon-home"></i>
                     </a>
                 </li>
@@ -24,8 +24,8 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Field</th>
-                            <th>Data</th>
+                            <th>Trường</th>
+                            <th>Dữ liệu</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,54 +38,32 @@
                             <td>{{ $user->email ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Name</strong></td>
-                            <td>{{ $user->name ?? '--' }}</td>
+                            <td><strong>Full Name</strong></td>
+                            <td>{{ $user->fullname ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Age</strong></td>
-                            <td>
-                                @if (!empty($user->age))
-                                    {{ $user->age }}
-                                @else
-                                    <span class="badge bg-danger">No data</span>
-                                @endif
-                            </td>
+                            <td><strong>Display Name</strong></td>
+                            <td>{{ $user->displayname ?? '--' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Address</strong></td>
-                            <td>
-                                @if (!empty($user->address))
-                                    {{ $user->address }}
-                                @else
-                                    <span class="badge bg-danger">No data</span>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Gender</strong></td>
-                            <td>
-                                @if (!empty($user->gender))
-                                    {{ $user->gender }}
-                                @else
-                                    <span class="badge bg-danger">No data</span>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Date of Birth</strong></td>
-                            <td>
-                                @if (!empty($user->date_of_birth))
-                                    {{ $user->date_of_birth }}
-                                @else
-                                    <span class="badge bg-danger">No data</span>
-                                @endif
-                            </td>
+                            <td><strong>Username</strong></td>
+                            <td>{{ $user->username ?? '--' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Phone</strong></td>
                             <td>
                                 @if (!empty($user->phone))
                                     {{ $user->phone }}
+                                @else
+                                    <span class="badge bg-danger">No data</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Avatar</strong></td>
+                            <td>
+                                @if (!empty($user->avatar))
+                                    <img src="{{ asset($user->avatar) }}" alt="Avatar" width="50">
                                 @else
                                     <span class="badge bg-danger">No data</span>
                                 @endif

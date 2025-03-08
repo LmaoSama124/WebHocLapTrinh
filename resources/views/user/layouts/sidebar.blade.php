@@ -33,7 +33,7 @@
     </a>
 
     <div class="stm_lms_user_float_menu__scrolled">
-        <a href="#" class="float_menu_item float_menu_item__inline __icon">
+        <a href="{{route('user.enrolled-courses')}}" class="float_menu_item float_menu_item__inline __icon">
             <span class="float_menu_item__title heading_font">
                 Enrolled Courses </span>
             <i class="fa fa-book float_menu_item__icon"></i>

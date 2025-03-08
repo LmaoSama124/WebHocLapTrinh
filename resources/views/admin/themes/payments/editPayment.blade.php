@@ -7,7 +7,7 @@
       <h3 class="fw-bold mb-3">Chỉnh sửa thanh toán</h3>
       <ul class="breadcrumbs mb-3">
         <li class="nav-home">
-          <a href="#"><i class="icon-home"></i></a>
+          <a href="{{ route('admin.dashboard') }}"><i class="icon-home"></i></a>
         </li>
         <li class="separator"><i class="icon-arrow-right"></i></li>
         <li class="nav-item"><a href="#">Payments</a></li>
@@ -31,45 +31,36 @@
                 <div class="col-md-6 col-lg-4">
 
                   <div class="form-group">
-                    <label for="user_id">ID User</label>
-                    <input type="number" name="user_id" class="form-control" id="user_id" value="{{ $payment->user_id }}" required />
+                    <label for="id_user">ID User</label>
+                    <input type="number" name="id_user" class="form-control" id="id_user" value="{{ $payment->id_user }}" required />
                   </div>
 
                   <div class="form-group">
-                    <label for="name_user">Tên User</label>
-                    <input type="text" name="name_user" class="form-control" id="name_user" value="{{ $payment->name_user }}" required />
+                    <label for="id_course">ID Course</label>
+                    <input type="number" name="id_course" class="form-control" id="id_course" value="{{ $payment->id_course }}" required />
                   </div>
 
                   <div class="form-group">
-                    <label for="course_id">ID Course</label>
-                    <input type="number" name="course_id" class="form-control" id="course_id" value="{{ $payment->course_id }}" required />
+                    <label for="payment_method">Phương thức thanh toán</label>
+                    <select name="payment_method" class="form-select" id="payment_method">
+                      <option value="vn_pay" {{ $payment->payment_method == 'vn_pay' ? 'selected' : '' }}>VN Pay</option>
+                      <option value="banking" {{ $payment->payment_method == 'banking' ? 'selected' : '' }}>Banking</option>
+                    </select>
                   </div>
 
                   <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" class="form-control" id="title" value="{{ $payment->title }}" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="amount">Amount</label>
+                    <label for="amount">Số tiền</label>
                     <input type="number" step="0.01" name="amount" class="form-control" id="amount" value="{{ $payment->amount }}" required />
                   </div>
 
                   <div class="form-group">
                     <label for="status">Trạng thái</label>
                     <select name="status" class="form-select" id="status">
-                      <option value="pending" {{ $payment->status == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
-                      <option value="completed" {{ $payment->status == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
-                      <option value="refunded" {{ $payment->status == 'refunded' ? 'selected' : '' }}>Hoàn trả</option>
-                      <option value="failed" {{ $payment->status == 'failed' ? 'selected' : '' }}>Thất bại</option>
+                      <option value="waiting" {{ $payment->status == 'waiting' ? 'selected' : '' }}>Đang chờ</option>
+                      <option value="success" {{ $payment->status == 'success' ? 'selected' : '' }}>Thành công</option>
+                      <option value="canceled" {{ $payment->status == 'canceled' ? 'selected' : '' }}>Đã hủy</option>
                     </select>
                   </div>
-
-                  <div class="form-group">
-                    <label for="comment">Ghi chú</label>
-                    <textarea name="comment" class="form-control" id="comment">{{ $payment->comment }}</textarea>
-                  </div>
-
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 img.wp-smiley,
 img.emoji {
     display: inline !important;
@@ -1220,4 +1221,5 @@ body {
 .stm_lms_user_float_menu:not(.__collapsed) .stm-lms-logout-button span {
     display: inline;
 }
+
 /* END SIDEBAR */

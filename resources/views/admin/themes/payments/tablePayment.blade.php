@@ -7,7 +7,7 @@
                 <h3 class="fw-bold mb-3">Quản lý thanh toán</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
-                        <a href="?mode=admin">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="icon-home"></i>
                         </a>
                     </li>
@@ -20,59 +20,58 @@
                 </ul>
             </div>
 
+            <!-- Sweet Alert -->
+            @if(session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: '{{ session('success') }}',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+            @endif
+
             <div class="row table-row">
                 <div class="table-container">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>Id User</th>
-                                <th>Name User</th>
-                                <th>Id Course</th>
-                                <th>Title</th>
+                                <th class="sticky-id">ID</th>
+                                <th>ID User</th>
+                                <th>Full Name</th>
+                                <th>ID Course</th>
+                                <th>Course Title</th>
+                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Status</th>
-                                <th>Comment</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th class="sticky-id">Id</th>
-                                <th>Id User</th>
-                                <th>Name User</th>
-                                <th>Id Course</th>
-                                <th>Title</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Comment</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
-                                <th class="sticky-actions">Actions</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @forelse ($payments as $payment)
                                 <tr>
                                     <td class="sticky-id">{{ $payment->id }}</td>
                                     <td>{{ $payment->id_user }}</td>
-                                    <td>{{ $payment->name_user }}</td>
-                                    <td>{{ $payment->id_course ?? '--' }}</td>
-                                    <td>{{ $payment->title ?? '--' }}</td>
-                                    <td>{{ $payment->amount ?? '--' }}</td>
-                                    <td>{{ $payment->status ?? '--' }}</td>
-                                    <td>{{ $payment->comment ?? '--' }}</td>
-                                    <td>{{ $payment->created_at ?? '--'}}</td>
-                                    <td>{{ $payment->updated_at ?? '--' }}</td>
+                                    <td>{{ $payment->user->fullname ?? '--' }}</td>
+                                    <td>{{ $payment->id_course }}</td>
+                                    <td>{{ $payment->course->title ?? '--' }}</td>
+                                    <td>{{ $payment->payment_method }}</td>
+                                    <td>{{ number_format($payment->amount, 2) }}</td>
+                                    <td>{{ ucfirst($payment->status) }}</td>
+                                    <td>{{ $payment->created_at }}</td>
+                                    <td>{{ $payment->updated_at }}</td>
                                     <td class="text-center sticky-actions">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href=""
+                                            <a href="{{ route('admin.payments.show', $payment->id) }}"
                                                 class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
-                                                <i class="fas fa-payment me-1"></i> Chi tiết
+                                                <i class="fas fa-eye me-1"></i> Chi tiết
                                             </a>
-                                            <a href=""
+                                            <a href="{{ route('admin.payments.edit', $payment->id) }}"
                                                 class="btn btn-warning btn-sm w-100 d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-edit me-1"></i> Sửa
                                             </a>
@@ -83,7 +82,6 @@
                                             </button>
                                         </div>
                                     </td>
-
                                 </tr>
                             @empty
                                 <tr>
@@ -110,7 +108,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa người dùng này không?
+                    Bạn có chắc chắn muốn xóa giao dịch thanh toán này không?
                 </div>
                 <div class="modal-footer">
                     <form id="deleteForm" method="POST">
@@ -127,11 +125,11 @@
     {{-- Script xử lý Xóa --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deletepaymentButtons = document.querySelectorAll('.delete-payment');
+            let deletePaymentButtons = document.querySelectorAll('.delete-payment');
             let closeModalBtn = document.getElementById('closeModalBtn');
             let cancelModalBtn = document.getElementById('cancelModalBtn');
 
-            deletepaymentButtons.forEach(button => {
+            deletePaymentButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     let paymentId = this.getAttribute('data-id');
                     let form = document.getElementById('deleteForm');

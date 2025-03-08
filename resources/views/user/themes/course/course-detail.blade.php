@@ -15,7 +15,7 @@
                                 Course available for <strong>180 days</strong> </div>
                             <div class="masterstudy-single-course-sleek-sidebar__cta">
                                 <div class="masterstudy-buy-button   ">
-                                    <a href="#" class="masterstudy-buy-button__link"
+                                    <a href="{{route('user.course-payment')}}" class="masterstudy-buy-button__link"
                                         data-authorization-modal="login">
                                         <span class="masterstudy-buy-button__title">Get course</span>
                                         <span class="masterstudy-buy-button__separator"></span>
@@ -25,7 +25,6 @@
                                     </a>
                                 </div>
                             </div>
-
                             <div class="masterstudy-single-course-stickybar">
                                 <div class="masterstudy-single-course-stickybar__wrapper">
                                     <div class="masterstudy-single-course-stickybar__column">
