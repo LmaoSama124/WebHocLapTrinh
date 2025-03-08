@@ -53,12 +53,12 @@
 
         <!-- Danh mục(Categories) -->
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#formAdmin">
+          <a data-bs-toggle="collapse" href="#formCat">
             <i class="fas fa-table"></i>
             <p>Danh mục</p>
             <span class="caret"></span>
           </a>
-          <div class="collapse" id="formAdmin">
+          <div class="collapse" id="formCat">
             <ul class="nav nav-collapse">
               <li>
                 <a href="{{ route('admin.categories.create') }}">
