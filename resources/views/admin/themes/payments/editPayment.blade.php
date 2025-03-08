@@ -31,13 +31,25 @@
                 <div class="col-md-6 col-lg-4">
 
                   <div class="form-group">
-                    <label for="id_user">ID User</label>
-                    <input type="number" name="id_user" class="form-control" id="id_user" value="{{ $payment->id_user }}" required />
+                    <label for="id_user">Người dùng</label>
+                    <select name="id_user" class="form-select" id="id_user" required>
+                      @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ $payment->id_user == $user->id ? 'selected' : '' }}>
+                          {{ $user->fullname }}
+                        </option>
+                      @endforeach
+                    </select>
                   </div>
 
                   <div class="form-group">
-                    <label for="id_course">ID Course</label>
-                    <input type="number" name="id_course" class="form-control" id="id_course" value="{{ $payment->id_course }}" required />
+                    <label for="id_course">Khóa học</label>
+                    <select name="id_course" class="form-select" id="id_course" required>
+                      @foreach($courses as $course)
+                        <option value="{{ $course->id }}" {{ $payment->id_course == $course->id ? 'selected' : '' }}>
+                          {{ $course->title }}
+                        </option>
+                      @endforeach
+                    </select>
                   </div>
 
                   <div class="form-group">

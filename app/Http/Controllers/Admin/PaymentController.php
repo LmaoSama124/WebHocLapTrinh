@@ -54,11 +54,13 @@ class PaymentController extends Controller
     // Hiển thị form chỉnh sửa thanh toán
     public function edit($id)
     {
-        $payment = Payment::with(['user', 'course'])->findOrFail($id); // ✅ Load dữ liệu user và khóa học
-        $users = User::all(); // ✅ Lấy danh sách người dùng
-        $courses = Course::all(); // ✅ Lấy danh sách khóa học
+        $payment = Payment::findOrFail($id);
+        $users = User::all(); // Lấy toàn bộ danh sách user
+        $courses = Course::all(); // Lấy toàn bộ danh sách khóa học
+
         return view('admin.themes.payments.editPayment', compact('payment', 'users', 'courses'));
     }
+
 
     // Cập nhật thông tin thanh toán
     public function update(Request $request, $id)
