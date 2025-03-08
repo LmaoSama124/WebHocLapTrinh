@@ -62,7 +62,8 @@
                                     <td>{{ $user->phone ?? '--' }}</td>
                                     <td>
                                         @if($user->avatar)
-                                            <img src="{{ asset($user->avatar) }}" alt="Avatar" width="50">
+                                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar"
+                                                style="width: 50px; height: 50px; object-fit: cover;">
                                         @else
                                             --
                                         @endif
