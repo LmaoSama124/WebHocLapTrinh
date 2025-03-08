@@ -39,12 +39,23 @@ class ReviewController extends Controller
             'id_user' => 'required|exists:tbl_users,id',
             'id_course' => 'required|exists:tbl_courses,id',
             'content' => 'required|string',
-            'rate' => 'required|numeric|min:0|max:5',
-            'status' => 'required|in:removed,exist',
+            'rate' => [
+                'required',
+                'numeric',
+                'between:1,5',
+                function ($attribute, $value, $fail) {
+                    if (!in_array($value, [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5])) {
+                        $fail('Điểm đánh giá chỉ được nhập các giá trị từ 1 đến 5, cách nhau 0.5 đơn vị.');
+                    }
+                }
+            ],
+            'status' => 'required|in:exist,removed',
         ]);
 
+        // Lưu đánh giá vào DB
         Review::create($request->all());
-        return redirect()->route('admin.reviews.index')->with('success', 'Review đã được thêm thành công');
+
+        return redirect()->route('admin.reviews.index')->with('success', 'Đánh giá đã được thêm!');
     }
 
     // Hiển thị form chỉnh sửa review
@@ -63,14 +74,25 @@ class ReviewController extends Controller
             'id_user' => 'required|exists:tbl_users,id',
             'id_course' => 'required|exists:tbl_courses,id',
             'content' => 'required|string',
-            'rate' => 'required|numeric|min:0|max:5',
+            'rate' => [
+                'required',
+                'numeric',
+                'between:1,5',
+                function ($attribute, $value, $fail) {
+                    if (!in_array($value, [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5])) {
+                        $fail('Điểm đánh giá chỉ được nhập các giá trị từ 1 đến 5, cách nhau 0.5 đơn vị.');
+                    }
+                }
+            ],
             'status' => 'required|in:removed,exist',
         ]);
 
         $review = Review::findOrFail($id);
         $review->update($request->all());
+
         return redirect()->route('admin.reviews.index')->with('success', 'Review đã được cập nhật thành công');
     }
+
 
     // Xóa một review
     public function destroy($id)
