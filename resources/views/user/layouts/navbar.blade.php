@@ -1,5 +1,5 @@
 <header id="masthead" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
-    <p class="main-title bhf-hidden" itemprop="headline"><a href="index.html" title="TITV" rel="home">TITV</a>
+    <p class="main-title bhf-hidden" itemprop="headline"><a href="{{ route('user.index') }}">Trang chủ</a>
     </p>
     <div data-elementor-type="wp-post" data-elementor-id="48181" class="elementor elementor-48181">
         <section
@@ -128,13 +128,49 @@
                             data-widget_type="stm_lms_pro_site_authorization_links.default">
                             <div class="elementor-widget-container">
                                 <a href="index.php/user-account/index.html" class="ms-lms-authorization">
-                                    <span class="ms-lms-authorization-icon">
-                                        <i class="fas fa-user" aria-hidden="true"></i>
-                                    </span>
-                                    <a href="{{ route('user.login') }}">
-                                        <span class="ms-lms-authorization-title">
-                                            login/sign up </span>
-                                    </a>
+                                    <!-- User Authentication -->
+                                    <div class="elementor-column elementor-col-25">
+                                        <span class="ms-lms-authorization-icon">
+                                            <i class="fas fa-user" aria-hidden="true"></i>
+                                        </span>
+                                        <div class="elementor-widget-wrap">
+                                            @guest
+                                                <!-- Nếu chưa đăng nhập -->
+                                                <a href="{{ route('user.login') }}" class="ms-lms-authorization">
+                                                    <span class="ms-lms-authorization-title">Login/Sign Up</span>
+                                                </a>
+                                            @else
+                                                <!-- Nếu đã đăng nhập -->
+                                                <div class="dropdown">
+                                                    <button class="dropbtn">
+                                                        {{ Auth::user()->username }} <i class="fas fa-caret-down"></i>
+                                                    </button>
+                                                    <div class="dropdown-content">
+                                                        <a href="https://titv.vn/user-account/enrolled-courses">Enrolled
+                                                            Courses</a>
+                                                        <a href="https://titv.vn/user-account/chat">Messages</a>
+                                                        <a href="https://titv.vn/wishlist/">Wishlist</a>
+                                                        <a href="https://titv.vn/user-account/enrolled-quizzes">Enrolled
+                                                            Quizzes</a>
+                                                        <a href="https://titv.vn/user-account/my-orders">My Orders</a>
+                                                        <a href="https://titv.vn/user-account/my-certificates/">My
+                                                            Certificates</a>
+                                                        <a
+                                                            href="https://titv.vn/user-account/enterprise-groups/">Groups</a>
+                                                        <a href="https://titv.vn/user-account/enrolled-assignments">My
+                                                            Assignments</a>
+                                                        <a href="https://titv.vn/user-account/points-history/">My
+                                                            Points</a>
+                                                        <form action="{{ route('user.logout') }}" method="POST"
+                                                            class="logout-form">
+                                                            @csrf
+                                                            <button type="submit">Logout</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endguest
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -144,6 +180,52 @@
         </section>
     </div>
 </header>
+<style>
+    .dropbtn {
+        background-color: #f8f9fa;
+        color: #333;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a,
+    .logout-form button {
+        color: black;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content a:hover,
+    .logout-form button:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
 <!-- Sau khi dang nhap -->
 {{-- <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-50bfdaac"
     data-id="50bfdaac" data-element_type="column">

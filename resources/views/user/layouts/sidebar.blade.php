@@ -1,4 +1,7 @@
 <!-- Sidebar -->
+@guest
+
+@else
 <div class="stm_lms_user_float_menu __collapsed __position_left __logged_in">
     <div class="stm_lms_user_float_menu__toggle">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12">
@@ -23,7 +26,7 @@
         </div>
 
         <div class="stm_lms_user_float_menu__user_info">
-            <h3>vuong8aqhqlna</h3>
+            <h3>{{ Auth::user()->username }}</h3>
             <span>Student</span>
         </div>
 
@@ -33,7 +36,7 @@
     </a>
 
     <div class="stm_lms_user_float_menu__scrolled">
-        <a href="{{route('user.enrolled-courses')}}" class="float_menu_item float_menu_item__inline __icon">
+        <a href="{{ route('user.course-enrolled') }}" class="float_menu_item float_menu_item__inline __icon">
             <span class="float_menu_item__title heading_font">
                 Enrolled Courses </span>
             <i class="fa fa-book float_menu_item__icon"></i>
@@ -97,7 +100,7 @@
         <span>Log out</span>
     </a>
 </div>
-
+@endguest
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.stm_lms_user_float_menu');
