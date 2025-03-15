@@ -11,5 +11,5 @@ class Income extends Model
 
     protected $table = 'tbl_incomes';
 
-    protected $fillable = ['total_buyer', 'total_amount', 'time'];
+    protected $fillable = ['total_buyer', 'total_amount', 'time', 'type'];
 }
