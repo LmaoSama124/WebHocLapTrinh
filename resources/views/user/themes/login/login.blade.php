@@ -24,7 +24,8 @@
                                                         <div class="masterstudy-authorization__form-field">
                                                             <input type="text" name="username"
                                                                 class="masterstudy-authorization__form-input @error('username') is-invalid @enderror"
-                                                                placeholder="Enter email or username" value="{{ old('username') }}">
+                                                                placeholder="Enter email or username"
+                                                                value="{{ old('username') }}">
                                                             @error('username')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -47,7 +48,8 @@
                                                         <div class="masterstudy-authorization__actions-remember">
                                                             <div class="masterstudy-authorization__checkbox">
                                                                 <input type="checkbox" name="remember"
-                                                                    id="masterstudy-authorization-remember" {{ old('remember') ? 'checked' : '' }} />
+                                                                    id="masterstudy-authorization-remember"
+                                                                    {{ old('remember') ? 'checked' : '' }} />
                                                                 <span
                                                                     class="masterstudy-authorization__checkbox-wrapper"></span>
                                                             </div>
@@ -82,13 +84,14 @@
                                                     <span class="masterstudy-authorization__header-title">
                                                         Sign Up </span>
                                                 </div>
-                                                <form action="{{ route('user.register') }}" method="POST">
+                                                <form action="{{ route('user.register') }}" method="POST" id="signup-form">
                                                     @csrf
                                                     <div class="masterstudy-authorization__form-wrapper">
                                                         <div class="masterstudy-authorization__form-field">
                                                             <input type="text" name="fullname"
                                                                 class="masterstudy-authorization__form-input @error('fullname') is-invalid @enderror"
-                                                                placeholder="Enter your full name" value="{{ old('fullname') }}">
+                                                                placeholder="Enter your full name"
+                                                                value="{{ old('fullname') }}">
                                                             @error('fullname')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -98,7 +101,8 @@
                                                         <div class="masterstudy-authorization__form-field">
                                                             <input type="text" name="displayname"
                                                                 class="masterstudy-authorization__form-input @error('displayname') is-invalid @enderror"
-                                                                placeholder="Enter display name" value="{{ old('displayname') }}">
+                                                                placeholder="Enter display name"
+                                                                value="{{ old('displayname') }}">
                                                             @error('displayname')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -126,13 +130,13 @@
                                                             @enderror
                                                         </div>
                                                         <div class="masterstudy-authorization__form-field">
-                                                            <input type="password" name="password"
+                                                            <input type="password" name="password" id="password"
                                                                 class="masterstudy-authorization__form-input masterstudy-authorization__form-input_pass @error('password') is-invalid @enderror"
                                                                 placeholder="Enter password">
                                                             <span class="masterstudy-authorization__form-show-pass"></span>
                                                             <span class="masterstudy-authorization__form-explain-pass">
-                                                                The password must have a minimum of 8 characters of numbers
-                                                                and letters, contain at least 1 capital letter </span>
+                                                                Mật khẩu phải có ít nhất 6 ký tự và không dài quá 50 ký tự
+                                                            </span>
                                                             @error('password')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -141,23 +145,29 @@
                                                         </div>
                                                         <div class="masterstudy-authorization__form-field">
                                                             <input type="password" name="password_confirmation"
+                                                                id="password_confirmation"
                                                                 class="masterstudy-authorization__form-input masterstudy-authorization__form-input_pass"
                                                                 placeholder="Repeat password">
                                                             <span class="masterstudy-authorization__form-show-pass"></span>
+                                                            <span class="password-confirm-error invalid-feedback"
+                                                                style="display: none;">
+                                                                <strong>Mật khẩu nhập lại không khớp</strong>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     <div class="masterstudy-authorization__actions">
                                                         <div class="masterstudy-authorization__actions-remember">
                                                             <div class="masterstudy-authorization__checkbox">
                                                                 <input type="checkbox" name="remember"
-                                                                    id="masterstudy-authorization-remember-register" {{ old('remember') ? 'checked' : '' }} />
+                                                                    id="masterstudy-authorization-remember-register"
+                                                                    {{ old('remember') ? 'checked' : '' }} />
                                                                 <span
                                                                     class="masterstudy-authorization__checkbox-wrapper"></span>
                                                             </div>
                                                             <span class="masterstudy-authorization__checkbox-title">
                                                                 Remember me </span>
                                                         </div>
-                                                        <button type="submit"
+                                                        <button type="submit" id="signup-button"
                                                             class="masterstudy-button masterstudy-button_style-primary masterstudy-button_size-sm">
                                                             <span class="masterstudy-button__title">Sign Up</span>
                                                         </button>
@@ -241,14 +251,40 @@
             const signUpLink = document.getElementById("masterstudy-authorization-sign-up");
             const signInLink = document.getElementById("masterstudy-authorization-sign-in");
             const loginContainer = document.querySelector(".login-container");
+            const signupForm = document.getElementById("signup-form");
+            const signupButton = document.getElementById("signup-button");
+            const passwordInput = document.getElementById("password");
+            const passwordConfirmInput = document.getElementById("password_confirmation");
+            const passwordConfirmError = document.querySelector(".password-confirm-error");
 
-            // Ẩn form đăng ký ban đầu nhưng không dùng display: none để tránh lỗi
-            signUpForm.style.opacity = "0";
-            signUpForm.style.position = "absolute";
-            signUpForm.style.pointerEvents = "none";
+            // Kiểm tra nếu có lỗi validation trong form đăng ký thì hiển thị form đăng ký
+            const hasRegisterErrors = {{ $errors->any() && old('email') ? 'true' : 'false' }};
 
-            updateContainerHeight(signInForm);
+            if (hasRegisterErrors) {
+                // Hiển thị form đăng ký nếu có lỗi
+                signInForm.style.opacity = "0";
+                signInForm.style.position = "absolute";
+                signInForm.style.pointerEvents = "none";
+                signInForm.style.display = "none";
 
+                signUpForm.style.display = "block";
+                signUpForm.style.position = "relative";
+                signUpForm.style.opacity = "1";
+                signUpForm.style.transform = "translateY(0)";
+                signUpForm.style.pointerEvents = "auto";
+
+                updateContainerHeight(signUpForm);
+            } else {
+                // Ẩn form đăng ký ban đầu nhưng không dùng display: none để tránh lỗi
+                signUpForm.style.opacity = "0";
+                signUpForm.style.position = "absolute";
+                signUpForm.style.pointerEvents = "none";
+                signUpForm.style.display = "none";
+
+                updateContainerHeight(signInForm);
+            }
+
+            // Chuyển đổi giữa form đăng nhập và đăng ký
             signUpLink.addEventListener("click", function(event) {
                 event.preventDefault();
                 toggleForms(signInForm, signUpForm);
@@ -258,6 +294,119 @@
                 event.preventDefault();
                 toggleForms(signUpForm, signInForm);
             });
+
+            // Xử lý việc submit form đăng ký
+            if (signupForm) {
+                signupForm.addEventListener("submit", function(event) {
+                    event.preventDefault(); // Ngăn form submit mặc định
+
+                    let isValid = true;
+
+                    // Kiểm tra mật khẩu và mật khẩu xác nhận
+                    if (passwordInput.value !== passwordConfirmInput.value) {
+                        passwordConfirmError.style.display = "block";
+                        isValid = false;
+                    } else {
+                        passwordConfirmError.style.display = "none";
+                    }
+
+                    // Xóa tất cả thông báo lỗi cũ trước khi kiểm tra mới
+                    const invalidFeedbacks = signupForm.querySelectorAll('.invalid-feedback');
+                    invalidFeedbacks.forEach(element => {
+                        if (!element.classList.contains('password-confirm-error')) {
+                            element.style.display = 'none';
+                        }
+                    });
+
+                    const invalidInputs = signupForm.querySelectorAll('.is-invalid');
+                    invalidInputs.forEach(element => {
+                        element.classList.remove('is-invalid');
+                    });
+
+                    // Kiểm tra các trường bắt buộc
+                    const requiredFields = ['fullname', 'displayname', 'username', 'email', 'password',
+                        'password_confirmation'
+                    ];
+                    requiredFields.forEach(field => {
+                        const input = signupForm.querySelector(`[name="${field}"]`);
+                        if (input && !input.value.trim()) {
+                            input.classList.add('is-invalid');
+                            const errorElement = input.parentElement.querySelector(
+                                '.invalid-feedback');
+                            if (errorElement) {
+                                errorElement.innerHTML =
+                                    `<strong>Vui lòng nhập ${getFieldLabel(field)}.</strong>`;
+                                errorElement.style.display = 'block';
+                            }
+                            isValid = false;
+                        }
+                    });
+
+                    if (!isValid) {
+                        updateContainerHeight(signUpForm);
+                        return false;
+                    }
+
+                    // Sử dụng Fetch API để gửi form
+                    fetch(signupForm.action, {
+                            method: 'POST',
+                            body: new FormData(signupForm),
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Nếu đăng ký thành công, chuyển hướng
+                                window.location.href = data.redirect;
+                            } else {
+                                // Nếu có lỗi, hiển thị lỗi trên form
+                                Object.keys(data.errors).forEach(key => {
+                                    const input = signupForm.querySelector(`[name="${key}"]`);
+                                    if (input) {
+                                        input.classList.add('is-invalid');
+                                        const errorElement = input.parentElement.querySelector(
+                                            '.invalid-feedback');
+                                        if (errorElement) {
+                                            errorElement.innerHTML =
+                                                `<strong>${data.errors[key][0]}</strong>`;
+                                            errorElement.style.display = 'block';
+                                        }
+                                    }
+                                });
+                                updateContainerHeight(signUpForm);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+
+                    return false;
+                });
+            }
+
+            function getFieldLabel(field) {
+                const labels = {
+                    'fullname': 'họ tên đầy đủ',
+                    'displayname': 'tên hiển thị',
+                    'username': 'tên đăng nhập',
+                    'email': 'địa chỉ email',
+                    'password': 'mật khẩu',
+                    'password_confirmation': 'xác nhận mật khẩu'
+                };
+                return labels[field] || field;
+            }
+            // Kiểm tra mật khẩu xác nhận khi gõ
+            if (passwordConfirmInput) {
+                passwordConfirmInput.addEventListener('input', function() {
+                    if (passwordInput.value !== passwordConfirmInput.value) {
+                        passwordConfirmError.style.display = "block";
+                    } else {
+                        passwordConfirmError.style.display = "none";
+                    }
+                });
+            }
 
             function toggleForms(hideForm, showForm) {
                 hideForm.style.opacity = "0";

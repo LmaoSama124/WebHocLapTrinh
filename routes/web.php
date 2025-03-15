@@ -17,16 +17,26 @@ use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\IndexController;
 use App\Http\Controllers\User\LoginController;
+use App\Http\Controllers\User\CourseUserController;
 
 
-Route::get('/user/course', [IndexController::class, 'course'])->name('user.course');
-Route::get('/user/course-detail', [IndexController::class, 'course_detail'])->name('user.course-detail');
-Route::get('/user/course-enrolled', [IndexController::class, 'course_enrolled'])->name('user.enrolled-courses');
-Route::get('/user/index', [IndexController::class, 'indexuser'])->name('user.index');
-Route::get('/user/login', [LoginController::class, 'showLoginForm'])->name('user.login');
-Route::get('/user/register', [LoginController::class, 'register'])->name('user.register');
-Route::get('/user/course-payment', [IndexController::class, 'course_payment'])->name('user.course-payment');
+Route::prefix('user')->group(function () {
+    // ------------User.login
+    Route::post('/register', [LoginController::class, 'storeRegister'])->name('user.register');
+    Route::get('/login', [LoginController::class, 'login'])->name('user.login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
 
+    // ------------User.index
+    Route::get('/index', [IndexController::class, 'index'])->name('user.index');
+
+    // ------------User.course
+    Route::get('/course/{id}', [CourseUserController::class, 'course_detail'])->name('user.course-detail');
+    Route::get('/course_enrolled', [CourseUserController::class, 'course_enrolled'])->name('user.course-enrolled');
+
+    //------------User.payment
+    Route::get('/course_payment', [IndexController::class, 'course_payment'])->name('user.course-payment');
+});
 
 Route::prefix('/admin')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
