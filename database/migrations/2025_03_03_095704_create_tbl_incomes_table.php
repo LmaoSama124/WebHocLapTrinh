@@ -13,7 +13,8 @@ return new class extends Migration
             $table->id();
             $table->integer('total_buyer');
             $table->decimal('total_amount', 10, 2);
-            $table->integer('time');
+            $table->enum('type',['day','month']);
+            $table->string('time', 20);
             $table->timestamps();
         });
     }
