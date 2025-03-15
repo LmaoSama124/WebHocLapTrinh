@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 
 class IndexController extends Controller
 {
@@ -9,18 +10,11 @@ class IndexController extends Controller
     {
         return view('user.themes.course.course');
     }
-    public function indexuser()
+    public function index()
     {
-        return view('user.index');
-    }
-    public function course_detail()
-    {
-        return view('user.themes.course.course-detail');
-    }
-    public function course_enrolled()
-    {
-        return view('user.themes.course.enrolled-courses');
-    }
+        $courses = Course::with('category')->get();
+        return view('user.index', compact('courses'));
+    }  
     public function course_payment()
     {
         return view('user.themes.course.course-payment');
