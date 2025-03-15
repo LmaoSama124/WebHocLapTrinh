@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\IndexController;
 use App\Http\Controllers\User\LoginController;
 
+
 Route::get('/user/course', [IndexController::class, 'course'])->name('user.course');
 Route::get('/user/course-detail', [IndexController::class, 'course_detail'])->name('user.course-detail');
 Route::get('/user/course-enrolled', [IndexController::class, 'course_enrolled'])->name('user.enrolled-courses');
