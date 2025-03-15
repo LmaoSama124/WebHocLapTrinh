@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\CourseEnrolled;
 use App\Models\Payment;
 use App\Models\User;
 use App\Models\Course;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -35,6 +37,7 @@ class PaymentController extends Controller
     // Lưu thanh toán mới vào database
     public function store(Request $request)
     {
+
         $request->validate([
             'id_user' => 'required|exists:tbl_users,id',
             'id_course' => 'required|exists:tbl_courses,id',
@@ -44,21 +47,53 @@ class PaymentController extends Controller
         ]);
 
         try {
-            Payment::create($request->all());
-            return redirect()->route('admin.payments.index')->with('success', 'Thanh toán đã được thêm thành công');
+            $course = Course::findOrFail($request->id_course);
+
+            if ($request->status === 'canceled') {
+                $finalStatus = 'canceled';
+            } else {
+                $finalStatus = ($request->amount == $course->price) ? 'success' : 'waiting';
+            }
+
+            DB::transaction(function () use ($request, $finalStatus, $course) {
+                $payment = Payment::create([
+                    'id_user' => $request->id_user,
+                    'id_course' => $request->id_course,
+                    'payment_method' => $request->payment_method,
+                    'amount' => $request->amount,
+                    'status' => $finalStatus,
+                ]);
+
+                if ($finalStatus === 'success') {
+                    CourseEnrolled::create([
+                        'id_user' => $request->id_user,
+                        'id_course' => $request->id_course,
+                        'title_course' => $course->title,
+                        'status' => 'in_progess',
+                        'progress' => 0,
+                        'expiration_date' => now()->addMonths(1),
+                    ]);
+                }
+            });
+
+            return redirect()->route('admin.payments.index')
+                ->with('success', 'Thanh toán đã được thêm thành công');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
 
     // Hiển thị form chỉnh sửa thanh toán
     public function edit($id)
     {
-        $payment = Payment::with(['user', 'course'])->findOrFail($id); // ✅ Load dữ liệu user và khóa học
-        $users = User::all(); // ✅ Lấy danh sách người dùng
-        $courses = Course::all(); // ✅ Lấy danh sách khóa học
+        $payment = Payment::findOrFail($id);
+        $users = User::all(); // Lấy toàn bộ danh sách user
+        $courses = Course::all(); // Lấy toàn bộ danh sách khóa học
+
         return view('admin.themes.payments.editPayment', compact('payment', 'users', 'courses'));
     }
+
 
     // Cập nhật thông tin thanh toán
     public function update(Request $request, $id)
@@ -73,12 +108,44 @@ class PaymentController extends Controller
 
         try {
             $payment = Payment::findOrFail($id);
-            $payment->update($request->all());
-            return redirect()->route('admin.payments.index')->with('success', 'Thông tin thanh toán đã được cập nhật');
+
+            if ($request->status === 'canceled') {
+                $finalStatus = 'canceled';
+            } else {
+                $course = Course::findOrFail($request->id_course);
+                $finalStatus = ($request->amount == $course->price) ? 'success' : 'waiting';
+            }
+
+            DB::transaction(function () use ($payment, $request, $finalStatus) {
+                $payment->update([
+                    'id_user' => $request->id_user,
+                    'id_course' => $request->id_course,
+                    'payment_method' => $request->payment_method,
+                    'amount' => $request->amount,
+                    'status' => $finalStatus,
+                ]);
+
+                if ($finalStatus === 'success') {
+                    $course = Course::findOrFail($request->id_course);
+
+                    CourseEnrolled::create([
+                        'id_user' => $request->id_user,
+                        'id_course' => $request->id_course,
+                        'title_course' => $course->title,
+                        'status' => 'in_progess',
+                        'progress' => 0,
+                        'expiration_date' => now()->addMonths(1),
+                    ]);
+                }
+            });
+
+            return redirect()->route('admin.payments.index')
+                ->with('success', 'Thông tin thanh toán đã được cập nhật');
         } catch (\Exception $e) {
             return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
+
 
     // Xóa một thanh toán
     public function destroy($id)

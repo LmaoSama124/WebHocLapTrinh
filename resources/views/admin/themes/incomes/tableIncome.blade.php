@@ -42,6 +42,7 @@
                                 <th>Tổng người mua</th>
                                 <th>Tổng doanh thu</th>
                                 <th>Thời gian</th>
+                                <th>Loại thống kê</th>
                                 <th>Ngày tạo</th>
                                 <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
@@ -53,6 +54,7 @@
                                 <th>Tổng người mua</th>
                                 <th>Tổng doanh thu</th>
                                 <th>Thời gian</th>
+                                <th>Loại thống kê</th>
                                 <th>Ngày tạo</th>
                                 <th>Ngày cập nhật</th>
                                 <th class="sticky-actions">Actions</th>
@@ -64,7 +66,8 @@
                                     <td class="sticky-id">{{ $income->id }}</td>
                                     <td>{{ $income->total_buyer }}</td>
                                     <td>{{ number_format($income->total_amount, 2) }}</td>
-                                    <td>{{ date('d/m/Y', $income->time) }}</td>
+                                    <td>{{ $income->time }}</td>
+                                    <td>{{ $income->type }}</td>
                                     <td>{{ $income->created_at->format('d/m/Y H:i') }}</td>
                                     <td>{{ $income->updated_at ? $income->updated_at->format('d/m/Y') : '--' }}</td>
                                     <td>

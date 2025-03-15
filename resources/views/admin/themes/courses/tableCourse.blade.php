@@ -46,6 +46,7 @@
                                 <th>Category</th>
                                 <th>Students</th>
                                 <th>Rate</th>
+                                <th>Thumbnail</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
@@ -62,6 +63,7 @@
                                 <th>Category</th>
                                 <th>Students</th>
                                 <th>Rate</th>
+                                <th>Thumbnail</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
@@ -79,15 +81,19 @@
                                     <td>{{ $course->category->category_name ?? '--' }}</td>
                                     <td>{{ $course->student_enrolled ?? 0 }}</td>
                                     <td>{{ number_format($course->rate, 1) ?? '0.0' }}</td>
+                                    <td><img src="{{ asset('storage/' . $course->thumbnail) }}" alt="Avatar"
+                                            style="width: 50px; height: 50px; object-fit: cover;"></td>
                                     <td>{{ ucfirst($course->status) }}</td>
                                     <td>{{ $course->created_at ?? '--' }}</td>
                                     <td>{{ $course->updated_at ?? '--' }}</td>
                                     <td class="text-center sticky-actions">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-warning btn-sm">
+                                            <a href="{{ route('admin.courses.show', $course->id) }}"
+                                                class="btn btn-warning btn-sm">
                                                 <i class="fas fa-eye me-1"></i> Chi tiết
                                             </a>
-                                            <a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning btn-sm">
+                                            <a href="{{ route('admin.courses.edit', $course->id) }}"
+                                                class="btn btn-warning btn-sm">
                                                 <i class="fas fa-edit me-1"></i> Sửa
                                             </a>
                                             <button class="btn btn-danger btn-sm delete-course" data-id="{{ $course->id }}">

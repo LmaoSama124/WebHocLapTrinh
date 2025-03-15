@@ -117,7 +117,6 @@ Route::prefix('/admin')->group(function () {
         Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
         Route::get('/messages/{id}/edit', [MessageController::class, 'edit'])->name('admin.messages.edit');
 
-
         // ------------ admin.incomes
         Route::get('/incomes', [IncomeController::class, 'index'])->name('admin.incomes.index');
         Route::get('/incomes/create', [IncomeController::class, 'create'])->name('admin.incomes.create');
@@ -125,7 +124,9 @@ Route::prefix('/admin')->group(function () {
         Route::get('/incomes/{id}', [IncomeController::class, 'show'])->name('admin.incomes.show');
         Route::put('/incomes/{id}', [IncomeController::class, 'update'])->name('admin.incomes.update');
         Route::delete('/incomes/{id}', [IncomeController::class, 'destroy'])->name('admin.incomes.destroy');
-        Route::get('/incomes/{id}/edit', [IncomeController::class, 'edit'])->name('admin.incomes.edit');
+        Route::get('/{id}/edit', [IncomeController::class, 'edit'])->name('admin.incomes.edit');
+        Route::get('/incomes/autofill/daily', [IncomeController::class, 'autoFillDaily'])->name('admin.incomes.autofill.daily');
+        Route::get('/incomes/autofill/monthly', [IncomeController::class, 'autoFillMonthly'])->name('admin.incomes.autofill.monthly');
 
         // ------------ admin.courseEnrolled
         Route::get('/courseEnrolled', [CourseEnrolledController::class, 'index'])->name('admin.courseEnrolled.index');
