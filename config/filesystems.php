@@ -59,16 +59,14 @@ return [
             'throw' => false,
             'report' => false,
         ],
-        
+
         'google' => [
             'driver' => 'google',
-            'client_id' => env('GOOGLE_DRIVE_CLIENT_ID'),
-            'client_secret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
-            'refresh_token' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
-            'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'), // Thư mục chứa video
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'), // Nếu muốn upload vào folder nào đó
         ],
-
-
     ],
 
     /*

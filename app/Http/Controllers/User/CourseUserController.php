@@ -28,7 +28,7 @@ class CourseUserController extends Controller
         $reviews = Review::where('id_course', $id)->where('status', 'exist')->orderByDesc('created_at')->get();
 
         if ($lesson->is_preview || $isEnrolled) {
-            return view('user.video', compact('lesson', 'lessons', 'reviews'))
+            return view('user.video', compact('user', 'lesson', 'lessons', 'reviews'))
                 ->with('courseId', $id);
         } else {
             return redirect()->route('user.course-detail', $id)
