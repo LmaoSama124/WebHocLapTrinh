@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 
@@ -26,10 +26,10 @@ class LoginController extends Controller
         ]);
 
         $user = User::where('username', $request->username)->first();
-        
+
         if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return redirect()->intended('/user/index'); 
+            Auth::guard('web')->login($user);
+            return redirect()->intended('/');
         }
 
         return back()->withErrors(['username' => 'Tên đăng nhập hoặc mật khẩu không chính xác']);
@@ -52,16 +52,19 @@ class LoginController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'remember_token' => Str::random(60), // Đảm bảo không lỗi token
         ]);
 
-        Auth::login($user);
-        return redirect('/user/index');
+        Auth::guard('web')->login($user);
+        return redirect('/login');
     }
 
     // Xử lý đăng xuất
     public function logout()
     {
         Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
         return redirect('/login');
     }
 }

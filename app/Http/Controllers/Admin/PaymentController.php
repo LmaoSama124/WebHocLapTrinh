@@ -37,7 +37,6 @@ class PaymentController extends Controller
     // Lưu thanh toán mới vào database
     public function store(Request $request)
     {
-
         $request->validate([
             'id_user' => 'required|exists:tbl_users,id',
             'id_course' => 'required|exists:tbl_courses,id',
@@ -55,11 +54,16 @@ class PaymentController extends Controller
                 $finalStatus = ($request->amount == $course->price) ? 'success' : 'waiting';
             }
 
-            DB::transaction(function () use ($request, $finalStatus, $course) {
+            // Nếu payment_method là banking thì lấy content, nếu không thì gán chuỗi rỗng
+            $content = ($request->payment_method === 'banking') ? $request->content : '';
+
+            DB::transaction(function () use ($request, $finalStatus, $course, $content) {
+
                 $payment = Payment::create([
                     'id_user' => $request->id_user,
                     'id_course' => $request->id_course,
                     'payment_method' => $request->payment_method,
+                    'content' => $content,
                     'amount' => $request->amount,
                     'status' => $finalStatus,
                 ]);
@@ -70,7 +74,7 @@ class PaymentController extends Controller
                         'id_course' => $request->id_course,
                         'title_course' => $course->title,
                         'status' => 'in_progess',
-                        'progress' => 0,
+                        'progess' => 0,
                         'expiration_date' => now()->addMonths(1),
                     ]);
                 }
@@ -79,6 +83,7 @@ class PaymentController extends Controller
             return redirect()->route('admin.payments.index')
                 ->with('success', 'Thanh toán đã được thêm thành công');
         } catch (\Exception $e) {
+            // Log lỗi nếu cần: Log::error($e);
             return redirect()->back()
                 ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
