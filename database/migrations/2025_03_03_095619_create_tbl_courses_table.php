@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('finish_time');
             $table->text('thumbnail');
             $table->integer('expiration_date');
+            $table->text('list_chapter');
             $table->float('rate')->default(0);
             $table->integer('student_enrolled')->default(0);
             $table->enum('status', ['Complete', 'Uncomplete']);

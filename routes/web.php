@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\CourseEnrolledController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
-use App\Models\Income;
+use App\Http\Controllers\User\ThemeHomeController;
+use App\Http\Controllers\User\ThemeLessonController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -15,26 +16,24 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\User\IndexController;
 use App\Http\Controllers\User\LoginController;
-use App\Http\Controllers\User\CourseUserController;
 
-Route::prefix('user')->group(function () {
-    // ------------User.login
-    Route::post('/register', [LoginController::class, 'storeRegister'])->name('user.register');
-    Route::get('/login', [LoginController::class, 'login'])->name('user.login');
-    Route::post('/login', [LoginController::class, 'authenticate']);
+// Trang chính & đăng nhập user
+Route::get('/', [ThemeHomeController::class, 'indexuser'])->name('user.index');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/register', [LoginController::class, 'register'])->name('user.register');
+
+// Trang User (Yêu cầu đăng nhập)
+Route::middleware('user.auth')->prefix('user')->group(function () {
+    Route::get('/course', [ThemeHomeController::class, 'course'])->name('user.course');
+    Route::get('/course-detail/{id}', [ThemeHomeController::class, 'course_detail'])->name('user.course-detail');
+    Route::get('/lessons/{lesson}', [ThemeLessonController::class, 'show'])->name('user.lessons.show');
+    Route::get('/course-enrolled', [ThemeHomeController::class, 'course_enrolled'])->name('user.enrolled-courses');
+    Route::get('/course-payment', [ThemeHomeController::class, 'course_payment'])->name('user.course-payment');
+
+    // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
-
-    // ------------User.index
-    Route::get('/index', [IndexController::class, 'index'])->name('user.index');
-
-    // ------------User.course
-    Route::get('/course/{id}', [CourseUserController::class, 'course_detail'])->name('user.course-detail');
-    Route::get('/course_enrolled', [CourseUserController::class, 'course_enrolled'])->name('user.course-enrolled');
-
-    //------------User.payment
-    Route::get('/course_payment', [IndexController::class, 'course_payment'])->name('user.course-payment');
 });
 
 Route::prefix('/admin')->group(function () {

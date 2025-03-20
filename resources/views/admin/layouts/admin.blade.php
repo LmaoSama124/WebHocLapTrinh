@@ -55,6 +55,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     @yield('scripts')
+    @yield('selectChapterScript')
 
     <!-- jQuery Scrollbar -->
     <script src="{{ asset('assets/admin/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>

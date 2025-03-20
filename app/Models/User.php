@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Import Authenticatable
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,10 +12,18 @@ class User extends Authenticatable
     protected $table = 'tbl_users';
 
     protected $fillable = [
-        'fullname', 'displayname', 'username', 'email', 'password', 'phone', 'avatar'
+        'fullname',
+        'displayname',
+        'username',
+        'email',
+        'password',
+        'phone',
+        'avatar',
+        'remember_token',
     ];
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function enrolledCourses()
+    {
+        return $this->hasMany(\App\Models\CourseEnrolled::class, 'id_user');
+    }
 }
