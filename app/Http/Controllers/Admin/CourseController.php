@@ -104,7 +104,6 @@ class CourseController extends Controller
             $data['list_chapter'] = json_encode(array_values($request->list_chapter));
         }
 
-        // Nếu có file thumbnail mới, xóa file cũ và lưu file mới
         if ($request->hasFile('thumbnail')) {
             if ($course->thumbnail) {
                 Storage::disk('public')->delete($course->thumbnail);
