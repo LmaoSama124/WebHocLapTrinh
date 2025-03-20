@@ -54,14 +54,12 @@ class CourseController extends Controller
             'list_chapter.*.chapter_title' => 'required|string',
         ]);
 
-        // Lấy dữ liệu trừ thumbnail và list_chapter
         $data = $request->except('thumbnail', 'list_chapter');
 
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
-        // Chuyển list_chapter thành JSON để lưu DB
         $data['list_chapter'] = json_encode(array_values($request->list_chapter));
 
         $course = Course::create($data);
