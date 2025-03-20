@@ -48,13 +48,6 @@ class VideoController extends Controller
             return redirect()->route('user.course-detail', $courseId)
                 ->with('error', 'Bạn cần đăng ký khóa học để xem video.');
         }
-
-        // $reviews = \App\Models\Review::where('id_course', $courseId)
-        //     ->where('status', 'exist')
-        //     ->orderByDesc('created_at')
-        //     ->get();
-
-        // ✅ Truyền courseId xuống view
         return view('user.video', compact('lesson', 'lessons', 'courseId'));
     }
 }

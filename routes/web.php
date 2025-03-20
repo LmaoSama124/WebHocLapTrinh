@@ -22,10 +22,12 @@ use App\Http\Controllers\User\CourseUserController;
 use App\Http\Controllers\User\VideoController;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.video');
+    Route::get('/course/{id}/lesson/{lessonId}', [VideoController::class, 'showVideo'])->name('user.video');
     Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
-    // Route::post('/video/{courseId}/review', [ReviewController::class, 'store'])->name('user.review.store');
-});
+    // Route gửi review
+    Route::post('/review/{course_id}', [ReviewController::class, 'store'])->middleware('auth');
+    Route::get('/reviews/{course_id}', [ReviewController::class, 'getReviews']);
+    });
 
 Route::prefix('user')->group(function () {
     // ------------User.login
@@ -43,7 +45,6 @@ Route::prefix('user')->group(function () {
 
     //------------User.payment
     Route::get('/course_payment', [IndexController::class, 'course_payment'])->name('user.course-payment');
-    
 });
 
 Route::prefix('/admin')->group(function () {
@@ -146,5 +147,3 @@ Route::prefix('/admin')->group(function () {
         Route::get('/courseEnrolled/{id}/edit', [CourseEnrolledController::class, 'edit'])->name('admin.courseEnrolled.edit');
     });
 });
-
-

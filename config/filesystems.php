@@ -67,8 +67,6 @@ return [
             'refresh_token' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
             'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'), // Thư mục chứa video
         ],
-
-
     ],
 
     /*
