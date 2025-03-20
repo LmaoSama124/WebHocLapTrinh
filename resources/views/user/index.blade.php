@@ -72,7 +72,7 @@
                                                         <div class="ms_lms_courses_grid__content  title_style_1">
                                                             <div class="ms_lms_courses_card_wrapper">
                                                                 <div class="ms_lms_courses_card card-style-1">
-                                                                    
+
                                                                     <!-- Content -->
                                                                     @foreach ($courses as $course)
                                                                         <div class="ms_lms_courses_card_item">
@@ -214,7 +214,7 @@
             </div>
         </div>
     </div>
-@endsection@extends('user.layouts.home')
+@endsection
 
 @section('content')
     <div id="wrapper" class="wrapper">
@@ -288,7 +288,7 @@
                                                         <div class="ms_lms_courses_grid__content  title_style_1">
                                                             <div class="ms_lms_courses_card_wrapper">
                                                                 <div class="ms_lms_courses_card card-style-1">
-                                                                    
+
                                                                     <!-- Content -->
                                                                     @foreach ($courses as $course)
                                                                         <div class="ms_lms_courses_card_item">
@@ -394,7 +394,8 @@
                                                                                                 data-remove="Remove from Wishlist"
                                                                                                 data-remove-icon="fa fa-heart"
                                                                                                 data-id="{{ $course->id }}">
-                                                                                                <i class="far fa-heart"></i>
+                                                                                                <i
+                                                                                                    class="far fa-heart"></i>
                                                                                                 <span>Add to Wishlist</span>
                                                                                             </div>
                                                                                         </div>
