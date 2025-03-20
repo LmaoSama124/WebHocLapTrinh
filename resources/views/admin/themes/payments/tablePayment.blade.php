@@ -45,6 +45,7 @@
                                 <th>ID Course</th>
                                 <th>Course Title</th>
                                 <th>Payment Method</th>
+                                <th>Content</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -52,6 +53,22 @@
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <th class="sticky-id">ID</th>
+                                <th>ID User</th>
+                                <th>Full Name</th>
+                                <th>ID Course</th>
+                                <th>Course Title</th>
+                                <th>Payment Method</th>
+                                <th>Content</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th class="sticky-actions">Actions</th>
+                            </tr>
+                        </tfoot>
                         <tbody>
                             @forelse ($payments as $payment)
                                 <tr>
@@ -61,6 +78,7 @@
                                     <td>{{ $payment->id_course }}</td>
                                     <td>{{ $payment->course->title ?? '--' }}</td>
                                     <td>{{ $payment->payment_method }}</td>
+                                    <td>{{ $payment->content }}</td>
                                     <td>{{ number_format($payment->amount, 2) }}</td>
                                     <td>{{ ucfirst($payment->status) }}</td>
                                     <td>{{ $payment->created_at }}</td>

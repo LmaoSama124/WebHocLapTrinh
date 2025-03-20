@@ -1,5 +1,5 @@
 <header id="masthead" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
-    <p class="main-title bhf-hidden" itemprop="headline"><a href="{{ route('user.index') }}" rel="home">HTAV2.vn</a>
+    <p class="main-title bhf-hidden" itemprop="headline"><a href="index.html" title="TITV" rel="home">TITV</a>
     </p>
     <div data-elementor-type="wp-post" data-elementor-id="48181" class="elementor elementor-48181">
         <section
@@ -30,6 +30,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-544f561f"
                     data-id="544f561f" data-element_type="column">
                     <div class="elementor-widget-wrap elementor-element-populated">
@@ -120,27 +121,40 @@
                     </div>
                 </div>
 
-                <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-50bfdaac"
-                    data-id="50bfdaac" data-element_type="column">
-                    <div class="elementor-widget-wrap elementor-element-populated">
-                        <div class="elementor-element elementor-element-19add38f elementor-widget elementor-widget-stm_lms_pro_site_authorization_links"
-                            data-id="19add38f" data-element_type="widget"
-                            data-widget_type="stm_lms_pro_site_authorization_links.default">
-                            <div class="elementor-widget-container">
-                                <a href="{{ route('user.login') }}" class="ms-lms-authorization">
-                                    <span class="ms-lms-authorization-icon">
-                                        <i class="fas fa-user" aria-hidden="true"></i>
-                                    </span>
-                                    <a href="{{ route('user.login') }}">
-                                        <span class="ms-lms-authorization-title">
-                                            login/sign up </span>
-                                    </a>
+                <div>
+                    <div class="dropdown">
+                        <button id="dLabel" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="stmlms-user11 masterstudy-dropdown-menu__icon"></i>
+                            <span class="login_name">Hey, {{ Auth::user()->displayname }}</span>
+                            <span class="caret"></span>
+                        </button>
+
+                        <!-- Menu dropdown -->
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ route('user.enrolled-courses') }}">Enrolled
+                                    Courses</a></li>
+                            <li><a class="dropdown-item" href="#">Messages</a></li>
+                            <li><a class="dropdown-item" href="#">Wishlist</a></li>
+                            <li><a class="dropdown-item" href="#">My Orders</a></li>
+                            <li><a class="dropdown-item" href="#">Groups</a></li>
+                            <li><a class="dropdown-item" href="#">My Assignments</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
                                 </a>
-                            </div>
-                        </div>
+                            </li>
+                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </section>
+    </div>
+    </section>
     </div>
 </header>
