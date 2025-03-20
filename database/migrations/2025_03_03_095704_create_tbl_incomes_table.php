@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('tbl_incomes', function (Blueprint $table) {
             $table->id();
             $table->integer('total_buyer');
-            $table->decimal('total_amount', 10, 2);
+            $table->decimal('total_amount', 15, 2);
             $table->integer('time');
             $table->timestamps();
         });

@@ -24,7 +24,7 @@
                                         </span>
                                     </a>
                                 </div>
-                            </div>                          
+                            </div>
                             <div class="masterstudy-single-course-sleek-sidebar__buttons">
                                 <div class="masterstudy-single-course-wishlist">
                                     <a href="../../user-account/index.html">
@@ -35,7 +35,7 @@
                                 <div class="masterstudy-single-course-share-button">
                                     <span class="masterstudy-single-course-share-button__title">
                                         Share </span>
-                                </div>                         
+                                </div>
                             </div>
                             <div class="masterstudy-single-course-price-info">
                                 Liên hệ </div>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="masterstudy-single-course-sleek-sidebar__main">
-                    <div class="masterstudy-single-course-sleek-sidebar__main-topbar">                       
+                    <div class="masterstudy-single-course-sleek-sidebar__main-topbar">
                         <div class="masterstudy-single-course-sleek-sidebar__heading">
                             <h1 class="masterstudy-single-course-title">{{ $course->title }}</h1>
                         </div>
@@ -91,9 +91,10 @@
                                     <div class="masterstudy-single-course-rating__wrapper">
                                         @for ($i = 1; $i <= 5; $i++)
                                             <span class="masterstudy-single-course-rating__star {{ $i <= $course->rate ? 'filled' : '' }}"></span>
-                                        @endfor
-                                        <div class="masterstudy-single-course-rating__count">
-                                            {{ $course->rate }} </div>
+                                            @endfor
+                                            <div class="masterstudy-single-course-rating__count">
+                                                {{ $course->rate }}
+                                            </div>
                                     </div>
                                     <div class="masterstudy-single-course-rating__quantity">
                                         0 reviews </div>
@@ -141,7 +142,7 @@
 
                             <div class="masterstudy-curriculum-list  ">
                                 @php
-                                    $chapters = $lessons->pluck('chapter')->unique();
+                                $chapters = $lessons->pluck('chapter')->unique();
                                 @endphp
 
                                 @foreach($chapters as $chapter)
@@ -154,22 +155,24 @@
 
                                     <ul class="masterstudy-curriculum-list__materials">
                                         @php
-                                            $chapterLessons = $lessons->where('chapter', $chapter);
-                                            $lessonCounter = 1;
+                                        $chapterLessons = $lessons->where('chapter', $chapter);
+                                        $lessonCounter = 1;
                                         @endphp
-                                        
+
                                         @foreach($chapterLessons as $lesson)
                                         <li class="masterstudy-curriculum-list__item">
-                                            <a href="{{ $lesson->url }}"
+                                            <a href="{{ route('user.video', ['id' => $lesson->id_course, 'lessonId' => $lesson->id]) }}"
                                                 class="masterstudy-curriculum-list__link {{ $lesson->is_preview ? '' : 'masterstudy-curriculum-list__link_disabled' }}">
                                                 <div class="masterstudy-curriculum-list__order">
-                                                    {{ $lessonCounter++ }} </div>
+                                                    {{ $lessonCounter++ }}
+                                                </div>
                                                 <img src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/icons/lessons/video.svg') }}"
                                                     class="masterstudy-curriculum-list__image">
                                                 <div class="masterstudy-curriculum-list__container">
                                                     <div class="masterstudy-curriculum-list__container-wrapper">
                                                         <div class="masterstudy-curriculum-list__title">
-                                                            {{ $lesson->title }} </div>
+                                                            {{ $lesson->title }}
+                                                        </div>
                                                         <div class="masterstudy-curriculum-list__meta-wrapper">
                                                             @if($lesson->is_preview)
                                                             <span class="masterstudy-curriculum-list__preview">
@@ -422,5 +425,5 @@
         </div>
     </div>
 </div>
-    
+
 @endsection
