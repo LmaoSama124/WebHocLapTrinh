@@ -37,6 +37,7 @@ class VideoController extends Controller
 
     public function showVideo($courseId, $lessonId)
     {
+        $user = Auth::user();
         $lesson = Lesson::findOrFail($lessonId);
         $lessons = Lesson::where('id_course', $courseId)->get();
 
@@ -55,6 +56,6 @@ class VideoController extends Controller
         //     ->get();
 
         // ✅ Truyền courseId xuống view
-        return view('user.video', compact('lesson', 'lessons', 'courseId'));
+        return view('user.video', compact('user', 'lesson', 'lessons', 'courseId'));
     }
 }

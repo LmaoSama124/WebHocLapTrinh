@@ -6,8 +6,10 @@ use App\Http\Controllers\Admin\CourseEnrolledController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\User\CourseUserController;
 use App\Http\Controllers\User\ThemeHomeController;
 use App\Http\Controllers\User\ThemeLessonController;
+use App\Http\Controllers\User\VideoController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -26,6 +28,10 @@ Route::get('/register', [LoginController::class, 'register'])->name('user.regist
 
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
+    // Xử lý video
+    Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.video');
+    Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
+
     Route::get('/course', [ThemeHomeController::class, 'course'])->name('user.course');
     Route::get('/course-detail/{id}', [ThemeHomeController::class, 'course_detail'])->name('user.course-detail');
     Route::get('/lessons/{lesson}', [ThemeLessonController::class, 'show'])->name('user.lessons.show');

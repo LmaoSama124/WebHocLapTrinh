@@ -229,7 +229,7 @@
                                                 <ul class="masterstudy-curriculum-list__materials">
                                                     @foreach ($lessons as $lesson)
                                                         <li class="masterstudy-curriculum-list__item">
-                                                            <a href="{{ route('user.lessons.show', ['course' => $course->id, 'lesson' => $lesson->id]) }}"
+                                                            <a href="{{ route('user.video', ['id' => $course->id, 'lessonId' => $lesson->id]) }}"
                                                                 class="masterstudy-curriculum-list__link">
                                                                 <div class="masterstudy-curriculum-list__order">
                                                                     {{ $loop->iteration }}</div>
