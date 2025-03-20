@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Course;
@@ -10,28 +9,31 @@ use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
-    // Hiển thị danh sách tất cả khoá học
     public function index()
     {
         $courses = Course::with('category')->get();
         return view('admin.themes.courses.tableCourse', compact('courses'));
     }
 
-    // Hiển thị chi tiết một khoá học
     public function show($id)
     {
         $course = Course::with('category')->findOrFail($id);
         return view('admin.themes.courses.courseDetail', compact('course'));
     }
 
-    // Hiển thị form tạo khoá học mới
     public function create()
     {
         $categories = Category::all();
-        return view('admin.themes.courses.createCourse', compact('categories'));
+        $courses = Course::select('id', 'title', 'list_chapter')->get();
+
+        foreach ($courses as $course) {
+            $course->chapters = json_decode($course->list_chapter, true) ?? [];
+        }
+
+        return view('admin.themes.courses.createCourse', compact('categories', 'courses'));
     }
 
-    // Lưu khoá học mới vào database
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,24 +49,24 @@ class CourseController extends Controller
             'status' => 'required|in:Complete,Uncomplete',
             'is_free' => 'required|boolean',
             'is_popular' => 'required|boolean',
+            'list_chapter' => 'required|array',
+            'list_chapter.*.chapter_number' => 'required|integer|min:1',
+            'list_chapter.*.chapter_title' => 'required|string',
         ]);
 
-        $data = $request->except('thumbnail');
+        $data = $request->except('thumbnail', 'list_chapter');
 
-        // ✅ Xử lý file ảnh nếu có
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = $thumbnailPath;
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
+
+        $data['list_chapter'] = json_encode(array_values($request->list_chapter));
 
         $course = Course::create($data);
 
-        return $course
-            ? redirect()->route('admin.courses.index')->with('success', 'Khóa học đã được thêm thành công')
-            : back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+        return redirect()->route('admin.courses.index')->with('success', 'Khóa học đã được thêm thành công');
     }
 
-    // Hiển thị form chỉnh sửa khoá học
     public function edit($id)
     {
         $course = Course::findOrFail($id);
@@ -72,7 +74,6 @@ class CourseController extends Controller
         return view('admin.themes.courses.editCourse', compact('course', 'categories'));
     }
 
-    // Cập nhật thông tin khoá học
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -90,18 +91,24 @@ class CourseController extends Controller
             'status' => 'required|in:Complete,Uncomplete',
             'is_free' => 'required|boolean',
             'is_popular' => 'required|boolean',
+            'list_chapter' => 'nullable|array',
+            'list_chapter.*.chapter_number' => 'required|integer|min:1',
+            'list_chapter.*.chapter_title' => 'required|string',
         ]);
 
         $course = Course::findOrFail($id);
-        $data = $request->except('thumbnail');
+        $data = $request->except(['thumbnail', 'list_chapter']);
 
-        // ✅ Kiểm tra và xóa ảnh cũ trước khi cập nhật thumbnail mới
+        // Nếu form có gửi list_chapter thì mới cập nhật
+        if ($request->has('list_chapter')) {
+            $data['list_chapter'] = json_encode(array_values($request->list_chapter));
+        }
+
         if ($request->hasFile('thumbnail')) {
             if ($course->thumbnail) {
                 Storage::disk('public')->delete($course->thumbnail);
             }
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = $thumbnailPath;
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $course->update($data);
@@ -109,12 +116,10 @@ class CourseController extends Controller
         return redirect()->route('admin.courses.index')->with('success', 'Thông tin khóa học đã được cập nhật');
     }
 
-    // Xóa một khoá học
     public function destroy($id)
     {
         $course = Course::findOrFail($id);
 
-        // ✅ Xóa ảnh trong storage nếu có
         if ($course->thumbnail) {
             Storage::disk('public')->delete($course->thumbnail);
         }

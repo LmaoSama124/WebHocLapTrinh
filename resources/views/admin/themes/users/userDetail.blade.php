@@ -63,7 +63,7 @@
                             <td><strong>Avatar</strong></td>
                             <td>
                                 @if (!empty($user->avatar))
-                                    <img src="{{ asset($user->avatar) }}" alt="Avatar" width="50">
+                                    <img src="{{ asset('storage/'. $user->avatar) }}" alt="Avatar" width="50">
                                 @else
                                     <span class="badge bg-danger">No data</span>
                                 @endif

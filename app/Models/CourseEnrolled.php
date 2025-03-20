@@ -11,14 +11,7 @@ class CourseEnrolled extends Model
 
     protected $table = 'tbl_course_enrolled';
 
-    protected $fillable = [
-        'id_user',
-        'id_course',
-        'title_course',
-        'status',
-        'progess',
-        'expiration_date',
-    ];
+    protected $fillable = ['id_user', 'id_course', 'title_course', 'status', 'progess', 'expiration_date'];
 
     public function user()
     {

@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/kaiadmin.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/css/option.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/option.css') }}" />
 
 </head>
 
@@ -52,6 +52,10 @@
     <script src="{{ asset('assets/admin/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/core/bootstrap.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    @yield('scripts')
+    @yield('selectChapterScript')
 
     <!-- jQuery Scrollbar -->
     <script src="{{ asset('assets/admin/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
@@ -111,6 +115,7 @@
             fillColor: "rgba(255, 165, 52, .14)",
         });
     </script>
+
     <!-- End js -->
 </body>
 

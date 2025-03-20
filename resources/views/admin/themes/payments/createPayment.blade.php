@@ -16,6 +16,23 @@
       </ul>
     </div>
 
+    @if ($errors->any())
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+      let errorMessages = "";
+      @foreach ($errors->all() as $error)
+      errorMessages += "{{ $error }}\n";
+    @endforeach
+      Swal.fire({
+      icon: 'error',
+      title: 'Lỗi nhập liệu!',
+      text: errorMessages,
+      confirmButtonText: 'OK'
+      });
+      });
+    </script>
+  @endif
+
     <div class="row">
       <form action="{{ route('admin.payments.store') }}" method="post">
       @csrf
@@ -41,11 +58,13 @@
 
             <div class="form-group">
             <label for="id_course">Khóa học</label>
-            <select name="id_course" class="form-select select2" id="id_course" required>
-              <option value="" disabled selected>Chọn khóa học...</option>
+            <select name="id_course" class="form-select selectpicker" id="id_course" data-live-search="true"
+              title="Chọn khóa học..." required>
+              <option value="" disabled selected>Chọn khoá học...</option>
               @foreach ($courses as $course)
-          <option value="{{ $course->id }}">{{ $course->title }} - {{ number_format($course->price, 0) }}
-          VNĐ</option>
+          <option value="{{ $course->id }}">
+          {{ $course->title }} - {{ number_format($course->price, 0) }} VNĐ
+          </option>
         @endforeach
             </select>
             </div>
@@ -57,6 +76,13 @@
               <option value="banking">Banking</option>
             </select>
             </div>
+
+            <div class="form-group" id="banking_content_group" style="display: none;">
+            <label for="content">Nội dung chuyển khoản</label>
+            <input type="text" name="content" class="form-control" id="content"
+              placeholder="Nhập nội dung chuyển khoản" />
+            </div>
+
 
             <div class="form-group">
             <label for="amount">Số tiền</label>
@@ -86,16 +112,29 @@
     </div>
   </div>
 
-  <!-- Import Select2 -->
   @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <!-- Select2 -->
     <script>
     $(document).ready(function () {
-    $('.select2').select2({
-      placeholder: "Tìm kiếm...",
-      allowClear: true
+
+    $('#payment_method').change(function () {
+      if ($(this).val() === 'banking') {
+      $('#banking_content_group').show();
+      $('#amount').val(0).prop('readonly', true);
+      } else {
+      $('#banking_content_group').hide();
+      $('#content').val('');
+      $('#amount').prop('readonly', false);
+      }
     });
+
+    // Kiểm tra giá trị mặc định khi load trang (trong trường hợp chỉnh sửa)
+    if ($('#payment_method').val() === 'banking') {
+      $('#banking_content_group').show();
+      $('#amount').val(0).prop('readonly', true);
+    }
     });
     </script>
   @endsection
+
 @endsection
