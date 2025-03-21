@@ -226,11 +226,10 @@
                                                     </span>
                                                     <span class="masterstudy-curriculum-list__toggler"></span>
                                                 </div>
-<<<<<<< HEAD
                                                 <ul class="masterstudy-curriculum-list__materials">
                                                     @foreach ($lessons as $lesson)
                                                         <li class="masterstudy-curriculum-list__item">
-                                                            <a href="{{ route('user.video', ['id' => $course->id, 'lessonId' => $lesson->id]) }}"
+                                                            <a href="{{ route('user.lessons.show', ['course' => $course->id, 'lesson' => $lesson->id]) }}"
                                                                 class="masterstudy-curriculum-list__link">
                                                                 <div class="masterstudy-curriculum-list__order">
                                                                     {{ $loop->iteration }}</div>
@@ -257,269 +256,84 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
-=======
-                                                <img src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/icons/lessons/video.svg') }}"
-                                                    class="masterstudy-curriculum-list__image">
-                                                <div class="masterstudy-curriculum-list__container">
-                                                    <div class="masterstudy-curriculum-list__container-wrapper">
-                                                        <div class="masterstudy-curriculum-list__title">
-                                                            {{ $lesson->title }}
-                                                        </div>
-                                                        <div class="masterstudy-curriculum-list__meta-wrapper">
-                                                            @if($lesson->is_preview)
-                                                            <span class="masterstudy-curriculum-list__preview">
-                                                                Preview </span>
-                                                            @endif
-                                                            <span class="masterstudy-curriculum-list__meta">
-                                                                {{ $lesson->time }} </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
->>>>>>> b6de84870119d28e470632dea8dde6b442681360
                                         @endforeach
-                                    </ul>
+                                    @else
+                                        <p>No curriculum available.</p>
+                                    @endif
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="masterstudy-single-course-tabs__container  " data-id="reviews">
-                            <span class="masterstudy-single-course-tabs__container-title">
-                                Reviews </span>
-                            <div class="masterstudy-single-course-reviews">
-                                <div
-                                    class="masterstudy-single-course-reviews__main masterstudy-single-course-reviews__main_empty">
-                                    <div class="masterstudy-single-course-reviews__form-message"></div>
-                                    <div class="masterstudy-single-course-reviews__row">
-                                        <div class="masterstudy-single-course-reviews__detailed	">
-                                            <div class="masterstudy-single-course-reviews__login">
-                                                Please, <a href="../../user-account/index.html"
-                                                    class="masterstudy-single-course-reviews__login-link"
-                                                    target="_blank">login</a> to leave a review </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endauth
-
-                                <div id="reviewList" class="mt-3"></div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="masterstudy-popular-courses">
-                        <span class="masterstudy-popular-courses__title">
-                            Popular courses </span>
-                        <ul class="masterstudy-popular-courses__list">
+                </div>
+                <!-- Popular Courses Section -->
+                <div class="masterstudy-popular-courses">
+                    <span class="masterstudy-popular-courses__title">Popular courses</span>
+                    <ul class="masterstudy-popular-courses__list">
+                        @foreach ($popularCourses as $popCourse)
                             <li class="masterstudy-popular-courses__item">
                                 <div class="masterstudy-popular-courses__link">
-                                    <a href="../video-thi-giac-may-tinh-computer-vision/index.html"
-                                        target="_blank" class="masterstudy-popular-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2024/03/24.png') }}" alt="24.png"
-                                            class="masterstudy-popular-courses__image">
-                                    </a>
-                                    <div class="masterstudy-popular-courses__item-meta">
-                                        <a href="../video-thi-giac-may-tinh-computer-vision/index.html"
-                                            target="_blank" class="masterstudy-popular-courses__item-title">
-                                            [Video] Thị giác máy tính - Computer ... </a>
-                                        <div class="masterstudy-popular-courses__item-block">
-                                            <div class="masterstudy-popular-courses__price ">
-                                                Free </div>
-                                            <div class="masterstudy-popular-courses__rating">
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                            </div>
-                                        </div>
-                                        <a href="../../user-public-account/1/index.html" target="_blank"
-                                            class="masterstudy-popular-courses__instructor ">
-                                            By admin </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="masterstudy-popular-courses__item">
-                                <div class="masterstudy-popular-courses__link">
-                                    <a href="../video-cau-truc-du-lieu-va-giai-thuat-java/index.html"
-                                        target="_blank" class="masterstudy-popular-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2024/03/CTDLVGTJAVA.png') }}"
-                                            alt="CTDLVGTJAVA.png" class="masterstudy-popular-courses__image">
-                                    </a>
-                                    <div class="masterstudy-popular-courses__item-meta">
-                                        <a href="../video-cau-truc-du-lieu-va-giai-thuat-java/index.html"
-                                            target="_blank" class="masterstudy-popular-courses__item-title">
-                                            Cấu trúc dữ liệu và giải thuật Java </a>
-                                        <div class="masterstudy-popular-courses__item-block">
-                                            <div class="masterstudy-popular-courses__price ">
-                                                Free </div>
-                                            <div class="masterstudy-popular-courses__rating">
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                            </div>
-                                        </div>
-                                        <a href="../../user-public-account/1/index.html" target="_blank"
-                                            class="masterstudy-popular-courses__instructor ">
-                                            By admin </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="masterstudy-popular-courses__item">
-                                <div class="masterstudy-popular-courses__link">
-                                    <a href="../he-dieu-hanh/index.html" target="_blank"
+                                    <a href="{{ route('user.course-detail', $popCourse->id) }}" target="_blank"
                                         class="masterstudy-popular-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2023/01/He-dieu-hanh-300x225.png') }}"
-                                            alt="He dieu hanh" class="masterstudy-popular-courses__image">
+                                        <img src="{{ asset('storage/' . $popCourse->thumbnail) }}"
+                                            alt="{{ $popCourse->title }}" class="masterstudy-popular-courses__image">
                                     </a>
                                     <div class="masterstudy-popular-courses__item-meta">
-                                        <a href="../he-dieu-hanh/index.html" target="_blank"
+                                        <a href="{{ route('user.course-detail', $popCourse->id) }}" target="_blank"
                                             class="masterstudy-popular-courses__item-title">
-                                            [Video] Nguyên lý Hệ điều hành </a>
+                                            {{ $popCourse->title }}
+                                        </a>
                                         <div class="masterstudy-popular-courses__item-block">
-                                            <div class="masterstudy-popular-courses__price ">
-                                                Free </div>
+                                            <div class="masterstudy-popular-courses__price">
+                                                {{ $popCourse->price > 0 ? number_format($popCourse->price) . ' đ' : 'Free' }}
+                                            </div>
                                             <div class="masterstudy-popular-courses__rating">
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <span
+                                                        class="masterstudy-popular-courses__rating-star {{ $popCourse->rating > $i ? 'active' : '' }}"></span>
+                                                @endfor
                                             </div>
                                         </div>
-                                        <a href="../../user-public-account/1/index.html" target="_blank"
-                                            class="masterstudy-popular-courses__instructor ">
-                                            By admin </a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="masterstudy-popular-courses__item">
-                                <div class="masterstudy-popular-courses__link">
-                                    <a href="../sql-server/index.html" target="_blank"
-                                        class="masterstudy-popular-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2023/04/lap-trinh-c-300-%c3%97-152-px.png') }}"
-                                            alt="lập trình c (300 × 152 px)"
-                                            class="masterstudy-popular-courses__image">
-                                    </a>
-                                    <div class="masterstudy-popular-courses__item-meta">
-                                        <a href="../sql-server/index.html" target="_blank"
-                                            class="masterstudy-popular-courses__item-title">
-                                            [Video] SQL Server - Cơ bản và Nâng cao </a>
-                                        <div class="masterstudy-popular-courses__item-block">
-                                            <div class="masterstudy-popular-courses__price ">
-                                                Free </div>
-                                            <div class="masterstudy-popular-courses__rating">
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                                <span class="masterstudy-popular-courses__rating-star "></span>
-                                            </div>
-                                        </div>
-                                        <a href="../../user-public-account/1/index.html" target="_blank"
-                                            class="masterstudy-popular-courses__instructor ">
-                                            By admin </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="masterstudy-related-courses">
-                        <span class="masterstudy-related-courses__title">
-                            Related courses </span>
-                        <ul class="masterstudy-related-courses__list">
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- Related Courses Section -->
+                <div class="masterstudy-related-courses">
+                    <span class="masterstudy-related-courses__title">Related courses</span>
+                    <ul class="masterstudy-related-courses__list">
+                        @foreach ($relatedCourses as $relCourse)
                             <li class="masterstudy-related-courses__item">
                                 <div class="masterstudy-related-courses__link">
-                                    <a href="../lap-trinh-web-php-and-mysql/index.html" target="_blank"
+                                    <a href="{{ route('user.course-detail', $relCourse->id) }}" target="_blank"
                                         class="masterstudy-related-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2024/03/phpmysql.png') }}" alt="phpmysql"
-                                            class="masterstudy-related-courses__image">
+                                        <img src="{{ asset('storage/' . $relCourse->thumbnail) }}"
+                                            alt="{{ $relCourse->title }}" class="masterstudy-related-courses__image">
                                     </a>
                                     <div class="masterstudy-related-courses__item-meta">
-                                        <a href="../lap-trinh-web-php-and-mysql/index.html" target="_blank"
+                                        <a href="{{ route('user.course-detail', $relCourse->id) }}" target="_blank"
                                             class="masterstudy-related-courses__item-title">
-                                            Lập trình web PHP &amp; MySQL </a>
+                                            {{ $relCourse->title }}
+                                        </a>
                                         <div class="masterstudy-related-courses__item-block">
-                                            <div class="masterstudy-related-courses__price ">
-                                                Free </div>
+                                            <div class="masterstudy-related-courses__price">
+                                                {{ $relCourse->price > 0 ? number_format($relCourse->price) . ' đ' : 'Free' }}
+                                            </div>
                                             <div class="masterstudy-related-courses__rating">
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <span
+                                                        class="masterstudy-related-courses__rating-star {{ $relCourse->rating > $i ? 'active' : '' }}"></span>
+                                                @endfor
                                             </div>
                                         </div>
-                                        <a class="masterstudy-related-courses__instructor "
-                                            href="../../user-public-account/1/index.html" target="_blank">
-                                            By admin </a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="masterstudy-related-courses__item">
-                                <div class="masterstudy-related-courses__link">
-                                    <a href="../tkw/index.html" target="_blank"
-                                        class="masterstudy-related-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2024/03/25-1.png') }}" alt="25.png"
-                                            class="masterstudy-related-courses__image">
-                                    </a>
-                                    <div class="masterstudy-related-courses__item-meta">
-                                        <a href="../tkw/index.html" target="_blank"
-                                            class="masterstudy-related-courses__item-title">
-                                            [Video] Thiết kế web - HTML - CSS - J... </a>
-                                        <div class="masterstudy-related-courses__item-block">
-                                            <div class="masterstudy-related-courses__price ">
-                                                Free </div>
-                                            <div class="masterstudy-related-courses__rating">
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                            </div>
-                                        </div>
-                                        <a class="masterstudy-related-courses__instructor "
-                                            href="../../user-public-account/1/index.html" target="_blank">
-                                            By admin </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="masterstudy-related-courses__item">
-                                <div class="masterstudy-related-courses__link">
-                                    <a href="../lap-trinh-mang-su-dung-java/index.html" target="_blank"
-                                        class="masterstudy-related-courses__image-wrapper">
-                                        <img src="{{ asset('assets/user/wp-content/uploads/2023/06/laptrinhmang-3.png') }}"
-                                            alt="laptrinhmang" class="masterstudy-related-courses__image">
-                                    </a>
-                                    <div class="masterstudy-related-courses__item-meta">
-                                        <a href="../lap-trinh-mang-su-dung-java/index.html" target="_blank"
-                                            class="masterstudy-related-courses__item-title">
-                                            [Video] Lập trình mạng (sử dụng Java) </a>
-                                        <div class="masterstudy-related-courses__item-block">
-                                            <div class="masterstudy-related-courses__price ">
-                                                Free </div>
-                                            <div class="masterstudy-related-courses__rating">
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                                <span class="masterstudy-related-courses__rating-star "></span>
-                                            </div>
-                                        </div>
-                                        <a class="masterstudy-related-courses__instructor "
-                                            href="../../user-public-account/1/index.html" target="_blank">
-                                            By admin </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 @endsection

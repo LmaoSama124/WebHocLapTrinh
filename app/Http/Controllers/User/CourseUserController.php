@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseUserController extends Controller
 {
-<<<<<<< HEAD
     public function showVideo($id, $lessonId)
     {
         if (!Auth::check()) {
@@ -35,8 +35,7 @@ class CourseUserController extends Controller
                 ->with('error', 'Bạn cần đăng ký khóa học để xem video này.');
         }
     }
-=======
->>>>>>> b6de84870119d28e470632dea8dde6b442681360
+
     public function course_detail($id)
     {
         $course = Course::findOrFail($id);
