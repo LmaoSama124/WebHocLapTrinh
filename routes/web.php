@@ -19,16 +19,13 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\LoginController;
-use App\Http\Controllers\User\CourseUserController;
-use App\Http\Controllers\User\VideoController;
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.video');
-    Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
-    // Route::post('/video/{courseId}/review', [ReviewController::class, 'store'])->name('user.review.store');
-});
+// Trang chính & đăng nhập user
+Route::get('/', [ThemeHomeController::class, 'indexuser'])->name('user.index');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/register', [LoginController::class, 'register'])->name('user.register');
 
-<<<<<<< HEAD
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
     // Xử lý video
@@ -42,25 +39,7 @@ Route::middleware('user.auth')->prefix('user')->group(function () {
     Route::get('/course-payment', [ThemeHomeController::class, 'course_payment'])->name('user.course-payment');
 
     // Logout
-=======
-Route::prefix('user')->group(function () {
-    // ------------User.login
-    Route::post('/register', [LoginController::class, 'storeRegister'])->name('user.register');
-    Route::get('/login', [LoginController::class, 'login'])->name('user.login');
-    Route::post('/login', [LoginController::class, 'authenticate']);
->>>>>>> b6de84870119d28e470632dea8dde6b442681360
     Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
-
-    // ------------User.index
-    Route::get('/index', [IndexController::class, 'index'])->name('user.index');
-
-    // ------------User.course
-    Route::get('/course/{id}', [CourseUserController::class, 'course_detail'])->name('user.course-detail');
-    Route::get('/course_enrolled', [CourseUserController::class, 'course_enrolled'])->name('user.course-enrolled');
-
-    //------------User.payment
-    Route::get('/course_payment', [IndexController::class, 'course_payment'])->name('user.course-payment');
-    
 });
 
 Route::prefix('/admin')->group(function () {
@@ -164,5 +143,3 @@ Route::prefix('/admin')->group(function () {
         Route::get('/courseEnrolled/{id}/edit', [CourseEnrolledController::class, 'edit'])->name('admin.courseEnrolled.edit');
     });
 });
-
-
