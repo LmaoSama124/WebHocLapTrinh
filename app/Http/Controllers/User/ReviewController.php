@@ -1,28 +1,60 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Review;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
-    public function store(Request $request, $courseId)
+    // Lấy danh sách review mới nhất
+    public function getReviews($course_id)
     {
-        $request->validate([
-            'content' => 'required|string',
-        ]);
+        $reviews = Review::with('user')
+            ->where('id_course', $course_id)
+            ->where('status', 'exist')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        Review::create([
-            'id_user' => Auth::id(),
-            'id_course' => $courseId,
-            'content' => $request->input('content'),
-            'rate' => 5,
-            'status' => 'exist'
-        ]);
+        return response()->json($reviews);
+    }
 
-        return back()->with('success', 'Bình luận của bạn đã được gửi!');
+    // Xử lý comment (chỉ người đã đăng ký khóa học mới được comment)
+    public function store(Request $request, $course_id)
+    {
+        $user = Auth::user();
+
+        // Check đã đăng ký khóa học chưa
+        $isEnrolled = DB::table('tbl_payments')
+            ->where('id_course', $course_id)
+            ->where('id_user', $user->id)
+            ->where('status', 'success')
+            ->exists();
+
+
+        if (!$isEnrolled) {
+            return response()->json(['error' => 'Bạn cần đăng ký khóa học để comment'], 403);
+        }
+
+        // Lưu review
+        $review = new Review();
+        $review->id_user = $user->id;
+        $review->id_course = $course_id;
+        $review->content = $request->input('content');
+        $review->rate = $request->input('rate', 5);
+        $review->status = 'exist';
+        $review->save();
+
+        return response()->json([
+            'success' => true,
+            'review' => [
+                'user' => $user->displayname,
+                'content' => $review->content,
+                'date' => $review->created_at->diffForHumans()
+            ]
+        ]);
     }
 }

@@ -6,10 +6,16 @@
 
     <div class="row">
         <div class="col-md-8">
-            <iframe width="100%" height="450"
-                src="https://drive.google.com/file/d/{{ $lesson->url }}/preview"
-                allowfullscreen>
-            </iframe>
+            <div class="video-wrapper position-relative">
+                <iframe width="100%" height="450"
+                    src="https://drive.google.com/file/d/{{ $lesson->url }}/preview"
+                    allowfullscreen>
+                </iframe>
+
+                <!-- Nút cover góc trên bên phải -->
+                <div class="cover-corner"></div>
+            </div>
+
 
             <div class="mt-3">
                 <a href="{{ route('user.course-detail', $lesson->id_course) }}" class="btn btn-primary">Quay lại khóa học</a>
@@ -21,11 +27,11 @@
             <h4>Danh sách bài học</h4>
             <ul class="list-group">
                 @foreach($lessons as $item)
-                    <li class="list-group-item {{ $item->id == $lesson->id ? 'active' : '' }}">
-                        <a href="{{ route('user.video', ['id' => $lesson->id_course, 'lessonId' => $item->id]) }}">
-                            {{ $item->title }}
-                        </a>
-                    </li>
+                <li class="list-group-item {{ $item->id == $lesson->id ? 'active' : '' }}">
+                    <a href="{{ route('user.video', ['id' => $lesson->id_course, 'lessonId' => $item->id]) }}">
+                        {{ $item->title }}
+                    </a>
+                </li>
                 @endforeach
             </ul>
         </div>
@@ -34,24 +40,25 @@
 
 <!-- CSS -->
 <style>
-    .video-container {
+    .video-wrapper {
         position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; /* Tỷ lệ 16:9 */
-        height: 0;
-        overflow: hidden;
-        background-color: #000;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .video-container iframe {
+    .video-wrapper iframe {
+        border-radius: 8px;
+        width: 100%;
+        height: 450px;
+    }
+
+    .video-cover {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border-radius: 8px;
+        cursor: default;
+        background-color: transparent;
+        z-index: 10;
     }
 
     .list-group-item a {
@@ -88,13 +95,27 @@
     }
 
     @media (max-width: 768px) {
-        .video-container {
-            padding-bottom: 75%;
+        .video-wrapper iframe {
+            height: 300px;
         }
 
         .btn-primary {
             width: 100%;
         }
+    }
+
+    .cover-corner {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 60px;
+        /* Chiều rộng vùng chặn */
+        height: 60px;
+        /* Chiều cao vùng chặn */
+        cursor: pointer;
+        background-color: transparent;
+        /* Không nhìn thấy */
+        z-index: 10;
     }
 </style>
 @endsection
