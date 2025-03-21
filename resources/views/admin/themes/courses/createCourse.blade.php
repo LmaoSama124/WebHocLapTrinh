@@ -57,22 +57,26 @@
                   <div class="col-md-6 col-lg-4">
                     <div class="form-group">
                       <label for="title">Tên khóa học</label>
-                      <input type="text" name="title" class="form-control" id="title" placeholder="Nhập tên khóa học..." required />
+                      <input type="text" name="title" class="form-control" id="title"
+                             placeholder="Nhập tên khóa học..." required />
                     </div>
 
                     <div class="form-group">
                       <label for="level">Cấp độ</label>
-                      <input type="text" name="level" class="form-control" id="level" placeholder="Nhập cấp độ..." required />
+                      <input type="text" name="level" class="form-control" id="level"
+                             placeholder="Nhập cấp độ..." required />
                     </div>
 
                     <div class="form-group">
                       <label for="lesson">Số bài học</label>
-                      <input type="number" name="lesson" class="form-control" id="lesson" placeholder="Nhập số bài học..." required />
+                      <input type="number" name="lesson" class="form-control" id="lesson"
+                             placeholder="Nhập số bài học..." required />
                     </div>
 
                     <div class="form-group">
                       <label for="price">Giá</label>
-                      <input type="number" step="0.01" name="price" class="form-control" id="price" placeholder="Nhập giá khóa học..." required />
+                      <input type="number" step="0.01" name="price" class="form-control" id="price"
+                             placeholder="Nhập giá khóa học..." required />
                     </div>
 
                     <div class="form-group">
@@ -87,12 +91,14 @@
 
                     <div class="form-group">
                       <label for="total_time_finish">Tổng thời gian hoàn thành</label>
-                      <input type="text" name="total_time_finish" class="form-control" id="total_time_finish" placeholder="Nhập tổng thời gian hoàn thành..." required />
+                      <input type="text" name="total_time_finish" class="form-control" id="total_time_finish"
+                             placeholder="Nhập tổng thời gian hoàn thành..." required />
                     </div>
 
                     <div class="form-group">
                       <label for="finish_time">Thời gian hoàn thành</label>
-                      <input type="text" name="finish_time" class="form-control" id="finish_time" placeholder="Nhập thời gian hoàn thành..." required />
+                      <input type="text" name="finish_time" class="form-control" id="finish_time"
+                             placeholder="Nhập thời gian hoàn thành..." required />
                     </div>
 
                     <div class="form-group">
@@ -135,6 +141,23 @@
                         <option value="0">Không</option>
                       </select>
                     </div>
+
+                    <!-- List Chapter Input -->
+                    <div class="form-group">
+                      <label for="list_chapter">Danh sách chương</label>
+                      <div id="chapter-list">
+                        <!-- Mặc định có 1 dòng chương -->
+                        <div class="chapter-item d-flex mb-2">
+                          <input type="text" name="list_chapter[0][chapter_title]"
+                                 class="form-control me-2" placeholder="Nhập tiêu đề chương" required>
+                          <input type="number" name="list_chapter[0][chapter_number]"
+                                 class="form-control me-2" placeholder="Chương số" min="1" required>
+                          <button type="button" class="btn btn-danger btn-sm remove-chapter">X</button>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addChapter()">Thêm chương</button>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -149,4 +172,27 @@
       </div>
     </div>
   </div>
+
+  <script>
+    let chapterIndex = 1; // Dùng để tạo index động cho các chương mới
+
+    function addChapter() {
+      let container = document.getElementById('chapter-list');
+      let div = document.createElement('div');
+      div.className = 'chapter-item d-flex mb-2';
+      div.innerHTML = `
+        <input type="text" name="list_chapter[${chapterIndex}][chapter_title]" class="form-control me-2" placeholder="Nhập tiêu đề chương" required>
+        <input type="number" name="list_chapter[${chapterIndex}][chapter_number]" class="form-control me-2" placeholder="Chương số" min="1" required>
+        <button type="button" class="btn btn-danger btn-sm remove-chapter">X</button>
+      `;
+      container.appendChild(div);
+      chapterIndex++;
+    }
+
+    document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('remove-chapter')) {
+        event.target.closest('.chapter-item').remove();
+      }
+    });
+  </script>
 @endsection

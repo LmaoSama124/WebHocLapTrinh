@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('content') 
+@section('content')
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
@@ -21,9 +21,9 @@
             </div>
 
             <!-- Sweet Alert -->
-            @if(session('success'))
+            @if (session('success'))
                 <script>
-                    document.addEventListener('DOMContentLoaded', function () {
+                    document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Thành công!',
@@ -51,6 +51,20 @@
                                 <th class="sticky-actions">Actions</th>
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <th class="sticky-id">Id</th>
+                                <th>Email</th>
+                                <th>Full Name</th>
+                                <th>Display Name</th>
+                                <th>Username</th>
+                                <th>Phone</th>
+                                <th>Avatar</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th class="sticky-actions">Actions</th>
+                            </tr>
+                        </tfoot>
                         <tbody>
                             @forelse ($users as $user)
                                 <tr>
@@ -61,7 +75,7 @@
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->phone ?? '--' }}</td>
                                     <td>
-                                        @if($user->avatar)
+                                        @if ($user->avatar)
                                             <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar"
                                                 style="width: 50px; height: 50px; object-fit: cover;">
                                         @else
@@ -130,25 +144,25 @@
 
     {{-- Script xử lý Xóa --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             let deleteUserButtons = document.querySelectorAll('.delete-user');
             let closeModalBtn = document.getElementById('closeModalBtn');
             let cancelModalBtn = document.getElementById('cancelModalBtn');
 
             deleteUserButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     let userId = this.getAttribute('data-id');
                     let form = document.getElementById('deleteForm');
-                    form.action = '{{ url("admin/users") }}/' + userId;
+                    form.action = '{{ url('admin/users') }}/' + userId;
                     $('#deleteModal').modal('show');
                 });
             });
 
-            closeModalBtn.addEventListener('click', function () {
+            closeModalBtn.addEventListener('click', function() {
                 $('#deleteModal').modal('hide');
             });
 
-            cancelModalBtn.addEventListener('click', function () {
+            cancelModalBtn.addEventListener('click', function() {
                 $('#deleteModal').modal('hide');
             });
         });

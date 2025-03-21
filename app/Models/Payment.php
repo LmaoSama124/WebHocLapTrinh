@@ -20,9 +20,6 @@ class Payment extends Model
         'status',
     ];
 
-    /**
-     * Quan hệ với bảng tbl_users (Người dùng)
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');

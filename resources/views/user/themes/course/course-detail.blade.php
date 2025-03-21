@@ -1,175 +1,270 @@
 @extends('user.layouts.home')
 @section('content')
-<div class="stm-lms-wrapper">
-    <div class="container">
-        <div class="masterstudy-single-course-sleek-sidebar">
-            <div class="masterstudy-single-course-sleek-sidebar__topbar">
-                <div class="masterstudy-single-course-sleek-sidebar__sticky">
-                    <div
-                        class="masterstudy-single-course-sleek-sidebar__sticky-wrapper masterstudy-single-course-sleek-sidebar__sticky-wrapper_on">
-                        <img class="masterstudy-single-course-thumbnail"
-                            src="{{asset($course->thumbnail) }}"
-                            alt="{{ $course->title }}">
-                        <div class="masterstudy-single-course-sleek-sidebar__sticky-block">
-                            <div class="masterstudy-single-course-expired">
-                                Course available for <strong>{{ $course->expiration_date }} days</strong> </div>
-                            <div class="masterstudy-single-course-sleek-sidebar__cta">
-                                <div class="masterstudy-buy-button   ">
-                                    <a href="{{route('user.course-payment')}}" class="masterstudy-buy-button__link"
-                                        data-authorization-modal="login">
-                                        <span class="masterstudy-buy-button__title">Get course</span>
-                                        <span class="masterstudy-buy-button__separator"></span>
-                                        <span class="masterstudy-buy-button__price">
-                                            <span class="masterstudy-buy-button__price_regular">{{ number_format($course->price, 0, ',', '.') }} đ</span>
-                                        </span>
-                                    </a>
+    <div class="stm-lms-wrapper">
+        <div class="container">
+            <div class="masterstudy-single-course-sleek-sidebar">
+                <!-- Sidebar Topbar -->
+                <div class="masterstudy-single-course-sleek-sidebar__topbar">
+                    <div class="masterstudy-single-course-sleek-sidebar__sticky">
+                        <div
+                            class="masterstudy-single-course-sleek-sidebar__sticky-wrapper masterstudy-single-course-sleek-sidebar__sticky-wrapper_on">
+                            <!-- Thumbnail dynamic -->
+                            <img class="masterstudy-single-course-thumbnail"
+                                src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/user/wp-content/uploads/2023/07/lap-trinh-c-300-%c3%97-152-px.png') }}"
+                                alt="{{ $course->title }}">
+                            <div class="masterstudy-single-course-sleek-sidebar__sticky-block">
+                                <div class="masterstudy-single-course-expired">
+                                    Course available for <strong>{{ $course->available_days ?? '180' }} days</strong>
                                 </div>
-                            </div>                          
-                            <div class="masterstudy-single-course-sleek-sidebar__buttons">
-                                <div class="masterstudy-single-course-wishlist">
-                                    <a href="../../user-account/index.html">
-                                        <span class="masterstudy-single-course-wishlist__title">
-                                            Add to wishlist </span>
-                                    </a>
+                                <div class="masterstudy-single-course-sleek-sidebar__cta">
+                                    <div class="masterstudy-buy-button">
+                                        <a href="{{ route('user.course-payment', $course->id) }}"
+                                            class="masterstudy-buy-button__link" data-authorization-modal="login">
+                                            <span class="masterstudy-buy-button__title">Get course</span>
+                                            <span class="masterstudy-buy-button__separator"></span>
+                                            <span class="masterstudy-buy-button__price">
+                                                <span class="masterstudy-buy-button__price_regular">
+                                                    {{ $course->price ? number_format($course->price) . ' đ' : 'Free' }}
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="masterstudy-single-course-share-button">
-                                    <span class="masterstudy-single-course-share-button__title">
-                                        Share </span>
-                                </div>                         
+                                <div class="masterstudy-single-course-stickybar">
+                                    <div class="masterstudy-single-course-stickybar__wrapper">
+                                        <div class="masterstudy-single-course-stickybar__column">
+                                            <div class="masterstudy-single-course-stickybar__title">
+                                                {{ $course->video_title ?? $course->title }}
+                                            </div>
+                                            <div class="masterstudy-single-course-stickybar__row">
+                                                <div
+                                                    class="masterstudy-single-course-instructor masterstudy-single-course-instructor_no-title">
+                                                    <div class="masterstudy-single-course-instructor__avatar">
+                                                        <img src="" class="avatar avatar-215 photo" />
+                                                    </div>
+                                                    <div class="masterstudy-single-course-instructor__info">
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="masterstudy-single-course-categories masterstudy-single-course-categories_only-one">
+                                                    <div class="masterstudy-single-course-categories__wrapper">
+                                                        <div class="masterstudy-single-course-categories__container">
+                                                            <span class="masterstudy-single-course-categories__icon"></span>
+                                                            <div class="masterstudy-single-course-categories__list">
+                                                                <span class="masterstudy-single-course-categories__title">
+                                                                    Category:
+                                                                </span>
+                                                                <div
+                                                                    class="masterstudy-single-course-categories__item-wrapper">
+                                                                    @if ($course->category)
+                                                                        <a class="masterstudy-single-course-categories__item"
+                                                                            href="{{ route('user.course', $course->category->id) }}"
+                                                                            target="_blank">
+                                                                            {{ $course->category->name }}
+                                                                        </a>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="masterstudy-single-course-stickybar__row">
+                                            <a href="#"
+                                                class="masterstudy-button masterstudy-button_style-primary masterstudy-button_size-sm"
+                                                data-id="masterstudy-single-course-stickybar-button">
+                                                <span class="masterstudy-button__title">Get this Course</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="masterstudy-single-course-sleek-sidebar__buttons">
+                                    <div class="masterstudy-single-course-wishlist">
+                                        <a href="{{ route('user.index') }}">
+                                            <span class="masterstudy-single-course-wishlist__title">Add to wishlist</span>
+                                        </a>
+                                    </div>
+                                    <div class="masterstudy-single-course-share-button">
+                                        <span class="masterstudy-single-course-share-button__title">Share</span>
+                                    </div>
+                                    <div class="masterstudy-single-course-share-button-modal" style="display:none">
+                                        <!-- Share modal content remains the same -->
+                                        <div class="masterstudy-single-course-share-button-modal__wrapper">
+                                            <div class="masterstudy-single-course-share-button-modal__container">
+                                                <div class="masterstudy-single-course-share-button-modal__header">
+                                                    <span
+                                                        class="masterstudy-single-course-share-button-modal__header-title">
+                                                        Share &quot;{{ $course->title }}&quot;
+                                                    </span>
+                                                    <div class="masterstudy-single-course-share-button-modal__close"></div>
+                                                </div>
+                                                <div class="masterstudy-single-course-share-button-modal__content">
+                                                    <!-- Các link chia sẻ -->
+                                                    <div class="masterstudy-single-course-share-button-modal__link-wrapper">
+                                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('user.course-detail', $course->id)) }}"
+                                                            target="_blank"
+                                                            class="masterstudy-single-course-share-button-modal__link masterstudy-single-course-share-button-modal__link_facebook">
+                                                            Facebook
+                                                        </a>
+                                                    </div>
+                                                    <div class="masterstudy-single-course-share-button-modal__link-wrapper">
+                                                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('user.course-detail', $course->id)) }}&amp;text={{ urlencode($course->title) }}"
+                                                            target="_blank"
+                                                            class="masterstudy-single-course-share-button-modal__link masterstudy-single-course-share-button-modal__link_twitter">
+                                                            Twitter
+                                                        </a>
+                                                    </div>
+                                                    <div class="masterstudy-single-course-share-button-modal__link-wrapper">
+                                                        <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode(route('user.course-detail', $course->id)) }}&amp;title={{ urlencode($course->title) }}"
+                                                            target="_blank"
+                                                            class="masterstudy-single-course-share-button-modal__link masterstudy-single-course-share-button-modal__link_linkedin">
+                                                            Linkedin
+                                                        </a>
+                                                    </div>
+                                                    <div class="masterstudy-single-course-share-button-modal__link-wrapper">
+                                                        <a href="https://t.me/share/url?url={{ urlencode(route('user.course-detail', $course->id)) }}&amp;text={{ urlencode($course->title) }}"
+                                                            target="_blank"
+                                                            class="masterstudy-single-course-share-button-modal__link masterstudy-single-course-share-button-modal__link_telegram">
+                                                            Telegram
+                                                        </a>
+                                                    </div>
+                                                    <div class="masterstudy-single-course-share-button-modal__link-wrapper">
+                                                        <a href="#"
+                                                            class="masterstudy-single-course-share-button-modal__link masterstudy-single-course-share-button-modal__link_copy">
+                                                            Copy link
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="masterstudy-single-course-price-info">
+                                    {{ $course->contact_info ?? 'Liên hệ' }}
+                                </div>
+                                <span class="masterstudy-single-course-sleek-sidebar__sticky-block-delimiter"></span>
                             </div>
-                            <div class="masterstudy-single-course-price-info">
-                                Liên hệ </div>
-                            <span
-                                class="masterstudy-single-course-sleek-sidebar__sticky-block-delimiter"></span>
+                            <ul class="masterstudy-single-course-tabs masterstudy-single-course-tabs_style-sidebar">
+                                <li class="masterstudy-single-course-tabs__item" data-id="curriculum">Curriculum</li>
+                                <li class="masterstudy-single-course-tabs__item" data-id="reviews">Reviews</li>
+                            </ul>
                         </div>
-                        <ul class="masterstudy-single-course-tabs masterstudy-single-course-tabs_style-sidebar">
-                            <li class="masterstudy-single-course-tabs__item" data-id="curriculum">
-                                Curriculum </li>
-                            <li class="masterstudy-single-course-tabs__item" data-id="reviews">
-                                Reviews </li>
-                        </ul>
                     </div>
-                </div>
-                <div class="masterstudy-single-course-sleek-sidebar__main">
-                    <div class="masterstudy-single-course-sleek-sidebar__main-topbar">                       
-                        <div class="masterstudy-single-course-sleek-sidebar__heading">
-                            <h1 class="masterstudy-single-course-title">{{ $course->title }}</h1>
-                        </div>
-                        <div class="masterstudy-single-course-sleek-sidebar__info">
-                            <div class="masterstudy-single-course-sleek-sidebar__info-block">
-
-                                <div class="masterstudy-single-course-instructor ">
-                                    <div class="masterstudy-single-course-instructor__avatar">
-                                        <img src='../../../secure.gravatar.com/avatar/e57afffbfde92ad891a8a7aec1694f8599fc.jpg?s=215&amp;d=mm&amp;r=g'
-                                            class='avatar avatar-215 photo' />
-                                    </div>
-                                    <div class="masterstudy-single-course-instructor__info">
-                                        <div class="masterstudy-single-course-instructor__title">
-                                            Instructor </div>
-                                        <a class="masterstudy-single-course-instructor__name "
-                                            href="../../user-public-account/1/index.html" target="_blank">
-                                            admin </a>
+                    <!-- Main Content -->
+                    <div class="masterstudy-single-course-sleek-sidebar__main">
+                        <div class="masterstudy-single-course-sleek-sidebar__main-topbar">
+                            <div class="masterstudy-single-course-sleek-sidebar__row">
+                                <div class="masterstudy-single-course-categories">
+                                    <div class="masterstudy-single-course-categories__wrapper">
+                                        <div class="masterstudy-single-course-categories__container">
+                                            <div class="masterstudy-single-course-categories__list">
+                                                @if ($course->category)
+                                                    <a class="masterstudy-single-course-categories__item"
+                                                        href="{{ route('user.course', $course->category->id) }}"
+                                                        target="_blank">
+                                                        {{ $course->category->name }}
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="masterstudy-single-course-sleek-sidebar__info-block masterstudy-single-course-sleek-sidebar__info-block_students">
-                                <div class="masterstudy-single-course-current-students ">
-                                    <div class="masterstudy-single-course-current-students__wrapper">
-                                        <span class="masterstudy-single-course-current-students__count">
-                                            {{ $course->student_enrolled }} </span>
-                                        <span class="masterstudy-single-course-current-students__title">
-                                            <span>
-                                                {{ $course->student_enrolled > 1 ? 'Students' : 'Student' }} </span>
-                                            enrolled </span>
-                                    </div>
-                                </div>
+                            <div class="masterstudy-single-course-sleek-sidebar__heading">
+                                <h1 class="masterstudy-single-course-title">{{ $course->title }}</h1>
                             </div>
-                            <div class="masterstudy-single-course-sleek-sidebar__info-block">
-
-                                <div class="masterstudy-single-course-rating">
-                                    <div class="masterstudy-single-course-rating__wrapper">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <span class="masterstudy-single-course-rating__star {{ $i <= $course->rate ? 'filled' : '' }}"></span>
-                                        @endfor
-                                        <div class="masterstudy-single-course-rating__count">
-                                            {{ $course->rate }} </div>
-                                    </div>
-                                    <div class="masterstudy-single-course-rating__quantity">
-                                        0 reviews </div>
+                        </div>
+                        <div class="masterstudy-single-course-sleek-sidebar__details">
+                            <div class="masterstudy-single-course-details masterstudy-single-course-details_row">
+                                <span class="masterstudy-single-course-details__title">Course details</span>
+                                <div class="masterstudy-single-course-details__item">
+                                    <span
+                                        class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_lectures"></span>
+                                    <span class="masterstudy-single-course-details__name">Lectures</span>
+                                    <span class="masterstudy-single-course-details__separator">:</span>
+                                    <span class="masterstudy-single-course-details__quantity">
+                                        {{ $course->lesson }}
+                                    </span>
+                                </div>
+                                <div class="masterstudy-single-course-details__item">
+                                    <span
+                                        class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_level"></span>
+                                    <span class="masterstudy-single-course-details__name">Level</span>
+                                    <span class="masterstudy-single-course-details__separator">:</span>
+                                    <span class="masterstudy-single-course-details__quantity">
+                                        {{ $course->level }}
+                                    </span>
+                                </div>
+                                <div class="masterstudy-single-course-details__item">
+                                    <span
+                                        class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_access-devices"></span>
+                                    <span class="masterstudy-single-course-details__name">Access on mobile and TV</span>
+                                    <span class="masterstudy-single-course-details__quantity"></span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="masterstudy-single-course-sleek-sidebar__details">
-                        <div class="masterstudy-single-course-details masterstudy-single-course-details_row">
-                            <span class="masterstudy-single-course-details__title">
-                                Course details </span>
-                            <div class="masterstudy-single-course-details__item">
-                                <span
-                                    class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_lectures"></span>
-                                <span class="masterstudy-single-course-details__name">
-                                    Lectures </span>
-                                <span class="masterstudy-single-course-details__separator">:</span>
-                                <span class="masterstudy-single-course-details__quantity">
-                                    {{ $course->lesson }} </span>
-                            </div>
-                            <div class="masterstudy-single-course-details__item">
-                                <span
-                                    class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_level"></span>
-                                <span class="masterstudy-single-course-details__name">
-                                    Level </span>
-                                <span class="masterstudy-single-course-details__separator">:</span>
-                                <span class="masterstudy-single-course-details__quantity">
-                                    {{ $course->level }} </span>
-                            </div>
-                            <div class="masterstudy-single-course-details__item">
-                                <span
-                                    class="masterstudy-single-course-details__icon masterstudy-single-course-details__icon_access-devices"></span>
-                                <span class="masterstudy-single-course-details__name">
-                                    Access on mobile and TV </span>
-                                <span class="masterstudy-single-course-details__quantity">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="masterstudy-single-course-tabs__content masterstudy-single-course-tabs_style-sidebar">
-                        <div class="masterstudy-single-course-tabs__container  " data-id="curriculum">
-                            <span class="masterstudy-single-course-tabs__container-title">
-                                Curriculum </span>
-
-                            <div class="masterstudy-curriculum-list  ">
-                                @php
-                                    $chapters = $lessons->pluck('chapter')->unique();
-                                @endphp
-
-                                @foreach($chapters as $chapter)
-                                <div
-                                    class="masterstudy-curriculum-list__wrapper masterstudy-curriculum-list__wrapper_opened">
-                                    <div class="masterstudy-curriculum-list__section">
-                                        <span class="masterstudy-curriculum-list__section-title">{{ $chapter }}</span>
-                                        <span class="masterstudy-curriculum-list__toggler"></span>
-                                    </div>
-
-                                    <ul class="masterstudy-curriculum-list__materials">
-                                        @php
-                                            $chapterLessons = $lessons->where('chapter', $chapter);
-                                            $lessonCounter = 1;
-                                        @endphp
-                                        
-                                        @foreach($chapterLessons as $lesson)
-                                        <li class="masterstudy-curriculum-list__item">
-                                            <a href="{{ $lesson->url }}"
-                                                class="masterstudy-curriculum-list__link {{ $lesson->is_preview ? '' : 'masterstudy-curriculum-list__link_disabled' }}">
-                                                <div class="masterstudy-curriculum-list__order">
-                                                    {{ $lessonCounter++ }} </div>
+                        <div class="masterstudy-single-course-tabs__content masterstudy-single-course-tabs_style-sidebar">
+                            <!-- Curriculum Section -->
+                            <div class="masterstudy-single-course-tabs__container" data-id="curriculum">
+                                <span class="masterstudy-single-course-tabs__container-title">Curriculum</span>
+                                <div class="masterstudy-curriculum-list">
+                                    @if ($course->lessons->count())
+                                        @foreach ($course->lessons->groupBy('chapter') as $chapterNumber => $lessons)
+                                            @php
+                                                // Tìm title của chương từ list_chapter
+                                                $chapterTitle =
+                                                    collect($chapters)->firstWhere('chapter_number', $chapterNumber)[
+                                                        'chapter_title'
+                                                    ] ?? 'Chưa có tiêu đề';
+                                            @endphp
+                                            <div
+                                                class="masterstudy-curriculum-list__wrapper masterstudy-curriculum-list__wrapper_opened">
+                                                <div class="masterstudy-curriculum-list__section">
+                                                    <span class="masterstudy-curriculum-list__section-title">
+                                                        Chương {{ $chapterNumber }} - {{ $chapterTitle }}
+                                                    </span>
+                                                    <span class="masterstudy-curriculum-list__toggler"></span>
+                                                </div>
+<<<<<<< HEAD
+                                                <ul class="masterstudy-curriculum-list__materials">
+                                                    @foreach ($lessons as $lesson)
+                                                        <li class="masterstudy-curriculum-list__item">
+                                                            <a href="{{ route('user.video', ['id' => $course->id, 'lessonId' => $lesson->id]) }}"
+                                                                class="masterstudy-curriculum-list__link">
+                                                                <div class="masterstudy-curriculum-list__order">
+                                                                    {{ $loop->iteration }}</div>
+                                                                <img src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/icons/lessons/video.svg') }}"
+                                                                    class="masterstudy-curriculum-list__image">
+                                                                <div class="masterstudy-curriculum-list__container">
+                                                                    <div
+                                                                        class="masterstudy-curriculum-list__container-wrapper">
+                                                                        <div class="masterstudy-curriculum-list__title">
+                                                                            {{ $lesson->title }}</div>
+                                                                        <div
+                                                                            class="masterstudy-curriculum-list__meta-wrapper">
+                                                                            @if ($lesson->is_preview)
+                                                                                <span
+                                                                                    class="masterstudy-curriculum-list__preview">Preview</span>
+                                                                            @endif
+                                                                            <span
+                                                                                class="masterstudy-curriculum-list__meta">{{ $lesson->time }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+=======
                                                 <img src="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/icons/lessons/video.svg') }}"
                                                     class="masterstudy-curriculum-list__image">
                                                 <div class="masterstudy-curriculum-list__container">
                                                     <div class="masterstudy-curriculum-list__container-wrapper">
                                                         <div class="masterstudy-curriculum-list__title">
-                                                            {{ $lesson->title }} </div>
+                                                            {{ $lesson->title }}
+                                                        </div>
                                                         <div class="masterstudy-curriculum-list__meta-wrapper">
                                                             @if($lesson->is_preview)
                                                             <span class="masterstudy-curriculum-list__preview">
@@ -182,6 +277,7 @@
                                                 </div>
                                             </a>
                                         </li>
+>>>>>>> b6de84870119d28e470632dea8dde6b442681360
                                         @endforeach
                                     </ul>
                                 </div>
@@ -204,6 +300,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endauth
+
+                                <div id="reviewList" class="mt-3"></div>
                             </div>
                         </div>
                     </div>
@@ -422,5 +521,5 @@
         </div>
     </div>
 </div>
-    
+
 @endsection
