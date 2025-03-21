@@ -28,13 +28,12 @@ Route::get('/register', [LoginController::class, 'register'])->name('user.regist
 
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
-    // Xử lý video
-    Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.video');
+    // Xử lý
+    Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.lessons.show');
     Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
 
     Route::get('/course', [ThemeHomeController::class, 'course'])->name('user.course');
     Route::get('/course-detail/{id}', [ThemeHomeController::class, 'course_detail'])->name('user.course-detail');
-    Route::get('/lessons/{lesson}', [ThemeLessonController::class, 'show'])->name('user.lessons.show');
     Route::get('/course-enrolled', [ThemeHomeController::class, 'course_enrolled'])->name('user.enrolled-courses');
     Route::get('/course-payment', [ThemeHomeController::class, 'course_payment'])->name('user.course-payment');
 
@@ -143,3 +142,4 @@ Route::prefix('/admin')->group(function () {
         Route::get('/courseEnrolled/{id}/edit', [CourseEnrolledController::class, 'edit'])->name('admin.courseEnrolled.edit');
     });
 });
+
