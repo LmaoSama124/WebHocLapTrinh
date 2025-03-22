@@ -7,8 +7,8 @@ use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\User\CourseUserController;
+use App\Http\Controllers\User\PaymentUserController;
 use App\Http\Controllers\User\ThemeHomeController;
-use App\Http\Controllers\User\ThemeLessonController;
 use App\Http\Controllers\User\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,14 +28,20 @@ Route::get('/register', [LoginController::class, 'register'])->name('user.regist
 
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
-    // Xử lý
+    // Xử lý Video
     Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.lessons.show');
     Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
 
+    // Course
     Route::get('/course', [ThemeHomeController::class, 'course'])->name('user.course');
-    Route::get('/course-detail/{id}', [ThemeHomeController::class, 'course_detail'])->name('user.course-detail');
+    Route::get('/course-detail/{id}', [CourseUserController::class, 'course_detail'])->name('user.course-detail');
     Route::get('/course-enrolled', [ThemeHomeController::class, 'course_enrolled'])->name('user.enrolled-courses');
-    Route::get('/course-payment', [ThemeHomeController::class, 'course_payment'])->name('user.course-payment');
+    Route::get('/course-payment/{id}', [PaymentUserController::class, 'course_payment'])->name('user.course-payment');
+
+    // Payment
+    Route::post('/payment/form', [PaymentUserController::class, 'showPaymentForm'])->name('user.payment.form');
+    Route::post('/payment/process', [PaymentUserController::class, 'processPayment'])->name('user.payment.process');
+    Route::post('/payment/banking/confirm', [PaymentUserController::class, 'confirmBanking'])->name('user.banking.confirm');
 
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');

@@ -38,18 +38,18 @@ class CourseUserController extends Controller
 
     public function course_detail($id)
     {
-        $course = Course::findOrFail($id);
-        $lessons = Lesson::where('id_course', $id)->get();
+        $user = Auth::user();
+        $course = Course::with(['lessons', 'category'])->findOrFail($id);
 
-        $isEnrolled = false;
-        if (Auth::check()) {
-            $isEnrolled = DB::table('tbl_payments')
-                ->where('id_course', $course->id)
-                ->where('id_user', Auth::id())
-                ->where('status', 'success')
-                ->exists();
-        }
+        $chapters = json_decode($course->list_chapter, true); // Decode sẵn
 
-        return view('user.themes.course.course-detail', compact('course', 'lessons', 'isEnrolled'));
+        $popularCourses = Course::where('is_popular', 1)->limit(5)->get();
+
+        $relatedCourses = Course::where('category_id', $course->category_id)
+            ->where('id', '!=', $course->id)
+            ->limit(5)
+            ->get();
+
+        return view('user.themes.course.course-detail', compact('user', 'course', 'chapters', 'popularCourses', 'relatedCourses'));
     }
 }
