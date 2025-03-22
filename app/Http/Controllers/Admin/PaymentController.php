@@ -51,7 +51,7 @@ class PaymentController extends Controller
             if ($request->status === 'canceled') {
                 $finalStatus = 'canceled';
             } else {
-                $finalStatus = ($request->amount == $course->price) ? 'success' : 'waiting';
+                $finalStatus = ($request->amount >= $course->price) ? 'success' : 'waiting';
             }
 
             // Nếu payment_method là banking thì lấy content, nếu không thì gán chuỗi rỗng
@@ -118,7 +118,7 @@ class PaymentController extends Controller
                 $finalStatus = 'canceled';
             } else {
                 $course = Course::findOrFail($request->id_course);
-                $finalStatus = ($request->amount == $course->price) ? 'success' : 'waiting';
+                $finalStatus = ($request->amount >= $course->price) ? 'success' : 'waiting';
             }
 
             DB::transaction(function () use ($payment, $request, $finalStatus) {
