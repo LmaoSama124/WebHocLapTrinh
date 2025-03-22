@@ -57,4 +57,5 @@ class VideoController extends Controller
         // ✅ Truyền courseId xuống view
         return view('user.video', compact('user', 'lesson', 'lessons', 'courseId'));
     }
+
 }
