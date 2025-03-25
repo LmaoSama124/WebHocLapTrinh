@@ -28,6 +28,10 @@ Route::get('/register', [LoginController::class, 'register'])->name('user.regist
 
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
+    // VNPAY
+    Route::get('/payment/vnpay', [PaymentUserController::class, 'createPayment'])->name('user.vnpay.create');
+    Route::get('/payment/vnpay-return', [PaymentUserController::class, 'vnpayReturn'])->name('user.vnpay.return');
+
     // Xử lý Video
     Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.lessons.show');
     Route::get('/video/signed-url/{lessonId}', [VideoController::class, 'getSignedUrl'])->name('user.get-signed-url');
