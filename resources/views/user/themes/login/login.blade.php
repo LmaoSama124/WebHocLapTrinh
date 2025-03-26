@@ -1,5 +1,28 @@
 @extends('user.layouts.home')
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
     <div id="wrapper" class="wrapper">
         <div class="container">
             <!-- Thêm login-container bao trọn mọi nội dung bên trong -->
@@ -353,14 +376,22 @@
                             body: new FormData(signupForm),
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             }
                         })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Nếu đăng ký thành công, chuyển hướng
-                                window.location.href = data.redirect;
-                            } else {
+                                // ✅ Hiển thị SweetAlert rồi mới redirect
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: 'Đăng ký thành công! Vui lòng đăng nhập.',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href = data.redirect;
+                                });
+                            } else if (data.errors) {
                                 // Nếu có lỗi, hiển thị lỗi trên form
                                 Object.keys(data.errors).forEach(key => {
                                     const input = signupForm.querySelector(`[name="${key}"]`);
@@ -380,6 +411,12 @@
                         })
                         .catch(error => {
                             console.error('Error:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Đã xảy ra lỗi, vui lòng thử lại sau.',
+                                confirmButtonText: 'OK'
+                            });
                         });
 
                     return false;

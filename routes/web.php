@@ -24,7 +24,7 @@ use App\Http\Controllers\User\LoginController;
 Route::get('/', [ThemeHomeController::class, 'indexuser'])->name('user.index');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/register', [LoginController::class, 'register'])->name('user.register');
+Route::post('/register', [LoginController::class, 'register'])->name('user.register');
 
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
