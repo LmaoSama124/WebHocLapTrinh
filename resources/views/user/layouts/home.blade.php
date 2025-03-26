@@ -18,13 +18,13 @@
 
 
     <link rel='stylesheet' id='mpay-style-css'
-        href="{{asset('assets/user/wp-content/plugins/bck-tu-dong-xac-nhan-thanh-toan-chuyen-khoan-ngan-hang/assets/css/style9704.css?ver=6.7.1') }}"
+        href="{{ asset('assets/user/wp-content/plugins/bck-tu-dong-xac-nhan-thanh-toan-chuyen-khoan-ngan-hang/assets/css/style9704.css?ver=6.7.1') }}"
         type='text/css' media='all' />
     <link rel='stylesheet' id='masterstudy-bootstrap-css'
-        href="{{asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/bootstrap.mindd8b.css?ver=3.5.16')}}"
+        href="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/bootstrap.mindd8b.css?ver=3.5.16') }}"
         type='text/css' media='all' />
     <link rel='stylesheet' id='masterstudy-bootstrap-custom-css'
-        href="{{asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/ms-bootstrap-customdd8b.css?ver=3.5.16') }}"
+        href="{{ asset('assets/user/wp-content/plugins/masterstudy-lms-learning-management-system/_core/assets/vendors/ms-bootstrap-customdd8b.css?ver=3.5.16') }}"
         type='text/css' media='all' />
     <link rel='stylesheet' id='hfe-widgets-style-css'
         href="{{ asset('assets/user/wp-content/plugins/header-footer-elementor/inc/widgets-css/frontend3601.css?ver=2.2.0') }}"
@@ -85,15 +85,15 @@
         href="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/includes/megamenu/assets/css/megamenu9704.css?ver=6.7.1') }}"
         type='text/css' media='all' />
     <link rel='stylesheet' id='starter-style-css'
-        href="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/styleffdc.css?ver=2.0.9') }}" type='text/css'
-        media='all' />
+        href="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/styleffdc.css?ver=2.0.9') }}"
+        type='text/css' media='all' />
 
     <link rel='stylesheet' id='starter-base-css'
         href="{{ asset('assets/user/wp-content/themes/ms-lms-starter-theme/assets/css/styleffdc.css?ver=2.0.9') }}"
         type='text/css' media='all' />
 
     <link rel='stylesheet' id='google-fonts-css'
-        href="{{ asset('assets/user/fonts.googleapis.com/cssdd6d.css?family=Montserrat%3A700%2C600%2C500%2C400%7COpen+Sans%3A700%2C400&amp;ver=2.0.9#038;subset=latin%2Clatin-ext')}}"
+        href="{{ asset('assets/user/fonts.googleapis.com/cssdd6d.css?family=Montserrat%3A700%2C600%2C500%2C400%7COpen+Sans%3A700%2C400&amp;ver=2.0.9#038;subset=latin%2Clatin-ext') }}"
         type='text/css' media='all' />
 
     <link rel='stylesheet' id='starter-navigation-css'
@@ -436,9 +436,9 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            var dropdownList = dropdownElementList.map(function(dropdownToggleEl) {
                 return new bootstrap.Dropdown(dropdownToggleEl);
             });
         });
@@ -464,7 +464,7 @@
         src="{{ asset('assets/user/wp-content/plugins/highlighting-code-block/assets/js/prism7406.js?ver=2.0.1') }}"
         id="hcb-prism-js"></script>
 
-    <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/clipboard.min3c89.js?ver=2.0.11')}}"
+    <script type="text/javascript" src="{{ asset('assets/user/wp-includes/js/clipboard.min3c89.js?ver=2.0.11') }}"
         id="clipboard-js"></script>
 
     <script type="text/javascript"
@@ -504,7 +504,7 @@
         id="elementor-webpack-runtime-js"></script>
 
     <script type="text/javascript"
-        src="{{ asset('assets/user/wp-content/plugins/elementor/assets/js/frontend.min3dd9.js?ver=3.27.6')}}"
+        src="{{ asset('assets/user/wp-content/plugins/elementor/assets/js/frontend.min3dd9.js?ver=3.27.6') }}"
         id="elementor-frontend-js"></script>
 
 </body>

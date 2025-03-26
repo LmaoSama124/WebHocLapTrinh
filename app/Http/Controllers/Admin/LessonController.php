@@ -36,7 +36,7 @@ class LessonController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'id_course' => 'required|exists:tbl_courses,id',
-            'url' => 'required|url',
+            'url' => 'required',
             'is_preview' => 'required|boolean',
             'time' => 'required|string|max:20',
             'chapter' => 'required|string|max:255'
@@ -64,7 +64,7 @@ class LessonController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'id_course' => 'required|exists:tbl_courses,id',
-            'url' => 'required|url',
+            'url' => 'required',
             'is_preview' => 'required|boolean',
             'time' => 'required|string|max:20',
             'chapter' => 'required|string|max:255'
