@@ -1,44 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    // Hiển thị form đăng nhập / đăng ký
-    public function index()
+    // Hiển thị trang đăng nhập
+    public function showLoginForm()
     {
-        return view('login');
+        return view('user.themes.login.login');
     }
 
     // Xử lý đăng nhập
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
-            return redirect()->route('home');
-        } else {
-            return back()->withErrors(['username' => 'Sai tài khoản hoặc mật khẩu'])->withInput();
+        $user = User::where('username', $request->username)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::guard('web')->login($user);
+            return redirect()->intended('/');
         }
+
+        return back()->withErrors(['username' => 'Tên đăng nhập hoặc mật khẩu không chính xác']);
     }
 
     // Xử lý đăng ký
     public function register(Request $request)
     {
-        // Validate dữ liệu
         $request->validate([
             'fullname' => 'required|string|max:200',
             'displayname' => 'required|string|max:150',
-            'username' => 'required|string|unique:tbl_users,username',
-            'email' => 'required|email|unique:tbl_users,email',
-            'password' => 'required|string|min:6|max:50|confirmed',
-        ], [
-            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+            'username' => 'required|string|max:200|unique:tbl_users,username',
+            'email' => 'required|string|email|max:200|unique:tbl_users,email',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         $user = User::create([
@@ -65,6 +70,8 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('user.login');
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/login');
     }
 }

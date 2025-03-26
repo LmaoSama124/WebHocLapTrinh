@@ -239,3 +239,4 @@
         </div>
     </div>
 @endsection
+@include('user.chatbot_box')

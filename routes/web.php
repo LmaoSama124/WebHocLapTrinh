@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CourseEnrolledController;
@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\LoginController;
+
+use App\Http\Controllers\User\ChatBotController;
 
 // Trang chính & đăng nhập user
 Route::get('/', [ThemeHomeController::class, 'indexuser'])->name('user.index');
@@ -153,3 +155,22 @@ Route::prefix('/admin')->group(function () {
     });
 });
 
+// Chatbot
+Route::get('/chatbot', function() {
+    return view('user.chatbot');
+});
+
+Route::post('/chatbot/send', [ChatBotController::class, 'sendMessage']);
+// check api chatbot gpt
+Route::get('/check-gpt', function() {
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+    ])->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            ['role' => 'user', 'content' => 'Hello GPT!'],
+        ],
+    ]);
+
+    dd($response->status(), $response->body());
+});
