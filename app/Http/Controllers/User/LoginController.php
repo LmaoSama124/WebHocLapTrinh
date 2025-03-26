@@ -55,8 +55,15 @@ class LoginController extends Controller
             'remember_token' => Str::random(60), // Đảm bảo không lỗi token
         ]);
 
-        Auth::guard('web')->login($user);
-        return redirect('/login');
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'redirect' => route('user.login')  // Hoặc route bạn muốn redirect
+            ]);
+        }
+
+        return redirect()->route('user.login')->with('success', 'Đăng ký thành công!');
+
     }
 
     // Xử lý đăng xuất
