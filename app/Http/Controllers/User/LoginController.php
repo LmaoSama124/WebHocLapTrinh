@@ -41,20 +41,24 @@ class LoginController extends Controller
             'password.confirmed' => 'Mật khẩu xác nhận không khớp',
         ]);
 
-        // Lưu user
-        $user = new User();
-        $user->fullname = $request->fullname;
-        $user->displayname = $request->displayname;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password); // ✅ Hash mật khẩu
-        $user->save();
-
-        // Trả về JSON cho fetch API
-        return response()->json([
-            'success' => true,
-            'redirect' => route('user.login'),
+        $user = User::create([
+            'fullname' => $request->fullname,
+            'displayname' => $request->displayname,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'remember_token' => Str::random(60), // Đảm bảo không lỗi token
         ]);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'redirect' => route('user.login')  // Hoặc route bạn muốn redirect
+            ]);
+        }
+
+        return redirect()->route('user.login')->with('success', 'Đăng ký thành công!');
+
     }
 
     // Xử lý đăng xuất
