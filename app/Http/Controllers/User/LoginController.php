@@ -1,70 +1,66 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\User;
-use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    // Hiển thị trang đăng nhập
-    public function showLoginForm()
+    // Hiển thị form đăng nhập / đăng ký
+    public function index()
     {
-        return view('user.themes.login.login');
+        return view('login');
     }
 
     // Xử lý đăng nhập
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('username', 'password');
 
-        $user = User::where('username', $request->username)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::guard('web')->login($user);
-            return redirect()->intended('/');
+        if (Auth::attempt($credentials, $request->remember)) {
+            return redirect()->route('home');
+        } else {
+            return back()->withErrors(['username' => 'Sai tài khoản hoặc mật khẩu'])->withInput();
         }
-
-        return back()->withErrors(['username' => 'Tên đăng nhập hoặc mật khẩu không chính xác']);
     }
 
     // Xử lý đăng ký
     public function register(Request $request)
     {
+        // Validate dữ liệu
         $request->validate([
             'fullname' => 'required|string|max:200',
             'displayname' => 'required|string|max:150',
-            'username' => 'required|string|max:200|unique:tbl_users,username',
-            'email' => 'required|string|email|max:200|unique:tbl_users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'username' => 'required|string|unique:tbl_users,username',
+            'email' => 'required|email|unique:tbl_users,email',
+            'password' => 'required|string|min:6|max:50|confirmed',
+        ], [
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
         ]);
 
-        $user = User::create([
-            'fullname' => $request->fullname,
-            'displayname' => $request->displayname,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'remember_token' => Str::random(60), // Đảm bảo không lỗi token
-        ]);
+        // Lưu user
+        $user = new User();
+        $user->fullname = $request->fullname;
+        $user->displayname = $request->displayname;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password); // ✅ Hash mật khẩu
+        $user->save();
 
-        Auth::guard('web')->login($user);
-        return redirect('/login');
+        // Trả về JSON cho fetch API
+        return response()->json([
+            'success' => true,
+            'redirect' => route('user.login'),
+        ]);
     }
 
     // Xử lý đăng xuất
     public function logout()
     {
         Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-        return redirect('/login');
+        return redirect()->route('user.login');
     }
 }
