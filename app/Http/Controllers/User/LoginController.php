@@ -25,7 +25,9 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = User::where('username', $request->username)->first();
+        $user = User::where('username', $request->username)
+            ->orWhere('email', $request->username)
+            ->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::guard('web')->login($user);
@@ -34,6 +36,7 @@ class LoginController extends Controller
 
         return back()->withErrors(['username' => 'Tên đăng nhập hoặc mật khẩu không chính xác']);
     }
+
 
     // Xử lý đăng ký
     public function register(Request $request)
