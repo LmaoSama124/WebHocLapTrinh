@@ -6,44 +6,61 @@ use App\Models\Course;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Str;
 
 class PaymentUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function course_payment($id)
     {
         $user = auth()->user();
-        $course = Course::findOrFail($id); // Lấy khoá học từ DB
+        $course = Course::findOrFail($id);
 
         return view('user.themes.payment.course-payment', compact('user', 'course'));
     }
 
     public function processPayment(Request $request)
     {
+        Log::info('PaymentUserController::processPayment called with data: ', $request->all());
+
+        $request->validate([
+            'course_id' => 'required|exists:tbl_courses,id',
+            'payment_method' => 'required|in:vn_pay,banking',
+        ]);
+
         $user = auth()->user();
         $course = Course::findOrFail($request->course_id);
         $paymentMethod = $request->payment_method;
 
         if ($paymentMethod == 'vn_pay') {
-            return view('user.themes.payment.vnPay', compact('user', 'course'));
+            Log::info('Redirecting to vnpay_form for course: ' . $course->id);
+            return view('user.themes.vnpay.form', compact('user', 'course'));
         } elseif ($paymentMethod == 'banking') {
-            $bankCode = 'bidv';  // Thay bank của bạn
-            $accountNumber = '4511092520'; // STK nhận tiền
+            $bankCode = 'bidv';
+            $accountNumber = '4511092520';
             $amount = $course->price;
-
-            // Nội dung chuyển khoản chuyên nghiệp đầy đủ
             $content = 'MaKH ' . $user->id . ' Ten ' . $user->fullname . ' MaKHOA ' . $course->id;
 
-            // Encode nội dung để lên QR
             $qrUrl = "https://img.vietqr.io/image/{$bankCode}-{$accountNumber}-compact.png?amount={$amount}&addInfo=" . urlencode($content);
 
+            Log::info('Redirecting to banking view for course: ' . $course->id);
             return view('user.themes.payment.banking', compact('user', 'course', 'qrUrl', 'content', 'amount'));
         } else {
-            return redirect()->back()->with('error', 'Phương thức thanh toán không hợp lệ!');
+            Log::error('Invalid payment method: ' . $paymentMethod);
+            return redirect()->route('user.course-payment', $request->course_id)->with('error', 'Phương thức thanh toán không hợp lệ!');
         }
     }
 
     public function confirmBanking(Request $request)
     {
+        Log::info('PaymentUserController::confirmBanking called with data: ', $request->all());
+
         $user = auth()->user();
         $courseId = $request->course_id;
 
@@ -63,9 +80,9 @@ class PaymentUserController extends Controller
             'content' => $request->content,
             'amount' => $request->amount,
             'status' => 'waiting',
+            'transaction_code' => strtoupper(Str::random(10)),
         ]);
 
-        // ✅ Xong -> Về home với thông báo thành công
         return redirect()->route('user.index')->with('banking_success', 'Yêu cầu của bạn sẽ được duyệt sau 1 tiếng!');
     }
 }

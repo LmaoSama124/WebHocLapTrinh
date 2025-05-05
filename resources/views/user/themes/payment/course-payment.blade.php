@@ -1,5 +1,26 @@
 @extends('user.layouts.home')
 @section('content')
+    @if (session('vnpay_success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('banking_success') }}',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    @if (session('vnpay_error'))
+        <script>
+            Swal.fire({
+                icon: 'info',
+                title: 'Thông báo',
+                text: '{{ session('banking_error') }}',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
     <style>
         .custom-checkout-btn {
             width: 100%;

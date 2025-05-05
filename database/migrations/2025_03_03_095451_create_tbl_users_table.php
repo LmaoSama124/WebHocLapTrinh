@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('tbl_users', function (Blueprint $table) {
@@ -15,6 +14,7 @@ return new class extends Migration
             $table->string('username', 200)->unique();
             $table->string('email', 200)->unique();
             $table->string('password', 200);
+            $table->string('device_id')->nullable();
             $table->string('phone', 12)->nullable();
             $table->text('avatar')->nullable();
             $table->rememberToken();

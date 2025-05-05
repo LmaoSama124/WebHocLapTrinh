@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('tbl_payments', function (Blueprint $table) {
@@ -20,14 +19,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_user')
-                  ->references('id')
-                  ->on('tbl_users')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('tbl_users')
+                ->onDelete('cascade');
 
             $table->foreign('id_course')
-                  ->references('id')
-                  ->on('tbl_courses')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('tbl_courses')
+                ->onDelete('cascade');
         });
     }
 
