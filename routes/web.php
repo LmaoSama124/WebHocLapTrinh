@@ -156,21 +156,5 @@ Route::prefix('/admin')->group(function () {
 });
 
 // Chatbot
-Route::get('/chatbot', function() {
-    return view('user.chatbot');
-});
-
-Route::post('/chatbot/send', [ChatBotController::class, 'sendMessage']);
-// check api chatbot gpt
-Route::get('/check-gpt', function() {
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
-    ])->post('https://api.openai.com/v1/chat/completions', [
-        'model' => 'gpt-3.5-turbo',
-        'messages' => [
-            ['role' => 'user', 'content' => 'Hello GPT!'],
-        ],
-    ]);
-
-    dd($response->status(), $response->body());
-});
+Route::get('/chatbot', [ChatBotController::class, 'showChatbot'])->name('chatbot.show');
+Route::match(['get', 'post'], '/botman', [ChatBotController::class, 'handle']);
