@@ -1,8 +1,6 @@
 @extends('user.layouts.home')
 
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     @if (session('banking_success'))
         <script>
             Swal.fire({
@@ -48,53 +46,24 @@
                                                             <h2>
                                                                 CHỌN LỘ TRÌNH CỦA BẠN &amp; CÙNG HỌC NHÉ! </h2>
                                                             <!-- filter -->
-                                                            <div class="ms_lms_courses_grid__sorting_wrapper">
-                                                                <ul class="ms_lms_courses_grid__sorting style_2">
+                                                            <ul id="course-categories"
+                                                                class="ms_lms_courses_grid__sorting style_2">
+                                                                <li>
+                                                                    <span data-id="all"
+                                                                        class="ms_lms_courses_grid__sorting_button active">All</span>
+                                                                </li>
+                                                                @foreach ($categories as $category)
                                                                     <li>
-                                                                        <span data-id="all"
-                                                                            class="ms_lms_courses_grid__sorting_button active">
-                                                                            All </span>
+                                                                        <span data-id="{{ $category->id }}"
+                                                                            class="ms_lms_courses_grid__sorting_button">
+                                                                            {{ $category->category_name }}
+                                                                        </span>
                                                                     </li>
-                                                                    <li>
-                                                                        <span data-id="75"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Mới học lập trình </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="76"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Cơ sở dữ liệu </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="77"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Lập trình Web </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="78"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Java Backend </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="79"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Java Fullstack </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="80"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Data Science </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span data-id="81"
-                                                                            class="ms_lms_courses_grid__sorting_button ">
-                                                                            Kiến thức nền tảng </span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                                @endforeach
+                                                            </ul>
                                                         </div>
                                                         <div class="ms_lms_courses_grid__content  title_style_1">
-                                                            <div class="ms_lms_courses_card_wrapper">
+                                                            <div class="ms_lms_courses_card_wrapper" id="course-list">
                                                                 <div class="ms_lms_courses_card card-style-1">
 
                                                                     <!-- Content -->
@@ -238,4 +207,130 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('course-categories').addEventListener('click', function(e) {
+            if (e.target && e.target.matches('.ms_lms_courses_grid__sorting_button')) {
+                const buttons = document.querySelectorAll('.ms_lms_courses_grid__sorting_button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const categoryId = e.target.getAttribute('data-id');
+
+                fetch(`/filter/${categoryId}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const courses = data.courses || [];
+
+                        const courseList = document.querySelector(
+                            '#course-list .ms_lms_courses_card.card-style-1');
+                        courseList.innerHTML = ''; // Đảm bảo xóa content cũ đúng vị trí
+
+                        if (courses.length > 0) {
+                            courses.forEach(course => {
+                                courseList.innerHTML += `
+                        <div class="ms_lms_courses_card_item">
+                            <div class="ms_lms_courses_card_item_wrapper">
+                                <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_image_link">
+                                    <img decoding="async"
+                                        src="/storage/${course.thumbnail}"
+                                        class="ms_lms_courses_card_item_image">
+                                </a>
+                                <div class="ms_lms_courses_card_item_info">
+                                    <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_info_title">
+                                        <h3>${course.title}</h3>
+                                    </a>
+                                    <div class="ms_lms_courses_card_item_info_meta">
+                                        <div class="ms_lms_courses_card_item_meta_block">
+                                            <i class="stmlms-members"></i>
+                                            <span>${course.student_enrolled}</span>
+                                        </div>
+                                        <div class="ms_lms_courses_card_item_meta_block">
+                                            <i class="stmlms-views"></i>
+                                            <span>15634</span>
+                                        </div>
+                                    </div>
+                                    <span class="ms_lms_courses_card_item_info_divider"></span>
+                                    <div class="ms_lms_courses_card_item_info_bottom_wrapper">
+                                        <div class="ms_lms_courses_card_item_info_rating">
+                                            <div class="ms_lms_courses_card_item_info_rating_stars">
+                                                <div class="ms_lms_courses_card_item_info_rating_stars_filled"
+                                                    style="width: ${parseFloat(course.rate) * 20}%;">
+                                                </div>
+                                            </div>
+                                            <div class="ms_lms_courses_card_item_info_rating_quantity">
+                                                <span>${parseFloat(course.rate).toFixed(1)}</span>
+                                            </div>
+                                        </div>
+                                        <div class="ms_lms_courses_card_item_info_price">
+                                            <div class="ms_lms_courses_card_item_info_price_single">
+                                                <span>${Number(course.price).toLocaleString('vi-VN')} đ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms_lms_courses_card_item_popup">
+                                <div class="ms_lms_courses_card_item_popup_author">
+                                    <img decoding="async"
+                                        src="https://secure.gravatar.com/avatar/e57afffbfde92ad891a8a7aec1694f85?s=215&d=mm&r=g">
+                                    <span class="ms_lms_courses_card_item_popup_author_name">HTAV2</span>
+                                </div>
+                                <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_popup_title">
+                                    <h3>${course.title}</h3>
+                                </a>
+                                <div class="ms_lms_courses_card_item_popup_meta">
+                                    <div class="ms_lms_courses_card_item_meta_block">
+                                        <i class="stmlms-levels"></i>
+                                        <span>${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</span>
+                                    </div>
+                                    <div class="ms_lms_courses_card_item_meta_block">
+                                        <i class="stmlms-cats"></i>
+                                        <span>${course.lesson} Lectures</span>
+                                    </div>
+                                    <div class="ms_lms_courses_card_item_meta_block">
+                                        <i class="stmlms-lms-clocks"></i>
+                                        <span>${course.total_time_finish}</span>
+                                    </div>
+                                </div>
+                                <div class="ms_lms_courses_card_item_popup_button_wrapper">
+                                    <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_popup_button">
+                                        <span>Preview this course</span>
+                                    </a>
+                                    <div class="ms_lms_courses_card_item_popup_bottom_wrapper">
+                                        <div class="ms_lms_courses_card_item_popup_wishlist">
+                                            <div class="stm-lms-wishlist"
+                                                data-add="Add to Wishlist"
+                                                data-add-icon="far fa-heart"
+                                                data-remove="Remove from Wishlist"
+                                                data-remove-icon="fa fa-heart"
+                                                data-id="${course.id}">
+                                                <i class="far fa-heart"></i>
+                                                <span>Add to Wishlist</span>
+                                            </div>
+                                        </div>
+                                        <div class="ms_lms_courses_card_item_popup_price">
+                                            <div class="ms_lms_courses_card_item_popup_price_single">
+                                                <span>${Number(course.price).toLocaleString('vi-VN')} đ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                            });
+                        } else {
+                            courseList.innerHTML = '<p>No courses found.</p>';
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
 @endsection

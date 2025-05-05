@@ -35,27 +35,4 @@ class VideoController extends Controller
         return response()->json(['url' => $file->webContentLink]);
     }
 
-    public function showVideo($courseId, $lessonId)
-    {
-        $user = Auth::user();
-        $lesson = Lesson::findOrFail($lessonId);
-        $lessons = Lesson::where('id_course', $courseId)->get();
-
-        $isEnrolled = CourseEnrolled::where('id_course', $courseId)
-            ->where('id_user', Auth::id())
-            ->exists();
-
-        if (!$isEnrolled) {
-            return redirect()->route('user.course-detail', $courseId)
-                ->with('error', 'Bạn cần đăng ký khóa học để xem video.');
-        }
-        // $reviews = \App\Models\Review::where('id_course', $courseId)
-        //     ->where('status', 'exist')
-        //     ->orderByDesc('created_at')
-        //     ->get();
-
-        // ✅ Truyền courseId xuống view
-        return view('user.video', compact('user', 'lesson', 'lessons', 'courseId'));
-    }
-
 }
