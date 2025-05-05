@@ -12,24 +12,25 @@ class Payment extends Model
     protected $table = 'tbl_payments';
 
     protected $fillable = [
-        'id_user',
         'id_course',
+        'id_user',
         'payment_method',
-        'content',
         'amount',
+        'content',
         'status',
+        'transaction_code',
+        'vnp_transaction_no',
+        'vnp_response_code',
+        'vnp_bank_code',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id');
+        return $this->belongsTo(User::class, 'id_user');
     }
 
-    /**
-     * Quan hệ với bảng tbl_courses (Khóa học)
-     */
     public function course()
     {
-        return $this->belongsTo(Course::class, 'id_course', 'id');
+        return $this->belongsTo(Course::class, 'id_course');
     }
 }

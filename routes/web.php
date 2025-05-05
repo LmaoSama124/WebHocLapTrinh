@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseEnrolledController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\User\VnPayController;
 use App\Http\Controllers\User\CourseUserController;
 use App\Http\Controllers\User\PaymentUserController;
 use App\Http\Controllers\User\ThemeHomeController;
@@ -28,11 +29,22 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.logi
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register'])->name('user.register');
 
+Route::get('/filter/{id}', [ThemeHomeController::class, 'filter'])->name('user.filter');
+
 // Trang User (Yêu cầu đăng nhập)
 Route::middleware('user.auth')->prefix('user')->group(function () {
-    // VNPAY
-    Route::get('/payment/vnpay', [PaymentUserController::class, 'createPayment'])->name('user.vnpay.create');
-    Route::get('/payment/vnpay-return', [PaymentUserController::class, 'vnpayReturn'])->name('user.vnpay.return');
+    // Payment (cho banking)
+    Route::get('/course-payment/{id}', [PaymentUserController::class, 'course_payment'])->name('user.course-payment');
+    Route::get('/payment/process', function () {
+        return redirect()->route('user.index')->with('error', 'Phương thức không được phép!');
+    })->name('user.payment.process.get');
+    Route::post('/payment/process', [PaymentUserController::class, 'processPayment'])->name('user.payment.process');
+    Route::post('/payment/banking/confirm', [PaymentUserController::class, 'confirmBanking'])->name('user.banking.confirm');
+
+    // VNPay
+    Route::post('/payment/vnpay/process', [VNPayController::class, 'processPayment'])->name('user.vnpay.process');
+    Route::get('/payment/process/return', [VNPayController::class, 'returnPayment'])->name('user.vnpay.return');
+    Route::post('/payment/vnpay/ipn', [VNPayController::class, 'ipn'])->name('user.vnpay.ipn');
 
     // Xử lý Video
     Route::get('/course/{id}/lesson/{lessonId}', [CourseUserController::class, 'showVideo'])->name('user.lessons.show');
@@ -42,12 +54,6 @@ Route::middleware('user.auth')->prefix('user')->group(function () {
     Route::get('/course', [ThemeHomeController::class, 'course'])->name('user.course');
     Route::get('/course-detail/{id}', [CourseUserController::class, 'course_detail'])->name('user.course-detail');
     Route::get('/course-enrolled', [ThemeHomeController::class, 'course_enrolled'])->name('user.enrolled-courses');
-    Route::get('/course-payment/{id}', [PaymentUserController::class, 'course_payment'])->name('user.course-payment');
-
-    // Payment
-    Route::post('/payment/form', [PaymentUserController::class, 'showPaymentForm'])->name('user.payment.form');
-    Route::post('/payment/process', [PaymentUserController::class, 'processPayment'])->name('user.payment.process');
-    Route::post('/payment/banking/confirm', [PaymentUserController::class, 'confirmBanking'])->name('user.banking.confirm');
 
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
