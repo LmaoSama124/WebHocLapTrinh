@@ -147,7 +147,8 @@
                                     Logout
                                 </a>
                             </li>
-                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST"
+                                class="d-none">
                                 @csrf
                             </form>
                         </ul>

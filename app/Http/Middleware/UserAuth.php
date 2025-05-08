@@ -13,12 +13,15 @@ class UserAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (!Auth::guard('web')->check()) {
-            return redirect()->route('user.login')->with('error', 'Bạn cần đăng nhập để truy cập.');
+        if (!auth()->check()) {
+            // Lưu URL trước đó, nhưng không áp dụng cho route POST
+            if (!$request->isMethod('post')) {
+                session()->put('url.intended', $request->url());
+            }
+            return redirect()->route('user.login');
         }
-
         return $next($request);
     }
 }
