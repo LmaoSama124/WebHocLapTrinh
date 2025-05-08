@@ -17,13 +17,13 @@ class ChatBotController extends Controller
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
             ])->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'Bạn là chatbot hỗ trợ CSKH và lập trình'],
-                    ['role' => 'user', 'content' => $question],
-                ],
-                'max_tokens' => 1000,
-            ]);
+                        'model' => 'gpt-3.5-turbo',
+                        'messages' => [
+                            ['role' => 'system', 'content' => 'Bạn là chatbot hỗ trợ CSKH và lập trình'],
+                            ['role' => 'user', 'content' => $question],
+                        ],
+                        'max_tokens' => 1000,
+                    ]);
 
             if (!$response->successful()) {
                 Log::error('GPT Error: ' . $response->body());
