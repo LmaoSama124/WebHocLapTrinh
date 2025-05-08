@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    <?php require_once './config.php'; ?>
     <div class="container">
         <div class="header clearfix">
             <h3 class="text-muted">VNPAY DEMO</h3>
