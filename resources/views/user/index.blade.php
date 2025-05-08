@@ -260,7 +260,7 @@
                 </section>
             </div>
         </div>
-        <<<<<<< HEAD <script>
+        <script>
             document.getElementById('course-categories').addEventListener('click', function(e) {
                 if (e.target && e.target.matches('.ms_lms_courses_grid__sorting_button')) {
                     const buttons = document.querySelectorAll('.ms_lms_courses_grid__sorting_button');
