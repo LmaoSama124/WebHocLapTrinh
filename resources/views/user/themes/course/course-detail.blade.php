@@ -1,15 +1,5 @@
 @extends('user.layouts.home')
 @section('content')
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'info',
-                title: 'Thông báo',
-                text: '{{ session('error') }}',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
     <div class="stm-lms-wrapper">
         <div class="container">
             <div class="masterstudy-single-course-sleek-sidebar">
