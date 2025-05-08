@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CourseEnrolledController;
@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\User\LoginController;
+
+use App\Http\Controllers\User\ChatBotController;
 
 // Trang chính & đăng nhập user
 Route::get('/', [ThemeHomeController::class, 'indexuser'])->name('user.index');
@@ -159,3 +161,6 @@ Route::prefix('/admin')->group(function () {
     });
 });
 
+// Chatbot
+Route::get('/chatbot', [ChatBotController::class, 'showChatbot'])->name('chatbot.show');
+Route::match(['get', 'post'], '/botman', [ChatBotController::class, 'handle']);

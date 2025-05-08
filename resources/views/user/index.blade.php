@@ -14,16 +14,16 @@
         </script>
     @endif
 
-    @if (session('banking_error'))
-        <script>
-            Swal.fire({
-                icon: 'info',
-                title: 'Thông báo',
-                text: '{{ session('banking_error') }}',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
+@if (session('banking_error'))
+<script>
+    Swal.fire({
+        icon: 'info',
+        title: 'Thông báo',
+        text: '{{ session('banking_error') }}',
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
 
     <div id="wrapper" class="wrapper">
         <div class="container">
@@ -96,98 +96,76 @@
                                                                                             <span>15634</span>
                                                                                             <!-- (Nếu bạn có số lượt xem thì lấy từ CSDL) -->
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <span
-                                                                                        class="ms_lms_courses_card_item_info_divider"></span>
-                                                                                    <div
-                                                                                        class="ms_lms_courses_card_item_info_bottom_wrapper">
-                                                                                        <div
-                                                                                            class="ms_lms_courses_card_item_info_rating">
-                                                                                            <div
-                                                                                                class="ms_lms_courses_card_item_info_rating_stars">
-                                                                                                <div class="ms_lms_courses_card_item_info_rating_stars_filled"
-                                                                                                    style="width: {{ $course->rate * 20 }}%;">
+                                                                                        <span class="ms_lms_courses_card_item_info_divider"></span>
+                                                                                        <div class="ms_lms_courses_card_item_info_bottom_wrapper">
+                                                                                            <div class="ms_lms_courses_card_item_info_rating">
+                                                                                                <div class="ms_lms_courses_card_item_info_rating_stars">
+                                                                                                    <div class="ms_lms_courses_card_item_info_rating_stars_filled" style="width: {{ $course->rate * 20 }}%;"></div>
+                                                                                                </div>
+                                                                                                <div class="ms_lms_courses_card_item_info_rating_quantity">
+                                                                                                    <span>{{ number_format($course->rate, 1) }}</span>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div
-                                                                                                class="ms_lms_courses_card_item_info_rating_quantity">
-                                                                                                <span>{{ number_format($course->rate, 1) }}</span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="ms_lms_courses_card_item_info_price">
-                                                                                            <div
-                                                                                                class="ms_lms_courses_card_item_info_price_single">
-                                                                                                <span>{{ number_format($course->price, 0, ',', '.') }}
-                                                                                                    đ</span>
+                                                                                            <div class="ms_lms_courses_card_item_info_price">
+                                                                                                <div class="ms_lms_courses_card_item_info_price_single">
+                                                                                                    <span>{{ $course->price > 0 ? number_format($course->price, 0, ',', '.') . ' đ' : 'Miễn phí' }}</span>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="ms_lms_courses_card_item_popup">
-                                                                                <div
-                                                                                    class="ms_lms_courses_card_item_popup_author">
-                                                                                    <img decoding="async"
-                                                                                        src="https://secure.gravatar.com/avatar/e57afffbfde92ad891a8a7aec1694f85?s=215&#038;d=mm&#038;r=g">
-                                                                                    <span
-                                                                                        class="ms_lms_courses_card_item_popup_author_name">HTAV2</span>
-                                                                                    <!-- Nếu có trường giảng viên thì sửa -->
-                                                                                </div>
-                                                                                <a href="{{ route('user.course-detail', ['id' => $course->id]) }}"
-                                                                                    class="ms_lms_courses_card_item_popup_title">
-                                                                                    <h3>{{ $course->title }}</h3>
-                                                                                </a>
-                                                                                <div
-                                                                                    class="ms_lms_courses_card_item_popup_meta">
-                                                                                    <div
-                                                                                        class="ms_lms_courses_card_item_meta_block">
-                                                                                        <i class="stmlms-levels"></i>
-                                                                                        <span>{{ ucfirst($course->level) }}</span>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="ms_lms_courses_card_item_meta_block">
-                                                                                        <i class="stmlms-cats"></i>
-                                                                                        <span>{{ $course->lesson }}
-                                                                                            Lectures</span>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="ms_lms_courses_card_item_meta_block">
-                                                                                        <i class="stmlms-lms-clocks"></i>
-                                                                                        <span>{{ $course->total_time_finish }}</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="ms_lms_courses_card_item_popup_button_wrapper">
-                                                                                    <a href="{{ route('user.course-detail', ['id' => $course->id]) }}"
-                                                                                        class="ms_lms_courses_card_item_popup_button">
-                                                                                        <span>Preview this course</span>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
+
+                                                                <!-- Hiển thị khóa học ngẫu nhiên -->
+                                                                <h3 class="section-title">{{ Auth::check() ? 'Khóa học khác' : 'Khóa học mới nhất' }}</h3>
+                                                                <div class="ms_lms_courses_grid__content title_style_1">
+                                                                    <div class="ms_lms_courses_card_wrapper">
+                                                                        <div class="ms_lms_courses_card card-style-1">
+                                                                            @foreach ($randomCourses->take(8) as $course)
+                                                                            <div class="ms_lms_courses_card_item">
+                                                                                <div class="ms_lms_courses_card_item_wrapper">
+                                                                                    <a href="{{ route('user.course-detail', ['id' => $course->id]) }}" class="ms_lms_courses_card_item_image_link">
+                                                                                        <img decoding="async" src="{{ asset('storage/' . $course->thumbnail) }}" class="ms_lms_courses_card_item_image" alt="{{ $course->title }}">
                                                                                     </a>
-                                                                                    <div
-                                                                                        class="ms_lms_courses_card_item_popup_bottom_wrapper">
-                                                                                        <div
-                                                                                            class="ms_lms_courses_card_item_popup_wishlist">
-                                                                                            <div class="stm-lms-wishlist"
-                                                                                                data-add="Add to Wishlist"
-                                                                                                data-add-icon="far fa-heart"
-                                                                                                data-remove="Remove from Wishlist"
-                                                                                                data-remove-icon="fa fa-heart"
-                                                                                                data-id="{{ $course->id }}">
-                                                                                                <i class="far fa-heart"></i>
-                                                                                                <span>Add to Wishlist</span>
+                                                                                    <div class="ms_lms_courses_card_item_info">
+                                                                                        <a href="{{ route('user.course-detail', ['id' => $course->id]) }}" class="ms_lms_courses_card_item_info_title">
+                                                                                            <h3>{{ $course->title }}</h3>
+                                                                                        </a>
+                                                                                        <div class="ms_lms_courses_card_item_info_meta">
+                                                                                            <div class="ms_lms_courses_card_item_meta_block">
+                                                                                                <i class="stmlms-members"></i>
+                                                                                                <span>{{ $course->student_enrolled }}</span>
+                                                                                            </div>
+                                                                                            <div class="ms_lms_courses_card_item_meta_block">
+                                                                                                <i class="stmlms-views"></i>
+                                                                                                <span>15634</span>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div
-                                                                                            class="ms_lms_courses_card_item_popup_price">
-                                                                                            <div
-                                                                                                class="ms_lms_courses_card_item_popup_price_single">
-                                                                                                <span>{{ number_format($course->price, 0, ',', '.') }}
-                                                                                                    đ</span>
+                                                                                        <span class="ms_lms_courses_card_item_info_divider"></span>
+                                                                                        <div class="ms_lms_courses_card_item_info_bottom_wrapper">
+                                                                                            <div class="ms_lms_courses_card_item_info_rating">
+                                                                                                <div class="ms_lms_courses_card_item_info_rating_stars">
+                                                                                                    <div class="ms_lms_courses_card_item_info_rating_stars_filled" style="width: {{ $course->rate * 20 }}%;"></div>
+                                                                                                </div>
+                                                                                                <div class="ms_lms_courses_card_item_info_rating_quantity">
+                                                                                                    <span>{{ number_format($course->rate, 1) }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="ms_lms_courses_card_item_info_price">
+                                                                                                <div class="ms_lms_courses_card_item_info_price_single">
+                                                                                                    <span>{{ $course->price > 0 ? number_format($course->price, 0, ',', '.') . ' đ' : 'Miễn phí' }}</span>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            @endforeach
                                                                         </div>
                                                                     @endforeach
 
@@ -336,3 +314,4 @@
         });
     </script>
 @endsection
+@include('user.chatbot_box')
