@@ -86,20 +86,4 @@ class ThemeHomeController extends Controller
     {
         return view('user.themes.login.login');
     }
-
-
-    public function filter($id)
-    {
-        $user = Auth::user();
-
-        if ($id == 'all') {
-            $courses = Course::all();
-        } else {
-            $courses = Course::where('category_id', $id)->get();
-        }
-
-        $categories = Category::all();
-        return response()->json(['courses' => $courses])->header('Content-Type', 'application/json');
-    }
-
 }
