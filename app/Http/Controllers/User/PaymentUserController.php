@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Course;
+use App\Models\CourseEnrolled;
 use App\Models\Payment;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +23,24 @@ class PaymentUserController extends Controller
     {
         $user = auth()->user();
         $course = Course::findOrFail($id);
+
+        if ($course->price === 0 || $course->is_free == 1) {
+            $months = (int) $course->expiration_date; // Ép kiểu thành số nguyên
+            $expirationDate = (new DateTime())->modify("+{$months} months")->format('Y-m-d H:i:s');
+            CourseEnrolled::updateOrCreate(
+                [
+                    'id_user' => $user->id,
+                    'id_course' => $course->id,
+                    'title_course' => $course->title,
+                    'expiration_date' => $expirationDate,
+                ],
+                [
+                    'status' => 'in_progess', // Hoặc 'active' tùy theo logic của bạn
+                ]
+            );
+
+            return redirect()->route('user.index', $id)->with('success', 'Bãn đã nhận thành công 1 khoá học miễn phí!');
+        }
 
         return view('user.themes.payment.course-payment', compact('user', 'course'));
     }

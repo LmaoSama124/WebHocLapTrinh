@@ -90,15 +90,12 @@ class ThemeHomeController extends Controller
 
     public function filter($id)
     {
-        $user = Auth::user();
-
         if ($id == 'all') {
             $courses = Course::all();
         } else {
             $courses = Course::where('category_id', $id)->get();
         }
 
-        $categories = Category::all();
         return response()->json(['courses' => $courses])->header('Content-Type', 'application/json');
     }
 }
