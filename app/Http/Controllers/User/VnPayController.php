@@ -130,8 +130,6 @@ class VNPayController extends Controller
 
     public function returnPayment(Request $request)
     {
-        Log::info('VNPayController::returnPayment called with data: ', $request->all());
-
         // Lấy cấu hình VNPay
         $vnp_HashSecret = config('vnpay.hash_secret');
 
@@ -159,8 +157,6 @@ class VNPayController extends Controller
                 $i = 1;
             }
         }
-
-        Log::info('VNPay Return Hash Data for TxnRef ' . ($inputData['vnp_TxnRef'] ?? 'unknown') . ': ' . $hashData);
 
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
 
@@ -208,20 +204,22 @@ class VNPayController extends Controller
                 );
 
                 $responseData['result'] = "<span style='color:blue'>GD Thanh cong</span>";
+                session()->flash('success', 'Thanh toán thành công! Bạn đã được đăng ký khóa học.');
             } else {
                 $payment->status = 'canceled'; // Khớp với ENUM
                 $payment->save();
 
                 $responseData['result'] = "<span style='color:red'>GD Khong thanh cong</span>";
+                session()->flash('error', 'Thanh toán không thành công! Vui lòng thử lại.');
             }
         } else {
             $responseData['result'] = "<span style='color:red'>Chu ky khong hop le</span>";
+            session()->flash('error', 'Lỗi xác thực giao dịch! Vui lòng thử lại.');
         }
 
-        Log::info('VNPay Return Result for TxnRef ' . ($inputData['vnp_TxnRef'] ?? 'unknown') . ': ' . $responseData['result']);
 
         // Trả về view duy nhất
-        return view('user.themes.vnpay.return', $responseData);
+        return redirect()->route('user.index', $responseData);
     }
 
     public function ipn(Request $request)

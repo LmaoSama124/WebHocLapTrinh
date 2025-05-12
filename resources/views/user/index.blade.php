@@ -1,25 +1,25 @@
 @extends('user.layouts.home')
 
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
-    @if (session('banking_success'))
+    @if (session('success'))
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Thành công!',
-                text: 'Giao dịch thành côngcông',
+                text: '{{ session('success') }}',
                 confirmButtonText: 'OK'
             });
         </script>
     @endif
 
-    @if (session('banking_error'))
+    @if (session('error'))
         <script>
             Swal.fire({
                 icon: 'info',
                 title: 'Thông báo',
-                text: 'Giao dịch thất bại',
+                text: '{{ session('error') }}',
                 confirmButtonText: 'OK'
             });
         </script>
@@ -47,7 +47,8 @@
                                                             <h2>
                                                                 CHỌN LỘ TRÌNH CỦA BẠN &amp; CÙNG HỌC NHÉ! </h2>
                                                             <!-- filter -->
-                                                            <div class="ms_lms_courses_grid__sorting_wrapper">
+                                                            <div id="course-categories"
+                                                                class="ms_lms_courses_grid__sorting_wrapper">
                                                                 <ul class="ms_lms_courses_grid__sorting style_2">
                                                                     <li>
                                                                         <span data-id="all"
@@ -55,37 +56,37 @@
                                                                             All </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="75"
+                                                                        <span data-id="1"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Mới học lập trình </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="76"
+                                                                        <span data-id="2"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Cơ sở dữ liệu </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="77"
+                                                                        <span data-id="3"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Lập trình Web </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="78"
+                                                                        <span data-id="4"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Java Backend </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="79"
+                                                                        <span data-id="5"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Java Fullstack </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="80"
+                                                                        <span data-id="6"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Data Science </span>
                                                                     </li>
                                                                     <li>
-                                                                        <span data-id="81"
+                                                                        <span data-id="7"
                                                                             class="ms_lms_courses_grid__sorting_button ">
                                                                             Kiến thức nền tảng </span>
                                                                     </li>
@@ -268,6 +269,14 @@
                     e.target.classList.add('active');
 
                     const categoryId = e.target.getAttribute('data-id');
+                    console.log('Đã chọn danh mục:', categoryId);
+
+                    // Hiển thị trạng thái đang tải
+                    const courseList = document.querySelector('.ms_lms_courses_card.card-style-1');
+                    if (courseList) {
+                        courseList.innerHTML =
+                            '<div class="loading-courses" style="width:100%; text-align:center; padding: 20px;"><p>Đang tải khóa học...</p></div>';
+                    }
 
                     fetch(`/filter/${categoryId}`, {
                             method: 'GET',
@@ -276,23 +285,58 @@
                                 'Accept': 'application/json'
                             }
                         })
-                        .then(response => response.json())
+                        .then(response => {
+                            console.log('Phản hồi server:', response.status, response.statusText);
+                            return response.json();
+                        })
                         .then(data => {
-                            const courses = data.courses || [];
+                            console.log('Dữ liệu nhận được từ server:', data);
 
-                            const courseList = document.querySelector(
-                                '#course-list .ms_lms_courses_card.card-style-1');
-                            courseList.innerHTML = ''; // Đảm bảo xóa content cũ đúng vị trí
+                            // Kiểm tra cấu trúc dữ liệu phản hồi
+                            if (!data.success && data.message) {
+                                throw new Error(data.message);
+                            }
+
+                            const courses = data.courses || [];
+                            console.log('Số lượng khóa học:', courses.length);
+
+                            // Debug thông tin từng khóa học
+                            courses.forEach((course, index) => {
+                                console.log(`Khóa học #${index + 1}:`, course);
+                            });
+
+                            // Tìm đúng container cho danh sách khóa học
+                            if (!courseList) {
+                                console.error('Không tìm thấy container khóa học. Vui lòng kiểm tra HTML.');
+                                return;
+                            }
+                            console.log('Đã tìm thấy container khóa học:', courseList);
+
+                            courseList.innerHTML = ''; // Xóa content cũ
+                            console.log('Đã xóa nội dung cũ, bắt đầu hiển thị khóa học mới');
 
                             if (courses.length > 0) {
-                                courses.forEach(course => {
+                                courses.forEach((course, index) => {
+                                    // Format giá tiền
+                                    const priceDisplay = course.price > 0 ?
+                                        `${Number(course.price).toLocaleString('vi-VN')} đ` :
+                                        'Miễn phí';
+
+                                    // Tính toán rating stars width một cách chính xác
+                                    const ratingWidth = parseFloat(course.rate || 0) * 20;
+
+                                    console.log(
+                                        `Đang hiển thị khóa học #${index + 1}: ${course.title}, Giá: ${priceDisplay}`
+                                    );
+
                                     courseList.innerHTML += `
                         <div class="ms_lms_courses_card_item">
                             <div class="ms_lms_courses_card_item_wrapper">
                                 <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_image_link">
                                     <img decoding="async"
                                         src="/storage/${course.thumbnail}"
-                                        class="ms_lms_courses_card_item_image">
+                                        class="ms_lms_courses_card_item_image"
+                                        alt="${course.title}">
                                 </a>
                                 <div class="ms_lms_courses_card_item_info">
                                     <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_info_title">
@@ -301,7 +345,7 @@
                                     <div class="ms_lms_courses_card_item_info_meta">
                                         <div class="ms_lms_courses_card_item_meta_block">
                                             <i class="stmlms-members"></i>
-                                            <span>${course.student_enrolled}</span>
+                                            <span>${course.student_enrolled || 0}</span>
                                         </div>
                                         <div class="ms_lms_courses_card_item_meta_block">
                                             <i class="stmlms-views"></i>
@@ -313,63 +357,16 @@
                                         <div class="ms_lms_courses_card_item_info_rating">
                                             <div class="ms_lms_courses_card_item_info_rating_stars">
                                                 <div class="ms_lms_courses_card_item_info_rating_stars_filled"
-                                                    style="width: ${parseFloat(course.rate) * 20}%;">
+                                                    style="width: ${ratingWidth}%;">
                                                 </div>
                                             </div>
                                             <div class="ms_lms_courses_card_item_info_rating_quantity">
-                                                <span>${parseFloat(course.rate).toFixed(1)}</span>
+                                                <span>${parseFloat(course.rate || 0).toFixed(1)}</span>
                                             </div>
                                         </div>
                                         <div class="ms_lms_courses_card_item_info_price">
                                             <div class="ms_lms_courses_card_item_info_price_single">
-                                                <span>${Number(course.price).toLocaleString('vi-VN')} đ</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ms_lms_courses_card_item_popup">
-                                <div class="ms_lms_courses_card_item_popup_author">
-                                    <img decoding="async"
-                                        src="https://secure.gravatar.com/avatar/e57afffbfde92ad891a8a7aec1694f85?s=215&d=mm&r=g">
-                                    <span class="ms_lms_courses_card_item_popup_author_name">HTAV2</span>
-                                </div>
-                                <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_popup_title">
-                                    <h3>${course.title}</h3>
-                                </a>
-                                <div class="ms_lms_courses_card_item_popup_meta">
-                                    <div class="ms_lms_courses_card_item_meta_block">
-                                        <i class="stmlms-levels"></i>
-                                        <span>${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</span>
-                                    </div>
-                                    <div class="ms_lms_courses_card_item_meta_block">
-                                        <i class="stmlms-cats"></i>
-                                        <span>${course.lesson} Lectures</span>
-                                    </div>
-                                    <div class="ms_lms_courses_card_item_meta_block">
-                                        <i class="stmlms-lms-clocks"></i>
-                                        <span>${course.total_time_finish}</span>
-                                    </div>
-                                </div>
-                                <div class="ms_lms_courses_card_item_popup_button_wrapper">
-                                    <a href="/user/course-detail/${course.id}" class="ms_lms_courses_card_item_popup_button">
-                                        <span>Preview this course</span>
-                                    </a>
-                                    <div class="ms_lms_courses_card_item_popup_bottom_wrapper">
-                                        <div class="ms_lms_courses_card_item_popup_wishlist">
-                                            <div class="stm-lms-wishlist"
-                                                data-add="Add to Wishlist"
-                                                data-add-icon="far fa-heart"
-                                                data-remove="Remove from Wishlist"
-                                                data-remove-icon="fa fa-heart"
-                                                data-id="${course.id}">
-                                                <i class="far fa-heart"></i>
-                                                <span>Add to Wishlist</span>
-                                            </div>
-                                        </div>
-                                        <div class="ms_lms_courses_card_item_popup_price">
-                                            <div class="ms_lms_courses_card_item_popup_price_single">
-                                                <span>${Number(course.price).toLocaleString('vi-VN')} đ</span>
+                                                <span>${priceDisplay}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -377,13 +374,27 @@
                             </div>
                         </div>`;
                                 });
+                                console.log('Đã hoàn thành việc hiển thị tất cả khóa học');
                             } else {
-                                courseList.innerHTML = '<p>No courses found.</p>';
+                                console.log('Không có khóa học nào được tìm thấy cho danh mục này');
+                                // Hiển thị thông báo khi không có khóa học
+                                courseList.innerHTML =
+                                    '<div class="no-courses-message" style="width:100%; text-align:center; padding: 20px;"><p>Không tìm thấy khóa học nào trong danh mục này.</p></div>';
                             }
                         })
-                        .catch(error => console.error('Error:', error));
+                        .catch(error => {
+                            console.error('Lỗi khi tải khóa học:', error);
+                            // Thông báo lỗi cho người dùng
+                            if (courseList) {
+                                courseList.innerHTML =
+                                    `<div class="error-message" style="width:100%; text-align:center; padding: 20px;"><p>Đã xảy ra lỗi khi tải khóa học: ${error.message}</p></div>`;
+                            }
+                        });
                 }
             });
+
+            // Thêm console.log khi trang được tải để kiểm tra event listener đã được thiết lập chưa
+            console.log('Script filter đã được tải. Chờ người dùng chọn danh mục...');
         </script>
     </div>
 
